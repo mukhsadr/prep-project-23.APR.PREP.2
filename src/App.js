@@ -2,12 +2,18 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import logo from "./mlh-prep.png";
 import AutoComp from "./components/AutoComp";
+import usePlacesAutocomplete from "use-places-autocomplete";
+import { useLoadScript } from "@react-google-maps/api";
 
 function App() {
   const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isVarLoaded, setIsVarLoaded] = useState(false);
   const [city, setCity] = useState("New York City");
   const [results, setResults] = useState(null);
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+    libraries: ["places"],
+  });
 
   useEffect(() => {
     fetch(
@@ -21,14 +27,14 @@ function App() {
       .then(
         (result) => {
           if (result["cod"] !== 200) {
-            setIsLoaded(false);
+            setIsVarLoaded(false);
           } else {
-            setIsLoaded(true);
+            setIsVarLoaded(true);
             setResults(result);
           }
         },
         (error) => {
-          setIsLoaded(true);
+          setIsVarLoaded(true);
           setError(error);
         }
       );
@@ -47,11 +53,12 @@ function App() {
         <img className="logo" src={logo} alt="MLH Prep Logo"></img>
         <div>
           <h2>Enter a city below 👇</h2>
-          <AutoComp cityHandler={cityHandler}></AutoComp>
+          {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
           <div className="Results">
-            {!isLoaded && <h2>Loading...</h2>}
+            {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
-            {isLoaded && results && (
+            {console.log(isLoaded)}
+            {isVarLoaded && results && (
               <>
                 <h3>{results.weather[0].main}</h3>
                 <p>Feels like {results.main.feels_like}°C</p>

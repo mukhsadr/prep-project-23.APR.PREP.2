@@ -1,4 +1,3 @@
-import { useLoadScript } from "@react-google-maps/api";
 import {
   Combobox,
   ComboboxInput,
@@ -8,14 +7,9 @@ import {
 } from "@reach/combobox";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import "@reach/combobox/styles.css";
-import { LoadingButton } from "@mui/lab";
 import { useEffect } from "react";
 
 export default function AutoComp(props) {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-    libraries: ["places"],
-  });
   const {
     ready,
     value,
@@ -34,17 +28,6 @@ export default function AutoComp(props) {
     clearSuggestions();
   };
 
-  if (!isLoaded) {
-    return (
-      <div>
-        {" "}
-        <LoadingButton
-          sx={{ bgcolor: "white", width: "220px", height: "35px" }}
-          loading={true}
-        ></LoadingButton>
-      </div>
-    );
-  }
   return (
     <>
       <Combobox onSelect={handleSelect} className="locationBox">
