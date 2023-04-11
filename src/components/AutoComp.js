@@ -19,7 +19,7 @@ export default function AutoComp(props) {
   } = usePlacesAutocomplete();
 
   useEffect(() => {
-    setValue("New York City");
+    setValue("New York, NY, USA", false);
   }, []);
 
   const handleSelect = async (address) => {
