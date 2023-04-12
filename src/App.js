@@ -16,6 +16,7 @@ function App() {
   });
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_APIKEY, city);
     fetch(
       "https://api.openweathermap.org/data/2.5/weather?q=" +
         city +
@@ -44,6 +45,17 @@ function App() {
     console.log("City set to:", city);
     setCity(city);
   };
+  // detect based on main code
+  // If it's raining, bring an umbrella - Rain, Drizzle, Thunderstorm
+  // If it's sunny, bring suncream - 	Clear
+  // If it's cold, bring a coat - 	Snow
+  const weatherEquipment = {
+    Rain: "Bring an umbrella",
+    Drizzle: "Bring an umbrella",
+    Thunderstorm: "Bring an umbrella",
+    Clear: "Bring sunscreen",
+    Snow: "Bring a coat",
+  };
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -61,6 +73,8 @@ function App() {
             {isVarLoaded && results && (
               <>
                 <h3>{results.weather[0].main}</h3>
+                <h4>{weatherEquipment[results.weather[0].main] || null}</h4>
+
                 <p>Feels like {results.main.feels_like}°C</p>
                 <i>
                   <p>
