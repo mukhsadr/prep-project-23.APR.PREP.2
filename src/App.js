@@ -5,8 +5,6 @@ import AutoComp from "./components/AutoComp";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import { useLoadScript } from "@react-google-maps/api";
 import './App.css';
-import logo from './mlh-prep.png'
-import './location.js';
 
 function App() {
   const [error, setError] = useState(null);
