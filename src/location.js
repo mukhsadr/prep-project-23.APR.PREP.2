@@ -1,3 +1,5 @@
+import "./App.css";
+
 document.addEventListener("DOMContentLoaded", event => {
   let $ = document.querySelector.bind(document);
 
@@ -15,6 +17,16 @@ document.addEventListener("DOMContentLoaded", event => {
   function onGeoSuccess(position) {
     var lat = position.coords.latitude;
     var long = position.coords.longitude;
+    /*
+    fetch(
+      "https://api.openweathermap.org/data/3.0/onecall?lat="
+      + lat + "&lon=" + long +
+      "&appid=" +
+        process.env.REACT_APP_APIKEY            
+    ) 
+    .then(response => response.json())
+    */
+    return [lat, long]
   }
   
   function onGeoError(error) {
