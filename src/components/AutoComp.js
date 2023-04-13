@@ -39,6 +39,13 @@ export default function AutoComp(props) {
         />
         <ComboboxPopover>
           <ComboboxList>
+          {status === "OK" && (
+              <ComboboxOption
+                className="optionBox"
+                value={"your location"}
+                key={123}
+              />
+            )}
             {status === "OK" &&
               data.map(({ place_id, description }) => (
                 <ComboboxOption
