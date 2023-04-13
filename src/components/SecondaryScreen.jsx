@@ -57,10 +57,12 @@ function SecondaryScreen() {
     return (
       <Grid
         container
+        wrap="nowrap"
         direction={"column"}
         sx={{
           height: "100%",
           width: "100%",
+          overflowY: "scroll",
         }}
       >
         <Grid
@@ -124,6 +126,7 @@ function SecondaryScreen() {
                 border: "solid",
                 borderColor: "white",
                 height: "100%",
+                display: { xs: "none", sm: "none", md: "grid" },
               }}
             >
               <Grid
