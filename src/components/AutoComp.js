@@ -8,6 +8,7 @@ import {
 import usePlacesAutocomplete from "use-places-autocomplete";
 import "@reach/combobox/styles.css";
 import { useEffect } from "react";
+import React from 'react';
 
 export default function AutoComp(props) {
   const {

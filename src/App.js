@@ -4,9 +4,8 @@ import logo from "./mlh-prep.png";
 import AutoComp from "./components/AutoComp";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import { useLoadScript } from "@react-google-maps/api";
-import './App.css';
-import logo from './mlh-prep.png'
-import './location.js';
+import getCoords from './location.js';
+import React from 'react';
 
 function App() {
   const [error, setError] = useState(null);
@@ -42,7 +41,13 @@ function App() {
         }
       );
   }, [city]);
-
+  /*
+  fetch(
+    "https://api.openweathermap.org/data/3.0/onecall?lat="
+    + coords[0] + "&lon=" + coords[1] +
+    "&appid=" +
+      process.env.REACT_APP_APIKEY            
+  ) */
   const cityHandler = (city) => {
     console.log("City set to:", city);
     setCity(city);
@@ -57,6 +62,9 @@ function App() {
         <div>
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
+          <button id="currPos">My location</button>
+          <div id="error"></div>
+          
           <div className="Results">
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
