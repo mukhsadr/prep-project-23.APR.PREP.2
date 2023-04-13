@@ -54,22 +54,25 @@ function App() {
         <div>
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
-          <div className="Results">
-            {!isVarLoaded && <h2>Loading...</h2>}
-            {console.log(results)}
-            {console.log(isLoaded)}
-            {isVarLoaded && results && (
-              <>
-                <h3>{results.weather[0].main}</h3>
-                <p>Feels like {results.main.feels_like}°C</p>
-                <i>
-                  <p>
-                    {results.name}, {results.sys.country}
-                  </p>
-                </i>
-              </>
-            )}
-          </div>
+          {/* added code */}
+            <div className = "ResultsBox">
+              <div className="Results">
+                {!isVarLoaded && <h2>Loading...</h2>}
+                {console.log(results)}
+                {console.log(isLoaded)}
+                {isVarLoaded && results && (
+                  <>
+                    <h3>{results.weather[0].main}</h3>
+                    <p>Feels like {results.main.feels_like}°C</p>
+                    <i>
+                      <p>
+                        {results.name}, {results.sys.country}
+                      </p>
+                    </i>
+                  </>
+                )}
+              </div>
+            </div>  
         </div>
       </>
     );
