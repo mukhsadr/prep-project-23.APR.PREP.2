@@ -56,7 +56,6 @@ function App() {
         <div>
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
-          <GeolocationButton> </GeolocationButton>
           <div className="Results">
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
