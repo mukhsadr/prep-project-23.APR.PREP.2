@@ -3,6 +3,7 @@ import logo from "./../mlh-prep.png";
 import AutoComp from "./AutoComp";
 import { useLoadScript } from "@react-google-maps/api";
 import { useWeatherContext } from "../store/WeatherContext";
+import { Box, Grid } from "@mui/material";
 
 function SecondaryScreen() {
   const [error, setError] = useState(null);
@@ -54,29 +55,116 @@ function SecondaryScreen() {
     return <div>Error: {error.message}</div>;
   } else {
     return (
-      <>
-        <img className="logo" src={logo} alt="MLH Prep Logo"></img>
-        <div>
-          <h2>Enter a city below 👇</h2>
-          {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
-          <div className="Results" onClick={changeScreen}>
-            {!isVarLoaded && <h2>Loading...</h2>}
-            {console.log(results)}
-            {console.log(isLoaded)}
-            {isVarLoaded && results && (
-              <>
-                <h3>{results.weather[0].main}</h3>
-                <p>Feels like {results.main.feels_like}°C</p>
-                <i>
-                  <p>
-                    {results.name}, {results.sys.country}
-                  </p>
-                </i>
-              </>
-            )}
-          </div>
-        </div>
-      </>
+      <Grid
+        container
+        direction={"column"}
+        sx={{
+          height: "100%",
+          width: "100%",
+        }}
+      >
+        <Grid
+          xs={1}
+          sx={{
+            border: "solid",
+            borderColor: "white",
+            minWidth: "100%",
+            maxWidth: "100%",
+            alignContent: "flex-start",
+          }}
+        >
+          <img className="logo" src={logo} alt="MLH Prep Logo"></img>
+          Header
+        </Grid>
+        <Grid
+          xs={7}
+          sx={{
+            border: "solid",
+            borderColor: "white",
+            minWidth: "100%",
+            maxWidth: "100%",
+          }}
+        >
+          {" "}
+          <Grid container direction={"row"} className={"LeftSide"}>
+            <Grid
+              sm={12}
+              md={6}
+              sx={{
+                border: "solid",
+                borderColor: "white",
+                height: "100%",
+              }}
+            >
+              <h2>Secondary Screen👇</h2>
+              {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
+              <div className="Results" onClick={changeScreen}>
+                {!isVarLoaded && <h2>Loading...</h2>}
+                {console.log(results)}
+                {console.log(isLoaded)}
+                {isVarLoaded && results && (
+                  <>
+                    <h3>{results.weather[0].main}</h3>
+                    <p>Feels like {results.main.feels_like}°C</p>
+                    <i>
+                      <p>
+                        {results.name}, {results.sys.country}
+                      </p>
+                    </i>
+                  </>
+                )}
+              </div>
+            </Grid>
+            <Grid
+              container
+              direction={"column"}
+              sm={12}
+              md={6}
+              sx={{
+                border: "solid",
+                borderColor: "white",
+                height: "100%",
+              }}
+            >
+              <Grid
+                xs={6}
+                sx={{
+                  border: "solid",
+                  borderColor: "white",
+                  height: "100%",
+                  maxWidth: "100%",
+                  minWidth: "100%",
+                }}
+              >
+                top right
+              </Grid>
+              <Grid
+                xs={6}
+                sx={{
+                  border: "solid",
+                  borderColor: "white",
+                  height: "100%",
+                  maxWidth: "100%",
+                  minWidth: "100%",
+                }}
+              >
+                bottom right
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid
+          xs={3}
+          sx={{
+            border: "solid",
+            borderColor: "white",
+            minWidth: "100%",
+            maxWidth: "100%",
+          }}
+        >
+          Bottom part
+        </Grid>
+      </Grid>
     );
   }
 }

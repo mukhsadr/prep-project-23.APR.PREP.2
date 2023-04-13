@@ -58,7 +58,7 @@ function InitialScreen() {
       <>
         <img className="logo" src={logo} alt="MLH Prep Logo"></img>
         <div>
-          <h2>Enter a city belowww 👇</h2>
+          <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
           <div className="Results" onClick={changeScreen}>
             {!isVarLoaded && <h2>Loading...</h2>}

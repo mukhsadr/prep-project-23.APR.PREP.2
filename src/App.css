@@ -1,7 +1,13 @@
-body {
+html, body, #root, .App{
     background-color: #133667;
     color: white;
     text-align: center;
+  height: 100%;
+  width: 100%;
+}
+.MuiGrid-root {
+  height: 100%;
+  width: 100%
 }
 
 .logo {
