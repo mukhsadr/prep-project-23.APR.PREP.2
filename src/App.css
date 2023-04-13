@@ -40,7 +40,16 @@ input {
 
 /* added code, make sure it takes up the full width, seperates it from other
 elements */
-.ResultsBox {
-  margin: 20px 10px 0px;
-  width: 100%;
+@media (max-width: 768px) {
+  .Results {
+    max-width: 90%;
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 576px) {
+  .Results {
+    max-width: 100%;
+    font-size: 0.7em;
+  }
 }
