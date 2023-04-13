@@ -1,5 +1,5 @@
 body {
-    background-color: #133667;
+    /* background-color: #133667; */
     color: white;
     text-align: center;
 }
@@ -33,4 +33,27 @@ input {
 .optionBox{
   color: black;
   text-align: left;
+}
+
+.bigCard{
+  /* Big Card */
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 54px 47px 29px;
+  gap: 71px;
+
+  position: absolute;
+  width: 854px;
+  height: 471px;
+  left: 1446px;
+  top: 539px;
+
+  /*background: url(sunny.png);*/
+  border: 1px solid #000000;
+  border-radius: 78px;
 }

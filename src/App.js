@@ -48,10 +48,23 @@ function App() {
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
+
+    const background_color = (temp) => {
+      if (temp < 10) {
+        return "#44c2fc";
+      } else if (temp < 20) {
+        return "#44e7fc";
+      } else if (temp < 30) {
+        return "green"
+      } else {
+        return "red"
+      }
+    }
+
     return (
       <>
         <img className="logo" src={logo} alt="MLH Prep Logo"></img>
-        <div>
+        <div style={{backgroundColor: background_color(results.main.feels_like)}}>
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
           <div className="Results">
