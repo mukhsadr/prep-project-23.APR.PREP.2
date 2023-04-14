@@ -4,6 +4,7 @@ import logo from "./mlh-prep.png";
 import AutoComp from "./components/AutoComp";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import { useLoadScript } from "@react-google-maps/api";
+import Forecast from "./components/Forecast/Forecast";
 
 function App() {
   const [error, setError] = useState(null);
@@ -14,6 +15,7 @@ function App() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ["places"],
   });
+  
 
   useEffect(() => {
     fetch(
@@ -70,6 +72,7 @@ function App() {
               </>
             )}
           </div>
+          <Forecast city={city} />
         </div>
       </>
     );

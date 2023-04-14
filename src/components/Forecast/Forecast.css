@@ -1,0 +1,56 @@
+input[type="datetime-local"] {
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  color: #000000;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  padding: 10px;
+  margin: 10px;
+  width: 250px;
+}
+
+/* Style the calendar portion of the datetime-local input */
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  background-color: rgb(255, 255, 255);
+  background-image: url('./calendar.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 20%;
+  opacity: 0.9;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Add the hover effect */
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+  background-image: url('./calendar.gif');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 20%;
+  opacity: 0.9;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+@keyframes calendar-hover {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  input[type="datetime-local"] {
+    width: 100%;
+  }
+}
