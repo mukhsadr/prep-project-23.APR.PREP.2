@@ -9,7 +9,7 @@ import React from 'react';
 function App() {
   const [error, setError] = useState(null);
   const [isVarLoaded, setIsVarLoaded] = useState(false);
-  const [city, setCity] = useState("New York City");
+  const [city, setCity] = useState("Your location");
   const [results, setResults] = useState(null);
   const [coords, setGeolocation] = useState(null);
   const { isLoaded } = useLoadScript({
