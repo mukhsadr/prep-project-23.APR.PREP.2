@@ -79,11 +79,47 @@ function Forecast({ city }) {
                     borderColor: "rgba(75, 192, 192, 0.5)",
                     backgroundColor: "rgba(75, 192, 192, 0.5)",
                     pointRadius: 20,
-                    pointBorderColor: "rgba(100, 192, 192, 0.9)",
+                    pointBorderColor: function(context) {
+                        var temp = context.dataset.data[context.dataIndex];
+                        if (temp < 0) {
+                            return "rgba(0, 123, 255, 0.8)"; // Blue for very cold temperatures
+                        } else if (temp < 10) {
+                            return "rgba(40, 167, 69, 0.8)"; // Green for cool temperatures
+                        } else if (temp < 20) {
+                            return "rgba(255, 193, 7, 0.8)"; // Yellow for warm temperatures
+                        } else {
+                            return "rgba(220, 53, 69, 0.8)"; // Red for hot temperatures
+                        }
+                        
+                    },
                     fill: false,
-                    borderWidth: 5,
-                    hoverBorderColor: "rgba(100, 192, 192, 0.9)",
-                    pointHoverBackgroundColor: "red",
+                    borderWidth: 3,
+                    hoverBorderColor: function(context) {
+                        var temp = context.dataset.data[context.dataIndex];
+                        if (temp < 0) {
+                            return "rgba(0, 123, 255, 0.5)"; // Blue for very cold temperatures
+                        } else if (temp < 10) {
+                            return "rgba(40, 167, 69, 0.5)"; // Green for cool temperatures
+                        } else if (temp < 20) {
+                            return "rgba(255, 193, 7, 0.5)"; // Yellow for warm temperatures
+                        } else {
+                            return "rgba(220, 53, 69, 0.5)"; // Red for hot temperatures
+                        }
+                        
+                    },
+                    pointHoverBackgroundColor: function(context) {
+                        var temp = context.dataset.data[context.dataIndex];
+                        if (temp < 0) {
+                            return "rgba(0, 123, 255, 0.3)"; // Blue for very cold temperatures
+                        } else if (temp < 10) {
+                            return "rgba(40, 167, 69, 0.3)"; // Green for cool temperatures
+                        } else if (temp < 20) {
+                            return "rgba(255, 193, 7, 0.3)"; // Yellow for warm temperatures
+                        } else {
+                            return "rgba(220, 53, 69, 0.3)"; // Red for hot temperatures
+                        }
+                        
+                    },
                     pointHoverRadius: 30,
                     hoverBorderWidth: 30,
                     fill: false,
@@ -116,16 +152,28 @@ function Forecast({ city }) {
                 responsive: true,
                 scales: {
                 y: {
+                    grid: {borderColor: "rgba(75, 192, 192, 1)",borderWidth: 5,},
                     ticks: {
                         // Include a dollar sign in the ticks
                         callback: function(value, index, ticks) {
                             return value +" °C";
                         },
-                        
-                        color: "blue",
+                        color: function(context) {
+                            const temp = context.tick.value
+                            if (temp < 0) {
+                                return "rgba(0, 123, 255, 0.7)"; // Blue for very cold temperatures
+                            } else if (temp < 10) {
+                                return "rgba(40, 167, 69, 0.7)"; // Green for cool temperatures
+                            } else if (temp < 20) {
+                                return "rgba(255, 193, 7, 0.7)"; // Yellow for warm temperatures
+                            } else {
+                                return "rgba(220, 53, 69, 0.7)"; // Red for hot temperatures
+                            }
+                        }
                         }
                     },
                     x: {
+                        grid: {borderColor: "rgba(75, 192, 192, 1)",borderWidth: 5,},
                         ticks: {
                         color: "blue",
                         }}
