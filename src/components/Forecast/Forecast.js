@@ -90,14 +90,15 @@ function Forecast({ city }) {
                     pointBackgroundColor: function(context) {
                         var temp = context.dataset.data[context.dataIndex];
                         if (temp < 0) {
-                            return "#007bff"; // Blue for very cold temperatures
+                            return "rgba(0, 123, 255, 0.7)"; // Blue for very cold temperatures
                         } else if (temp < 10) {
-                            return "#28a745"; // Green for cool temperatures
+                            return "rgba(40, 167, 69, 0.7)"; // Green for cool temperatures
                         } else if (temp < 20) {
-                            return "#ffc107"; // Yellow for warm temperatures
+                            return "rgba(255, 193, 7, 0.7)"; // Yellow for warm temperatures
                         } else {
-                            return "#dc3545"; // Red for hot temperatures
+                            return "rgba(220, 53, 69, 0.7)"; // Red for hot temperatures
                         }
+                        
                     }
                     },
                     ],
@@ -156,9 +157,15 @@ function Forecast({ city }) {
                         // Set caret Position (above, below,no-transform ).As I need above I don't delete that class
                         tooltipEl.classList.remove('below', 'no-transform');
     
-    
+                        
                         // Set HTML & Data
                         if (tooltipModel.body) {
+                            function hexToRgb(hex) {
+                                const r = parseInt(hex.substring(0, 2), 16);
+                                const g = parseInt(hex.substring(2, 4), 16);
+                                const b = parseInt(hex.substring(4, 6), 16);
+                                return `${r}, ${g}, ${b}`;
+                              }
                             const dataFromCurrentElement = tooltipModel.dataPoints[0];
                             const currentElement = dataFromCurrentElement.dataIndex;
                             const temp = dataFromCurrentElement.formattedValue
@@ -166,13 +173,13 @@ function Forecast({ city }) {
                             const humidityLine = `Humidity: ${context.chart.data.datasets[0].humidityData[currentElement]}%`;
                             const pressureLine = `Pressure: ${context.chart.data.datasets[0].pressureData[currentElement]} hPa`; 
                             const borderColor = tooltipModel.chart.tooltip.labelColors[0].backgroundColor
-                            console.log(tooltipModel.chart.tooltip.labelColors[0].backgroundColor)               
+                            console.log(tooltipModel.chart)               
                             const innerHtml = `
                             <div style="border-collapse: separate; overflow: hidden; border-radius: 10px; box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <div style="background-color: ${borderColor}; padding-top: 5px; padding-bottom: 6px; padding-left: 7px; color: #000; font-family: 'Poppins'; font-size: 14px; border-bottom: solid 1px #DDD">
-                                Wether Forecast
+                                <h3>Wether Forecast<h3>
                                 </div>
-                                <div style="display: flex; padding: 1.2rem; background-color: rgba(75, 192, 192, 0.5)">
+                                <div style="display: flex; padding: 1.2rem; background-color: rgba(75, 192, 192, 0.1)">
                                 <div class="tooltipText" style="display: flex; flex-direction: column; font-family: 'Poppins'; font-size: 14px; justify-content: flex-end;">
                                     <span style="font-weight: 600; color:black;">Time: ${time}</span>
                                     <span style="font-weight: 600;  color:black;">Temp: ${temp} °C</span>
