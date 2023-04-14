@@ -2,12 +2,9 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import logo from "./mlh-prep.png";
 import AutoComp from "./components/AutoComp";
-import Geolocation from "./components/Geolocation";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import { useLoadScript } from "@react-google-maps/api";
 import React from 'react';
-import './location.js'
-import getURL from "./location.js";
 
 function App() {
   const [error, setError] = useState(null);
@@ -21,27 +18,17 @@ function App() {
   });
 
   useEffect(() => {
-    if (city == "your location") {
-
-        var location = Geolocation();
-        setGeolocation(location)
-        var res = fetch(
-          "http://api.openweathermap.org/geo/1.0/reverse?lat="
-          + coords[0] + "&lon=" + coords[1] +
-          "&appid=" +
-            process.env.REACT_APP_APIKEY            
-        ) 
-        
-        var result = res.json()
-        console.log(result); 
-        setCity(result.name);
+    if (city == "Your location") {
+        navigator.geolocation.getCurrentPosition((position) => {
+          
+        });
     } else {
     fetch(
       "https://api.openweathermap.org/data/2.5/weather?q=" +
-        city +
-        "&units=metric" +
-        "&appid=" +
-        process.env.REACT_APP_APIKEY
+      city +
+      "&units=metric" +
+      "&appid=" +
+      process.env.REACT_APP_APIKEY
     ) 
       .then((res) => res.json())
       .then(

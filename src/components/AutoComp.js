@@ -42,7 +42,7 @@ export default function AutoComp(props) {
           {status === "OK" && (
               <ComboboxOption
                 className="optionBox"
-                value={"your location"}
+                value={"Your location"}
                 key={123}
               />
             )}
