@@ -21,16 +21,36 @@ input {
 
 .Results {
   background-color: white;
-  margin-left: 150px;
+  /* margin-left: 150px;
   margin-right: 150px;
-  margin-top: 20px;
+  margin-top: 20px; */
   border-radius: 8px;
   color: black;
   padding: 10px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  /* added code, makes it so it doesnt become too big and is centered on the page  */
+  max-width: 70%;
+  margin: 0px auto;
+  margin-top: 20px;
 }
 
 .optionBox{
   color: black;
   text-align: left;
+}
+
+/* added code, make sure it takes up the full width, seperates it from other
+elements */
+@media (max-width: 768px) {
+  .Results {
+    max-width: 70%;
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 576px) {
+  .Results {
+    max-width: 100%;
+    font-size: 0.7em;
+  }
 }

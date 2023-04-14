@@ -4,6 +4,8 @@ import logo from "./mlh-prep.png";
 import AutoComp from "./components/AutoComp";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import { useLoadScript } from "@react-google-maps/api";
+import { useMediaQuery } from "@material-ui/core";
+
 
 function App() {
   const [error, setError] = useState(null);
@@ -45,6 +47,8 @@ function App() {
     setCity(city);
   };
 
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
+
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
@@ -54,22 +58,23 @@ function App() {
         <div>
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
-          <div className="Results">
-            {!isVarLoaded && <h2>Loading...</h2>}
-            {console.log(results)}
-            {console.log(isLoaded)}
-            {isVarLoaded && results && (
-              <>
-                <h3>{results.weather[0].main}</h3>
-                <p>Feels like {results.main.feels_like}°C</p>
-                <i>
-                  <p>
-                    {results.name}, {results.sys.country}
-                  </p>
-                </i>
-              </>
-            )}
-          </div>
+          {/* added code */}
+            <div className={`Results${isSmallScreen ? " smallScreen" : ""}`}>
+                {!isVarLoaded && <h2>Loading...</h2>}
+                {console.log(results)}
+                {console.log(isLoaded)}
+                {isVarLoaded && results && (
+                  <>
+                    <h3>{results.weather[0].main}</h3>
+                    <p>Feels like {results.main.feels_like}°C</p>
+                    <i>
+                      <p>
+                        {results.name}, {results.sys.country}
+                      </p>
+                    </i>
+                  </>
+                )}
+              </div>
         </div>
       </>
     );
