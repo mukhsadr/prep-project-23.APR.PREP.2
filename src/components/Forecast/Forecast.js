@@ -22,11 +22,10 @@ function Forecast({ city }) {
         const parsedData = filteredData.map((item) => ({
             time: new Date(item.dt_txt).toLocaleString('en-US', { weekday: 'short', hour: 'numeric', hour12: true }),
             temp: Math.round(item.main.temp),
-            icon: item.weather[0].main,
+            icon: item.weather[0].icon,
             humidity: item.main.humidity,
             pressure: item.main.pressure,
         }));
-
         if (isToday) {
             const nowHour = now.getHours();
             const maxHours = 24 - nowHour;
@@ -43,6 +42,8 @@ function Forecast({ city }) {
             if (result.cod === '200') {
                 const parsedData = parseForecast(result);
                 setForecast(parsedData);
+                console.log("Raw", result)
+                console.log("Parsed", parsedData)
             }
             });
         }, [city, date])
@@ -54,12 +55,14 @@ function Forecast({ city }) {
         const data = forecast.map((forecastItem) => forecastItem.temp);
         const humidityData = forecast.map((forecastItem) => forecastItem.humidity);
         const pressureData = forecast.map((forecastItem) => forecastItem.pressure);
-            
+        const iconData = forecast.map((forecastItem) => forecastItem.icon);
+
         if (chart) {
             chart.data.labels = labels;
             chart.data.datasets[0].data = data;
             chart.data.datasets[0].humidityData = humidityData;
             chart.data.datasets[0].pressureData = pressureData;
+            chart.data.datasets[0].iconData = iconData;
             chart.update();
         } else {
             const ctx = document.getElementById("chart").getContext("2d");
@@ -71,6 +74,7 @@ function Forecast({ city }) {
                 {
                     pressureData,
                     humidityData,
+                    iconData,
                     data,
                     borderColor: "rgba(75, 192, 192, 0.5)",
                     backgroundColor: "rgba(75, 192, 192, 0.5)",
@@ -205,13 +209,14 @@ function Forecast({ city }) {
                             const currentElement = dataFromCurrentElement.dataIndex;
                             const temp = dataFromCurrentElement.formattedValue
                             const time = dataFromCurrentElement.label
+                            const icon = context.chart.data.datasets[0].iconData[currentElement]
                             const humidityLine = `Humidity: ${context.chart.data.datasets[0].humidityData[currentElement]}%`;
                             const pressureLine = `Pressure: ${context.chart.data.datasets[0].pressureData[currentElement]} hPa`; 
                             const borderColor = tooltipModel.chart.tooltip.labelColors[0].backgroundColor              
                             const innerHtml = `
                             <div style="border-collapse: separate; overflow: hidden; border-radius: 10px; box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <div style="background-color: ${borderColor}; padding-top: 5px; padding-bottom: 6px; padding-left: 7px; color: #000; font-family: 'Poppins'; font-size: 14px; border-bottom: solid 1px #DDD">
-                                <h3>Wether Forecast<h3>
+                                <img src=" https://openweathermap.org/img/wn/${icon}.png" alt="Weather Icon" style="width:50px;height:50px;margin-left:auto;">
                                 </div>
                                 <div style="display: flex; padding: 1.2rem; background-color: rgba(75, 192, 192, 0.5)">
                                 <div class="tooltipText" style="display: flex; flex-direction: column; font-family: 'Poppins'; font-size: 14px; justify-content: flex-end;">
