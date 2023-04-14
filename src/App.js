@@ -23,7 +23,7 @@ function App() {
           let coordY = position.coords.longitude
           console.log(coordX, coordY)
           fetch(
-            "http://api.openweathermap.org/geo/1.0/reverse?lat="
+            "https://api.openweathermap.org/geo/1.0/reverse?lat="
             + coordX + "&lon=" + coordY +
             "&appid=" +
             process.env.REACT_APP_APIKEY
