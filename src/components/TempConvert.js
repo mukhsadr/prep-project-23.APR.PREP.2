@@ -7,7 +7,7 @@ export default function TempConvert(props, currTemp) {
   const [unit, setUnit] = useState("C");
 
   const oppositeUnit = unit === "C" ? "F" : "C";
- 
+  //setTemp(currTemp);
   const convert = () => {
     if (unit === "C") {
       const newT = temp * 1.8 + 32;

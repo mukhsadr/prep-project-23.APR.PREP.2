@@ -35,6 +35,7 @@ function App() {
           } else {
             setIsVarLoaded(true);
             setResults(result);
+            setTemp(results.main.feels_like);
           }
         },
         (error) => {
@@ -64,7 +65,7 @@ function App() {
         <div>
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
-          <TempConvert tempHandler={tempHandler} currTemp={results.main.feels_like}></TempConvert>
+          <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert>
           <div className="Results">
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
