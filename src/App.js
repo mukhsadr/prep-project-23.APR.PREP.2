@@ -37,7 +37,7 @@ function App() {
             console.log("Error:")
             console.log(err)
         });
-    } else {
+    }
     fetch(
       "https://api.openweathermap.org/data/2.5/weather?q=" +
       city +
@@ -59,7 +59,7 @@ function App() {
           setIsVarLoaded(true);
           setError(error);
         }
-      )};
+      );
   }, [city]);
 
 
