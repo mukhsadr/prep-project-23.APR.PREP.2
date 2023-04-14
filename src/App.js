@@ -20,7 +20,25 @@ function App() {
   useEffect(() => {
     if (city == "Your location") {
         navigator.geolocation.getCurrentPosition((position) => {
-          
+          console.log("you are here", position)
+          setGeolocation({lat : position.coords.latitude, lon : position.coords.longitude})
+          let coordX = position.coords.latitude
+          let coordY = position.coords.longitude
+          console.log(coordX, coordY)
+          fetch(
+            "http://api.openweathermap.org/geo/1.0/reverse?lat="
+            + coordX + "&lon=" + coordY +
+            "&appid=" +
+            process.env.REACT_APP_APIKEY
+          ).then((res) =>
+          {return res.json()}).then((result)=> {
+            console.log(result);
+            console.log("city:", result[0].name)
+            setCity(result[0].name);
+          })
+        }, (err) => {
+            console.log("Error:")
+            console.log(err)
         });
     } else {
     fetch(
