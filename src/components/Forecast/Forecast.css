@@ -13,7 +13,6 @@ input[type="datetime-local"] {
 
 /* Style the calendar portion of the datetime-local input */
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-  background-color: rgb(255, 255, 255);
   background-image: url('./calendar.png');
   background-size: contain;
   background-repeat: no-repeat;
@@ -38,15 +37,6 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
   opacity: 0.9;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
-}
-
-@keyframes calendar-hover {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.2);
-  }
 }
 
 @media screen and (max-width: 600px) {
