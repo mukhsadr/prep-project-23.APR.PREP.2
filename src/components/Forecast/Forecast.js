@@ -155,7 +155,7 @@ function Forecast({ city }) {
                                 <div style="display: flex; padding: 1.2rem; background-color: rgba(75, 192, 192, 0.5)">
                                 <div style="display: flex; flex-direction: column; font-family: 'Poppins'; font-size: 14px; justify-content: flex-end;">
                                     <span style="font-weight: 600; color:black;">Time: ${time}</span>
-                                    <span style="font-weight: 600;  color:black;">Temp: ${temp} C</span>
+                                    <span style="font-weight: 600;  color:black;">Temp: ${temp} °C</span>
                                 </div>                          
                                 </div>
                             </div>
