@@ -156,7 +156,7 @@ function Forecast({ city }) {
                     ticks: {
                         // Include a dollar sign in the ticks
                         callback: function(value, index, ticks) {
-                            return value +" °C";
+                            return value.toFixed(1) + " °C";
                         },
                         color: function(context) {
                             const temp = context.tick.value
@@ -169,14 +169,22 @@ function Forecast({ city }) {
                             } else {
                                 return "rgba(220, 53, 69, 0.7)"; // Red for hot temperatures
                             }
-                        }
+                        }, 
+                        font: {
+                            size: 20,
+                            weight: "bold",
+                          },
                         }
                     },
                     x: {
                         grid: {borderColor: "rgba(75, 192, 192, 1)",borderWidth: 5,},
                         ticks: {
                         color: "blue",
-                        }}
+                        font: {
+                            size: 20,
+                            weight: "bold",
+                          },
+                        },}
                     },
     
                 plugins: {
