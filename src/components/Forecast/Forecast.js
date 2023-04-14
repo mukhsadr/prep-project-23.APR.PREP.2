@@ -19,7 +19,7 @@ function Forecast({ city }) {
         }
         
         const parsedData = filteredData.map((item) => ({
-            time: new Date(item.dt_txt).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }),
+            time: new Date(item.dt_txt).toLocaleString('en-US', { weekday: 'short', hour: 'numeric', hour12: true }),
             temp: Math.round(item.main.temp),
             icon: item.weather[0].main,
             humidity: item.main.humidity,
