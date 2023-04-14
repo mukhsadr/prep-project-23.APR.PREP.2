@@ -5,7 +5,7 @@ import "./Forecast.css";
 function Forecast({ city }) {
     const [chart, setChart] = useState(null);
     const [forecast, setForecast] = useState([]);
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(new Date());      
 
     useEffect(() => {
         const now = new Date();
@@ -56,10 +56,14 @@ function Forecast({ city }) {
 
         const labels = forecast.map((forecastItem) => forecastItem.time);
         const data = forecast.map((forecastItem) => forecastItem.temp);
+        const humidityData = forecast.map((forecastItem) => forecastItem.humidity);
+        const pressureData = forecast.map((forecastItem) => forecastItem.pressure);
             
         if (chart) {
             chart.data.labels = labels;
             chart.data.datasets[0].data = data;
+            chart.data.datasets[0].humidityData = humidityData;
+            chart.data.datasets[0].pressureData = pressureData;
             chart.update();
         } else {
             const ctx = document.getElementById("chart").getContext("2d");
@@ -69,33 +73,45 @@ function Forecast({ city }) {
                 labels,
                 datasets: [
                 {
+                    pressureData,
+                    humidityData,
                     data,
                     borderColor: "rgba(75, 192, 192, 0.5)",
                     backgroundColor: "rgba(75, 192, 192, 0.5)",
                     pointRadius: 20,
                     pointBorderColor: "rgba(100, 192, 192, 0.9)",
                     fill: false,
-                    borderDash: [20, 10],
-                },
-                ],
+                    borderWidth: 5,
+                    hoverBorderColor: "rgba(100, 192, 192, 0.9)",
+                    pointHoverBackgroundColor: "red",
+                    pointHoverRadius: 30,
+                    hoverBorderWidth: 30,
+                    fill: false,
+                    pointBackgroundColor: function(context) {
+                        var temp = context.dataset.data[context.dataIndex];
+                        if (temp < 0) {
+                            return "#007bff"; // Blue for very cold temperatures
+                        } else if (temp < 10) {
+                            return "#28a745"; // Green for cool temperatures
+                        } else if (temp < 20) {
+                            return "#ffc107"; // Yellow for warm temperatures
+                        } else {
+                            return "#dc3545"; // Red for hot temperatures
+                        }
+                    }
+                    },
+                    ],
             },
             options: {
-                elements: {
-                    line: {
-                      borderColor: (ctx) => {
-                        const temp = ctx.parsed.y; // Get the temperature value
-                        if (temp < 0) {
-                          return "#007bff"; // Blue for very cold temperatures
-                        } else if (temp < 10) {
-                          return "#28a745"; // Green for cool temperatures
-                        } else if (temp < 20) {
-                          return "#ffc107"; // Yellow for warm temperatures
-                        } else {
-                          return "#dc3545"; // Red for hot temperatures
-                        }
-                      },
-                      borderWidth: 2
-                    }},
+                animations: {
+                    tension: {
+                      duration: 1000,
+                      easing: 'linear',
+                      from: 1,
+                      to: 0,
+                      loop: true
+                    }
+                  },
                 responsive: true,
                 scales: {
                 y: {
@@ -147,15 +163,21 @@ function Forecast({ city }) {
                             const currentElement = dataFromCurrentElement.dataIndex;
                             const temp = dataFromCurrentElement.formattedValue
                             const time = dataFromCurrentElement.label
+                            const humidityLine = `Humidity: ${context.chart.data.datasets[0].humidityData[currentElement]}%`;
+                            const pressureLine = `Pressure: ${context.chart.data.datasets[0].pressureData[currentElement]} hPa`; 
+                            const borderColor = tooltipModel.chart.tooltip.labelColors[0].backgroundColor
+                            console.log(tooltipModel.chart.tooltip.labelColors[0].backgroundColor)               
                             const innerHtml = `
                             <div style="border-collapse: separate; overflow: hidden; border-radius: 10px; box-shadow: 0 6px 12px rgba(0,0,0,.175);">
-                                <div style="background-color: rgba(100, 192, 192, 0.9); padding-top: 5px; padding-bottom: 6px; padding-left: 7px; color: #000; font-family: 'Poppins'; font-size: 14px; border-bottom: solid 1px #DDD">
+                                <div style="background-color: ${borderColor}; padding-top: 5px; padding-bottom: 6px; padding-left: 7px; color: #000; font-family: 'Poppins'; font-size: 14px; border-bottom: solid 1px #DDD">
                                 Wether Forecast
                                 </div>
                                 <div style="display: flex; padding: 1.2rem; background-color: rgba(75, 192, 192, 0.5)">
-                                <div style="display: flex; flex-direction: column; font-family: 'Poppins'; font-size: 14px; justify-content: flex-end;">
+                                <div class="tooltipText" style="display: flex; flex-direction: column; font-family: 'Poppins'; font-size: 14px; justify-content: flex-end;">
                                     <span style="font-weight: 600; color:black;">Time: ${time}</span>
                                     <span style="font-weight: 600;  color:black;">Temp: ${temp} °C</span>
+                                    <span style="font-weight: 600;  color:black;">${humidityLine}</span>
+                                    <span style="font-weight: 600;  color:black;">${pressureLine}</span>
                                 </div>                          
                                 </div>
                             </div>
