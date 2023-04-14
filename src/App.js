@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import logo from "./mlh-prep.png";
 import AutoComp from "./components/AutoComp";
-import usePlacesAutocomplete from "use-places-autocomplete";
 import { useLoadScript } from "@react-google-maps/api";
 import React from 'react';
 
@@ -11,7 +10,6 @@ function App() {
   const [isVarLoaded, setIsVarLoaded] = useState(false);
   const [city, setCity] = useState("Your location");
   const [results, setResults] = useState(null);
-  const [coords, setGeolocation] = useState(null);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ["places"],
@@ -19,9 +17,8 @@ function App() {
 
   useEffect(() => {
     if (city == "Your location") {
-        navigator.geolocation.getCurrentPosition((position) => {
+      navigator.geolocation.getCurrentPosition((position) => {
           console.log("you are here", position)
-          setGeolocation({lat : position.coords.latitude, lon : position.coords.longitude})
           let coordX = position.coords.latitude
           let coordY = position.coords.longitude
           console.log(coordX, coordY)
