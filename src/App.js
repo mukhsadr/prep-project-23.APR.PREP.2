@@ -72,7 +72,9 @@ function App() {
               </>
             )}
           </div>
-          <Forecast city={city} />
+          {!isVarLoaded && <h2>Loading...</h2>}
+          {isVarLoaded && results && (
+          <Forecast city={city} />)}
         </div>
       </>
     );

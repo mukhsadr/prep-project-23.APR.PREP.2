@@ -212,7 +212,7 @@ function Forecast({ city }) {
                                 <div style="background-color: ${borderColor}; padding-top: 5px; padding-bottom: 6px; padding-left: 7px; color: #000; font-family: 'Poppins'; font-size: 14px; border-bottom: solid 1px #DDD">
                                 <h3>Wether Forecast<h3>
                                 </div>
-                                <div style="display: flex; padding: 1.2rem; background-color: rgba(75, 192, 192, 0.1)">
+                                <div style="display: flex; padding: 1.2rem; background-color: rgba(75, 192, 192, 0.5)">
                                 <div class="tooltipText" style="display: flex; flex-direction: column; font-family: 'Poppins'; font-size: 14px; justify-content: flex-end;">
                                     <span style="font-weight: 600; color:black;">Time: ${time}</span>
                                     <span style="font-weight: 600;  color:black;">Temp: ${temp} °C</span>
@@ -252,7 +252,7 @@ function Forecast({ city }) {
     return (
         <>
         <div className="Results">
-          <h4>Hourly Forecast for {city} - {date.toLocaleDateString()}</h4>
+          <h2>Hourly Forecast for {city} - {date.toLocaleDateString()}</h2>
           <input type="datetime-local" value={`${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}T${date.toTimeString().slice(0, 5)}`}
             min={new Date().toISOString().slice(0, 16)}
             max={new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().slice(0, 16)}
