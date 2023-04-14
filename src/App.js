@@ -5,11 +5,14 @@ import AutoComp from "./components/AutoComp";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import { useLoadScript } from "@react-google-maps/api";
 import './App.css';
+import TempConvert from "./components/TempConvert";
 
 function App() {
   const [error, setError] = useState(null);
   const [isVarLoaded, setIsVarLoaded] = useState(false);
   const [city, setCity] = useState("New York City");
+  const [temp, setTemp] = useState(null);
+  const [unit, setUnit] = useState("C");
   const [results, setResults] = useState(null);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
@@ -46,6 +49,12 @@ function App() {
     setCity(city);
   };
 
+  const tempHandler = (temp, unit) => {
+    console.log("Temp set to:", temp)
+    setTemp(temp);
+    setUnit(unit);
+  };
+
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
@@ -55,6 +64,7 @@ function App() {
         <div>
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
+          <TempConvert tempHandler={tempHandler} currTemp={results.main.feels_like}></TempConvert>
           <div className="Results">
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
@@ -62,7 +72,7 @@ function App() {
             {isVarLoaded && results && (
               <>
                 <h3>{results.weather[0].main}</h3>
-                <p>Feels like {results.main.feels_like}°C</p>
+                <p>Feels like {temp}°{unit}</p>
                 <i>
                   <p>
                     {results.name}, {results.sys.country}
