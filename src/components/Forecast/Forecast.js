@@ -28,7 +28,7 @@ function Forecast({ city }) {
 
         if (isToday) {
             const nowHour = now.getHours();
-            const maxHours = 16 - nowHour;
+            const maxHours = 24 - nowHour;
             parsedData.splice(maxHours);
         }
         return parsedData;
@@ -42,18 +42,13 @@ function Forecast({ city }) {
             if (result.cod === '200') {
                 const parsedData = parseForecast(result);
                 setForecast(parsedData);
-                console.log("Raw", result)
-                console.log("Formatted", parsedData)
             }
             });
-    
-    
         }, [city, date])
     
     useEffect(() => {
 
         if (forecast.length > 0) {
-
         const labels = forecast.map((forecastItem) => forecastItem.time);
         const data = forecast.map((forecastItem) => forecastItem.temp);
         const humidityData = forecast.map((forecastItem) => forecastItem.humidity);
@@ -154,7 +149,6 @@ function Forecast({ city }) {
                 y: {
                     grid: {borderColor: "rgba(75, 192, 192, 1)",borderWidth: 5,},
                     ticks: {
-                        // Include a dollar sign in the ticks
                         callback: function(value, index, ticks) {
                             return value.toFixed(1) + " °C";
                         },
@@ -192,44 +186,27 @@ function Forecast({ city }) {
                     enabled: false,
     
                     external: (context) => {
-                        // Tooltip Element
                         let tooltipEl = document.getElementById('chartjs-tooltip');
-    
-                        // Create element on first render
                         if (!tooltipEl) {
                             tooltipEl = document.createElement('div');
                             tooltipEl.id = 'chartjs-tooltip';
                             tooltipEl.innerHTML = '<table></table>';
                             document.body.appendChild(tooltipEl);
                         }
-    
-                        // Hide if no tooltip
                         const tooltipModel = context.tooltip;
                         if (tooltipModel.opacity === 0) {
                             tooltipEl.style.opacity = '0';
                             return;
                         }
-    
-                        // Set caret Position (above, below,no-transform ).As I need above I don't delete that class
                         tooltipEl.classList.remove('below', 'no-transform');
-    
-                        
-                        // Set HTML & Data
                         if (tooltipModel.body) {
-                            function hexToRgb(hex) {
-                                const r = parseInt(hex.substring(0, 2), 16);
-                                const g = parseInt(hex.substring(2, 4), 16);
-                                const b = parseInt(hex.substring(4, 6), 16);
-                                return `${r}, ${g}, ${b}`;
-                              }
                             const dataFromCurrentElement = tooltipModel.dataPoints[0];
                             const currentElement = dataFromCurrentElement.dataIndex;
                             const temp = dataFromCurrentElement.formattedValue
                             const time = dataFromCurrentElement.label
                             const humidityLine = `Humidity: ${context.chart.data.datasets[0].humidityData[currentElement]}%`;
                             const pressureLine = `Pressure: ${context.chart.data.datasets[0].pressureData[currentElement]} hPa`; 
-                            const borderColor = tooltipModel.chart.tooltip.labelColors[0].backgroundColor
-                            console.log(tooltipModel.chart)               
+                            const borderColor = tooltipModel.chart.tooltip.labelColors[0].backgroundColor              
                             const innerHtml = `
                             <div style="border-collapse: separate; overflow: hidden; border-radius: 10px; box-shadow: 0 6px 12px rgba(0,0,0,.175);">
                                 <div style="background-color: ${borderColor}; padding-top: 5px; padding-bottom: 6px; padding-left: 7px; color: #000; font-family: 'Poppins'; font-size: 14px; border-bottom: solid 1px #DDD">
@@ -250,8 +227,6 @@ function Forecast({ city }) {
                         }
     
                         const position = context.chart.canvas.getBoundingClientRect();
-    
-                        // Display, position, and set styles for font
                         tooltipEl.style.opacity = '1';
                         tooltipEl.style.position = 'absolute';
                         tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
