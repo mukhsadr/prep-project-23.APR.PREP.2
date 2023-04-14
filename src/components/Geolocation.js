@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const GeolocationButton = () => {
+export default function Geolocation() {
   const [geolocationData, setGeolocationData] = useState(null);
-
+   
   // Function to fetch geolocation data
   const fetchGeolocationData = async () => {
     try {
@@ -16,18 +16,8 @@ const GeolocationButton = () => {
       console.error("Error fetching geolocation data:", error);
     }
   };
+  fetchGeolocationData();
 
-  return (
-    <div>
-      <button onClick={fetchGeolocationData}>Fetch Geolocation</button>
-      {geolocationData && (
-        <div>
-          <p>Latitude: {geolocationData.latitude}</p>
-          <p>Longitude: {geolocationData.longitude}</p>
-        </div>
-      )}
-    </div>
-  );
+
+  return ( [geolocationData.latitude, geolocationData.longitude] );
 };
-
-export default GeolocationButton;

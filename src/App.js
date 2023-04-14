@@ -2,30 +2,47 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import logo from "./mlh-prep.png";
 import AutoComp from "./components/AutoComp";
-import GeolocationButton from "./components/GeolocationButton";
+import Geolocation from "./components/Geolocation";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import { useLoadScript } from "@react-google-maps/api";
 import React from 'react';
+import './location.js'
+import getURL from "./location.js";
 
 function App() {
   const [error, setError] = useState(null);
   const [isVarLoaded, setIsVarLoaded] = useState(false);
   const [city, setCity] = useState("New York City");
   const [results, setResults] = useState(null);
-  const [geolocationData, setGeolocationData] = useState(null);
+  const [coords, setGeolocation] = useState(null);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ["places"],
   });
 
   useEffect(() => {
+    if (city == "your location") {
+
+        var location = Geolocation();
+        setGeolocation(location)
+        var res = fetch(
+          "http://api.openweathermap.org/geo/1.0/reverse?lat="
+          + coords[0] + "&lon=" + coords[1] +
+          "&appid=" +
+            process.env.REACT_APP_APIKEY            
+        ) 
+        
+        var result = res.json()
+        console.log(result); 
+        setCity(result.name);
+    } else {
     fetch(
       "https://api.openweathermap.org/data/2.5/weather?q=" +
         city +
         "&units=metric" +
         "&appid=" +
         process.env.REACT_APP_APIKEY
-    )
+    ) 
       .then((res) => res.json())
       .then(
         (result) => {
@@ -40,8 +57,10 @@ function App() {
           setIsVarLoaded(true);
           setError(error);
         }
-      );
+      )};
   }, [city]);
+
+
   const cityHandler = (city) => {
     console.log("City set to:", city);
     setCity(city);

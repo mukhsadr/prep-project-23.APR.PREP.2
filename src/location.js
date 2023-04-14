@@ -1,35 +1,6 @@
 import "./App.css";
-/*
-document.addEventListener("DOMContentLoaded", event => {
-  let $ = document.querySelector.bind(document);
-
-  $("#currPos").addEventListener("click", getLocation);
   
-  function getLocation() {
-    let geolocation = navigator.geolocation;
-    if (geolocation) {
-      geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-    }
-  }
-  
-  function onGeoSuccess(position) {
-    var lat = position.coords.latitude;
-    var long = position.coords.longitude;
-    /*
-    fetch(
-      "https://api.openweathermap.org/data/3.0/onecall?lat="
-      + lat + "&lon=" + long +
-      "&appid=" +
-        process.env.REACT_APP_APIKEY            
-    ) 
-    .then(response => response.json())
-    
-    return [lat, long]
-  }
-  
-  function onGeoError(error) {
+  function errorCallback (error) {
     let detailError;
     
     if(error.code === error.PERMISSION_DENIED) {
@@ -44,27 +15,26 @@ document.addEventListener("DOMContentLoaded", event => {
     else if(error.code === error.UNKNOWN_ERROR) {
       detailError = "An unknown error occurred."
     }
-    
-    $("#error").innerHTML = `Error: ${detailError}`;
+    console.log(error, detailError);
   }
-});
 
-const successCallback = (position) => {
+  const successCallback = (position) => {
     console.log(position);
   };
-  
-  const errorCallback = (error) => {
-    console.log(error);
-  };
-  
+
   navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 
-  export default function getCoords() {
-  var coords = navigator.geolocation.getCurrentPosition(function(position){
+  
+  export default function getURL() {
+    navigator.geolocation.getCurrentPosition(function(position){
     var lat = position.coords.latitude;
     var long = position.coords.longitude;
-    return [lat, long]
-  })
-    return coords
+    generateURL(lat, long);
+    })
+
 }
-*/
+
+function generateURL(lat, long) {
+  var URL = 'http://example.com/?lat=' + lat + '&long=' + long;
+  console.log(URL)
+}
