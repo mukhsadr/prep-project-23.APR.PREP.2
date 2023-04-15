@@ -2,9 +2,11 @@ import React from "react";
 import { useState } from "react";
 import {FormControlLabel, Switch} from "@mui/material";
 
+
 export default function TempConvert(props) {
   const [unit, setUnit] = useState("C");
   const [label, setLabel] = useState("Convert to °F")
+
 
   const convert = () => {
     console.log(props.currTemp)
