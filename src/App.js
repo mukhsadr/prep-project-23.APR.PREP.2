@@ -44,9 +44,16 @@ function App() {
         }
       ).then(()=> {
         setTemp(results.main.feels_like)
-      console.log(temp)
+        setUnit("C")
+        console.log(temp)
     });
   }, [city]);
+
+  useEffect(()=> {
+    results ? setTemp(results.main.feels_like) : setTemp(null)
+  }, [results])
+
+
 
 
   const cityHandler = (city) => {
@@ -69,7 +76,7 @@ function App() {
         <div>
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
-          {temp? <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert> : null}
+          {temp ? <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert> : null}
           <div className="Results">
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
@@ -77,7 +84,7 @@ function App() {
             {isVarLoaded && results && (
               <>
                 <h3>{results.weather[0].main}</h3>
-                {temp ? <p>Feels like {temp}°{unit}</p> : null}
+                {temp ? <p>Feels like {temp.toFixed(2)}°{unit}</p> : null}
                 <i>
                   <p>
                     {results.name}, {results.sys.country}
