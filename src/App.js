@@ -35,15 +35,19 @@ function App() {
           } else {
             setIsVarLoaded(true);
             setResults(result);
-            setTemp(results.main.feels_like);
+            console.log("Result:",result)
           }
         },
         (error) => {
           setIsVarLoaded(true);
           setError(error);
         }
-      );
+      ).then(()=> {
+        setTemp(results.main.feels_like)
+      console.log(temp)
+    });
   }, [city]);
+
 
   const cityHandler = (city) => {
     console.log("City set to:", city);
@@ -65,7 +69,7 @@ function App() {
         <div>
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
-          <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert>
+          {temp? <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert> : null}
           <div className="Results">
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
@@ -73,7 +77,7 @@ function App() {
             {isVarLoaded && results && (
               <>
                 <h3>{results.weather[0].main}</h3>
-                <p>Feels like {temp}°{unit}</p>
+                {temp ? <p>Feels like {temp}°{unit}</p> : null}
                 <i>
                   <p>
                     {results.name}, {results.sys.country}
