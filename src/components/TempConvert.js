@@ -11,7 +11,7 @@ export default function TempConvert(props) {
   const convert = () => {
     console.log(props.currTemp)
     let newT = 0
-    let newUnit = "c"
+    let newUnit = "C"
     if (unit === "C") {
       newT = props.currTemp * 1.8 + 32;
       newUnit = "F"
