@@ -101,7 +101,7 @@ function App() {
         <img className="logo" src={logo} alt="MLH Prep Logo"></img>
         <div>
           <h2>Enter a city below 👇</h2>
-          {isLoaded && <AutoComp cityHandler={cityHandler}></AutoComp>}
+          {isLoaded && <AutoComp cityHandler={cityHandler} city={city}></AutoComp>}
           {temp ? <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert> : null}
           <div className="Results">
             {!isVarLoaded && <h2>Loading...</h2>}
