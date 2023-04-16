@@ -113,7 +113,7 @@ function Forecast({ city }) {
                     humidityData,
                     iconData,
                     data,
-                    borderColor: "rgba(75, 192, 192, 0.5)",
+                    borderColor: "rgba(75, 192, 192, 1)",
                     backgroundColor: "rgba(75, 192, 192, 0.5)",
                     pointRadius: 20,
                     pointBorderColor: function(context) {
