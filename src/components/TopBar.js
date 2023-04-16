@@ -1,19 +1,17 @@
 import React from "react";
 import { useState } from "react";
-import {
-  Avatar,
-  FormControlLabel,
-  Grid,
-  Switch,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { useWeatherContext } from "../store/WeatherContext";
 import AutoComp from "./AutoComp";
 import TempConvert from "./TempConvert";
+import PauseIcon from "@mui/icons-material/Pause";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import SkipNextIcon from "@mui/icons-material/SkipNext";
 
-export default function TopBar(props) {
+export default function TopBar() {
   const { isLoaded, cityHandler, city, temp, tempHandler } =
     useWeatherContext();
+  const [musicPlaying, setMusicPlaying] = useState(false);
 
   return (
     <Grid
@@ -64,10 +62,23 @@ export default function TopBar(props) {
           <Grid
             item
             xs={2}
-            padding={"15px"}
+            padding={"20px"}
             sx={{ display: { xs: "none", sm: "none", md: "block" } }}
           >
-            <Avatar></Avatar>
+            {musicPlaying ? (
+              <Button>
+                <PauseIcon sx={{ color: "rgb(191,178,232)" }}></PauseIcon>
+              </Button>
+            ) : (
+              <Button>
+                <PlayArrowIcon
+                  sx={{ color: "rgb(191,178,232)" }}
+                ></PlayArrowIcon>
+              </Button>
+            )}
+            <Button>
+              <SkipNextIcon sx={{ color: "rgb(191,178,232)" }}></SkipNextIcon>
+            </Button>
           </Grid>
         </Grid>
       </Grid>
