@@ -6,6 +6,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@googlemaps/js-api-loader": "^1.15.1",
+    "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.125",
     "@mui/material": "^5.11.16",
     "@reach/combobox": "^0.18.0",
