@@ -1,24 +1,11 @@
 import React from "react";
-import logo from "./../mlh-prep.png";
-import AutoComp from "./AutoComp";
 import { useWeatherContext } from "../store/WeatherContext";
-import { Grid, Typography } from "@mui/material";
-import TempConvert from "./TempConvert";
+import { Grid } from "@mui/material";
 import TopBar from "./TopBar";
 
 function SecondaryScreen() {
-  const {
-    city,
-    temp,
-    unit,
-    isLoaded,
-    results,
-    error,
-    isVarLoaded,
-    cityHandler,
-    tempHandler,
-    changeScreen,
-  } = useWeatherContext();
+  const { temp, unit, isLoaded, results, error, isVarLoaded, changeScreen } =
+    useWeatherContext();
 
   if (error) {
     return <div>Error: {error.message}</div>;

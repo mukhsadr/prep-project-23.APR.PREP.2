@@ -27,8 +27,18 @@ function InitialScreen() {
     return (
       <Grid container direction={"column"}>
         <TopBar></TopBar>
-        <Grid xs={10} maxWidth={"100%"} minWidth={"100%"}>
-          <div className="Results" onClick={changeScreen}>
+        <Grid
+          xs={10}
+          maxWidth={"100%"}
+          minWidth={"100%"}
+          paddingTop={"50px"}
+          align={"center"}
+        >
+          <div
+            className="Results"
+            onClick={changeScreen}
+            style={{ maxWidth: "50%" }}
+          >
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
             {console.log(isLoaded)}

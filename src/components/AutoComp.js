@@ -31,11 +31,7 @@ export default function AutoComp(props) {
 
   return (
     <>
-      <Combobox
-        onSelect={handleSelect}
-        className="locationBox"
-        style={{ color: "pink" }}
-      >
+      <Combobox onSelect={handleSelect} className="locationBox">
         <ComboboxInput
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -44,11 +40,11 @@ export default function AutoComp(props) {
             minWidth: "150px",
             width: "100%",
             border: "none !important",
-            borderRadius: "20PX",
+            borderRadius: "20px",
             outline: "none !important",
           }}
         />
-        <ComboboxPopover>
+        <ComboboxPopover style={{ border: "none" }}>
           <ComboboxList>
             {status === "OK" && (
               <ComboboxOption
