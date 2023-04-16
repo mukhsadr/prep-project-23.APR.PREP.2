@@ -108,7 +108,7 @@ export default function MusicPlayer() {
 
           play({
             playerInstance: player,
-            spotify_uri: "spotify:track:7xGfFoTpQ2E7fRF5lN10tr",
+            spotify_uri: "spotify:track:3sg1RZE32Qwy8j1T1POnBx",
           });
         });
 
