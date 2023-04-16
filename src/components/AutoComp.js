@@ -8,6 +8,7 @@ import {
 import usePlacesAutocomplete from "use-places-autocomplete";
 import "@reach/combobox/styles.css";
 import { useEffect } from "react";
+import React from 'react';
 
 export default function AutoComp(props) {
   const {
@@ -19,7 +20,7 @@ export default function AutoComp(props) {
   } = usePlacesAutocomplete();
 
   useEffect(() => {
-    setValue("New York, NY, USA", false);
+    setValue("Your location", false);
   }, []);
 
   const handleSelect = async (address) => {
@@ -38,6 +39,13 @@ export default function AutoComp(props) {
         />
         <ComboboxPopover>
           <ComboboxList>
+          {status === "OK" && (
+              <ComboboxOption
+                className="optionBox"
+                value={"Your location"}
+                key={123}
+              />
+            )}
             {status === "OK" &&
               data.map(({ place_id, description }) => (
                 <ComboboxOption
