@@ -8,18 +8,8 @@ import TopBar from "./TopBar";
 import { Grid } from "@mui/material";
 
 function InitialScreen() {
-  const {
-    city,
-    temp,
-    unit,
-    isLoaded,
-    results,
-    error,
-    isVarLoaded,
-    cityHandler,
-    tempHandler,
-    changeScreen,
-  } = useWeatherContext();
+  const { temp, unit, isLoaded, results, error, isVarLoaded, changeScreen } =
+    useWeatherContext();
 
   if (error) {
     return <div>Error: {error.message}</div>;

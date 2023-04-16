@@ -4,7 +4,7 @@ import { Button, Grid, Typography } from "@mui/material";
 import { useWeatherContext } from "../store/WeatherContext";
 import AutoComp from "./AutoComp";
 import TempConvert from "./TempConvert";
-import Spotify from "./Spotify";
+import MusicPlayer from "./MusicPlayer";
 
 export default function TopBar() {
   const { isLoaded, cityHandler, city, temp, tempHandler } =
@@ -56,7 +56,7 @@ export default function TopBar() {
               <AutoComp cityHandler={cityHandler} city={city}></AutoComp>
             )}
           </Grid>
-          <Spotify></Spotify>
+          <MusicPlayer></MusicPlayer>
         </Grid>
       </Grid>
     </Grid>

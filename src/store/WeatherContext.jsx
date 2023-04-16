@@ -27,7 +27,6 @@ const WeatherStore = ({ children }) => {
   });
 
   const cityHandler = (city) => {
-    console.log("City set to:", city);
     if (city === "Your location") {
       setCity(yourLocation);
     } else {
@@ -36,24 +35,20 @@ const WeatherStore = ({ children }) => {
   };
 
   const tempHandler = (temp, unit) => {
-    console.log("Temp set to:", temp);
     setTemp(temp);
     setUnit(unit);
   };
 
   const changeScreen = () => {
     setScreen((prev) => !prev);
-    console.log("First", screen);
   };
 
   useEffect(() => {
     if (city === "Your location") {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          console.log("you are here", position);
           let coordX = position.coords.latitude;
           let coordY = position.coords.longitude;
-          console.log(coordX, coordY);
           fetch(
             "https://api.openweathermap.org/geo/1.0/reverse?lat=" +
               coordX +
@@ -94,7 +89,6 @@ const WeatherStore = ({ children }) => {
           } else {
             setIsVarLoaded(true);
             setResults(result);
-            console.log("Result:", result);
           }
         },
         (error) => {
@@ -106,7 +100,6 @@ const WeatherStore = ({ children }) => {
 
   useEffect(() => {
     if (results !== null) {
-      console.log("setting result:", unit);
       if (unit === "F") {
         let newT = results.main.feels_like * 1.8 + 32;
         setTemp(newT);
