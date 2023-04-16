@@ -1,5 +1,16 @@
+.forecast-card{background-color: white;
+  margin-left: 150px;
+  margin-right: 150px;
+  margin-top: 20px;
+  border-radius: 8px;
+  color: black;
+  padding: 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
 .chart-container {
-  margin: 10px;
+ margin: 10px;
+  height: 60vh;
 }
 
 .tooltipText{
@@ -50,8 +61,56 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
   transition: transform 0.3s ease-in-out;
 }
 
-@media screen and (max-width: 600px) {
+
+
+@media screen and (max-width: 320px) {
   input[type="datetime-local"] {
-    width: 100%;
+    width: 80%;
   }
+  .forecast-card{background-color: white;
+    margin-left: 1vh;
+    width: 110vh;
+    margin-right: 1vh;
+    margin-top: 2px;
+    padding: 1px;
+  }
+  .chart-container {
+     height: 55vh;
+     width: 100vh;
+   }
+}
+
+@media screen and (max-width: 768px) {
+  input[type="datetime-local"] {
+    width: 80%;
+  }
+  .forecast-card{background-color: white;
+    margin-left: 1vh;
+    width: 120vh;
+    margin-right: 1vh;
+    margin-top: 2px;
+    padding: 1px;
+  }
+  .chart-container {
+     height: 55vh;
+     width: 120vh;
+   }
+}
+
+
+@media screen and (max-width: 1024px) {
+  input[type="datetime-local"] {
+    width: 80%;
+  }
+  .forecast-card{background-color: white;
+    margin-left: 1vh;
+    width: 126.3vh;
+    margin-right: 1vh;
+    margin-top: 2px;
+    padding: 1px;
+  }
+  .chart-container {
+     height: 55vh;
+     width: 120vh;
+   }
 }
