@@ -8,7 +8,7 @@ import {
 import usePlacesAutocomplete from "use-places-autocomplete";
 import "@reach/combobox/styles.css";
 import { useEffect } from "react";
-import React from 'react';
+import React from "react";
 
 export default function AutoComp(props) {
   const {
@@ -31,15 +31,25 @@ export default function AutoComp(props) {
 
   return (
     <>
-      <Combobox onSelect={handleSelect} className="locationBox">
+      <Combobox
+        onSelect={handleSelect}
+        className="locationBox"
+        style={{ color: "pink" }}
+      >
         <ComboboxInput
           value={value}
           onChange={(e) => setValue(e.target.value)}
           disabled={!ready}
+          style={{
+            minWidth: "150px",
+            width: "100%",
+            border: "none",
+            borderRadius: "20PX",
+          }}
         />
         <ComboboxPopover>
           <ComboboxList>
-          {status === "OK" && (
+            {status === "OK" && (
               <ComboboxOption
                 className="optionBox"
                 value={"Your location"}

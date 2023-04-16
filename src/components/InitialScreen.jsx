@@ -4,6 +4,8 @@ import AutoComp from "./AutoComp";
 import React from "react";
 import TempConvert from "./TempConvert";
 import { useWeatherContext } from "../store/WeatherContext";
+import TopBar from "./TopBar";
+import { Grid } from "@mui/material";
 
 function InitialScreen() {
   const {
@@ -23,19 +25,9 @@ function InitialScreen() {
     return <div>Error: {error.message}</div>;
   } else {
     return (
-      <>
-        <img className="logo" src={logo} alt="MLH Prep Logo"></img>
-        <div>
-          <h2>Enter a city below 👇</h2>
-          {isLoaded && (
-            <AutoComp cityHandler={cityHandler} city={city}></AutoComp>
-          )}
-          {temp ? (
-            <TempConvert
-              tempHandler={tempHandler}
-              currTemp={temp}
-            ></TempConvert>
-          ) : null}
+      <Grid container direction={"column"}>
+        <TopBar></TopBar>
+        <Grid xs={10} maxWidth={"100%"} minWidth={"100%"}>
           <div className="Results" onClick={changeScreen}>
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
@@ -56,8 +48,8 @@ function InitialScreen() {
               </>
             )}
           </div>
-        </div>
-      </>
+        </Grid>
+      </Grid>
     );
   }
 }

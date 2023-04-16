@@ -2,8 +2,9 @@ import React from "react";
 import logo from "./../mlh-prep.png";
 import AutoComp from "./AutoComp";
 import { useWeatherContext } from "../store/WeatherContext";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import TempConvert from "./TempConvert";
+import TopBar from "./TopBar";
 
 function SecondaryScreen() {
   const {
@@ -33,19 +34,7 @@ function SecondaryScreen() {
           overflowY: "scroll",
         }}
       >
-        <Grid
-          xs={1}
-          sx={{
-            border: "solid",
-            borderColor: "white",
-            minWidth: "100%",
-            maxWidth: "100%",
-            alignContent: "flex-start",
-          }}
-        >
-          <img className="logo" src={logo} alt="MLH Prep Logo"></img>
-          Header
-        </Grid>
+        <TopBar></TopBar>
         <Grid
           xs={7}
           sx={{
@@ -66,17 +55,7 @@ function SecondaryScreen() {
                 height: "100%",
               }}
             >
-              <h2>Secondary Screen👇</h2>
               <div>
-                {isLoaded && (
-                  <AutoComp cityHandler={cityHandler} city={city}></AutoComp>
-                )}
-                {temp ? (
-                  <TempConvert
-                    tempHandler={tempHandler}
-                    currTemp={temp}
-                  ></TempConvert>
-                ) : null}
                 <div className="Results" onClick={changeScreen}>
                   {!isVarLoaded && <h2>Loading...</h2>}
                   {console.log(results)}

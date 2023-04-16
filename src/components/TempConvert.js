@@ -1,11 +1,70 @@
 import React from "react";
 import { useState } from "react";
-import { FormControlLabel, Switch } from "@mui/material";
+import {
+  createTheme,
+  FormControlLabel,
+  Switch,
+  ThemeProvider,
+} from "@mui/material";
 import { useWeatherContext } from "../store/WeatherContext";
 
 export default function TempConvert(props) {
   const { unit, setUnit } = useWeatherContext();
   const [label, setLabel] = useState("Convert to °F");
+
+  const toggleTheme = createTheme({
+    components: {
+      MuiSwitch: {
+        styleOverrides: {
+          root: {
+            width: "38px",
+            height: "16px",
+            padding: "0px",
+            marginLeft: "10px",
+          },
+          switchBase: {
+            color: "lightgray",
+            padding: "1px",
+            "&$checked": {
+              "& + $track": {
+                backgroundColor: "#23bf58",
+              },
+            },
+          },
+          thumb: {
+            color: "white",
+            width: "16px",
+            height: "16px",
+            marginTop: "-1px",
+            marginLeft: "1px",
+          },
+          track: {
+            borderRadius: "20px",
+            backgroundColor: "#ee0979",
+            opacity: "1 !important",
+            "&:after, &:before": {
+              color: "white",
+              fontSize: "10px",
+              position: "absolute",
+              top: "2px",
+            },
+            "&:after": {
+              content: "'°F'",
+              left: "5px",
+            },
+            "&:before": {
+              content: "'°C'",
+              right: "5px",
+            },
+          },
+          checked: {
+            color: "#23bf58 !important",
+            transform: "translateX(26px) !important",
+          },
+        },
+      },
+    },
+  });
 
   const convert = () => {
     console.log(props.currTemp);
@@ -26,9 +85,10 @@ export default function TempConvert(props) {
   };
 
   return (
-    <FormControlLabel
-      control={<Switch onClick={convert} defaultChecked color="warning" />}
-      label={label}
-    />
+    <ThemeProvider theme={toggleTheme}>
+      <FormControlLabel
+        control={<Switch onClick={convert} defaultChecked color="warning" />}
+      />
+    </ThemeProvider>
   );
 }
