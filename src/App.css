@@ -23,7 +23,8 @@ input {
   padding: 10px;
   border-radius: 4px;
   border: 10px;
-  width: 200px
+  width: 200px;
+  background-color: white;
 }
 
 .Results {
