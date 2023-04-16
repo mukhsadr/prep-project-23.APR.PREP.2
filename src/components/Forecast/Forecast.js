@@ -42,8 +42,6 @@ function Forecast({ city }) {
             if (result.cod === '200') {
                 const parsedData = parseForecast(result);
                 setForecast(parsedData);
-                console.log("Raw", result)
-                console.log("Parsed", parsedData)
             }
             });
         }, [city, date])
@@ -56,12 +54,24 @@ function Forecast({ city }) {
         const humidityData = forecast.map((forecastItem) => forecastItem.humidity);
         const pressureData = forecast.map((forecastItem) => forecastItem.pressure);
         const iconData = forecast.map((forecastItem) => forecastItem.icon);
-         const weatherType = forecast.map((forecastItem) => forecastItem.weatherType);
-        const canvas = document.getElementById("chart");
-     
-        console.log("Found", canvas.getContext("2d"), "Style", canvas.style)
+        const weatherType = forecast.map((forecastItem) => forecastItem.weatherType);
         
-        const weatherCondition = weatherType[0]; // replace with the weather condition from your OpenWeatherMap response
+        const canvas = document.getElementById("chart");
+        const typeCounts = {};
+        weatherType.forEach(type => {
+        typeCounts[type] = (typeCounts[type] || 0) + 1;
+        });
+
+        let mostFrequentType = null;
+        let mostFrequentCount = 0;
+        for (const type in typeCounts) {
+        if (typeCounts[type] > mostFrequentCount) {
+            mostFrequentType = type;
+            mostFrequentCount = typeCounts[type];
+        }
+        }
+        const weatherCondition = mostFrequentType;
+        console.log("Type", weatherType)
         let backgroundImageUrl;
 
         switch (weatherCondition) {
