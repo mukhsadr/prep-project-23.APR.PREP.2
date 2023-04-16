@@ -1,6 +1,7 @@
-.forecast-card{background-color: white;
-  margin-left: 150px;
-  margin-right: 150px;
+.forecast-card{
+  background-color: white;
+  margin-left: 10%;
+  margin-right: 10%;
   margin-top: 20px;
   border-radius: 8px;
   color: black;
@@ -62,55 +63,3 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
 }
 
 
-
-@media screen and (max-width: 320px) {
-  input[type="datetime-local"] {
-    width: 80%;
-  }
-  .forecast-card{background-color: white;
-    margin-left: 1vh;
-    width: 110vh;
-    margin-right: 1vh;
-    margin-top: 2px;
-    padding: 1px;
-  }
-  .chart-container {
-     height: 55vh;
-     width: 100vh;
-   }
-}
-
-@media screen and (max-width: 768px) {
-  input[type="datetime-local"] {
-    width: 80%;
-  }
-  .forecast-card{background-color: white;
-    margin-left: 1vh;
-    width: 120vh;
-    margin-right: 1vh;
-    margin-top: 2px;
-    padding: 1px;
-  }
-  .chart-container {
-     height: 55vh;
-     width: 120vh;
-   }
-}
-
-
-@media screen and (max-width: 1024px) {
-  input[type="datetime-local"] {
-    width: 80%;
-  }
-  .forecast-card{background-color: white;
-    margin-left: 1vh;
-    width: 126.3vh;
-    margin-right: 1vh;
-    margin-top: 2px;
-    padding: 1px;
-  }
-  .chart-container {
-     height: 55vh;
-     width: 120vh;
-   }
-}
