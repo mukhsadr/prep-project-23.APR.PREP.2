@@ -11,7 +11,6 @@ function Forecast({ city }) {
     useEffect(() => {
         const now = new Date();
         const isToday = date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth() && date.getDate() === now.getDate();
-        
         const parseForecast = (data) => {
         let filteredData = data.list;
         if (!isToday) {
@@ -25,6 +24,7 @@ function Forecast({ city }) {
             icon: item.weather[0].icon,
             humidity: item.main.humidity,
             pressure: item.main.pressure,
+            weatherType: item.weather[0].main,
         }));
         if (isToday) {
             const nowHour = now.getHours();
@@ -56,6 +56,43 @@ function Forecast({ city }) {
         const humidityData = forecast.map((forecastItem) => forecastItem.humidity);
         const pressureData = forecast.map((forecastItem) => forecastItem.pressure);
         const iconData = forecast.map((forecastItem) => forecastItem.icon);
+         const weatherType = forecast.map((forecastItem) => forecastItem.weatherType);
+        const canvas = document.getElementById("chart");
+     
+        console.log("Found", canvas.getContext("2d"), "Style", canvas.style)
+        
+        const weatherCondition = weatherType[0]; // replace with the weather condition from your OpenWeatherMap response
+        let backgroundImageUrl;
+
+        switch (weatherCondition) {
+        case "Thunderstorm":
+            backgroundImageUrl = "https://media.giphy.com/media/l0MYOJCCE8yTfcwSY/giphy.gif";
+            break;
+        case "Drizzle":
+        case "Rain":
+            backgroundImageUrl = "https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif";
+            break;
+        case "Snow":
+            backgroundImageUrl = "https://media.giphy.com/media/OWxrxRHY6afRu/giphy.gif";
+            break;
+        case "Clear":
+            backgroundImageUrl = "https://media.giphy.com/media/1LAArSrLLApVu/giphy.gif";
+            break;
+        case "Clouds":
+            backgroundImageUrl = "https://media.giphy.com/media/PIh4laWJlz9bq/giphy.gif";
+            break;
+        default:
+            backgroundImageUrl = "https://media.giphy.com/media/mno6BJfy8USic/giphy.gif";
+        }
+        canvas.style.backgroundPosition = "center center";
+        canvas.style.backgroundRepeat = "no-repeat";
+        canvas.style.backgroundSize = "cover";
+        canvas.style.backgroundImage = `url(${backgroundImageUrl})`;
+        canvas.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+        canvas.style.filter = "opacity(0.5)";
+        canvas.style.borderRadius = "10px";
+        canvas.style.backgroundBlendMode = "true";
+
 
         if (chart) {
             chart.data.labels = labels;
@@ -82,13 +119,13 @@ function Forecast({ city }) {
                     pointBorderColor: function(context) {
                         var temp = context.dataset.data[context.dataIndex];
                         if (temp < 0) {
-                            return "rgba(0, 123, 255, 0.8)"; // Blue for very cold temperatures
+                            return "rgba(0, 123, 255, 1)"; // Blue for very cold temperatures
                         } else if (temp < 10) {
-                            return "rgba(40, 167, 69, 0.8)"; // Green for cool temperatures
+                            return "rgba(40, 167, 69, 1)"; // Green for cool temperatures
                         } else if (temp < 20) {
-                            return "rgba(255, 193, 7, 0.8)"; // Yellow for warm temperatures
+                            return "rgba(255, 193, 7, 1)"; // Yellow for warm temperatures
                         } else {
-                            return "rgba(220, 53, 69, 0.8)"; // Red for hot temperatures
+                            return "rgba(220, 53, 69, 1)"; // Red for hot temperatures
                         }
                         
                     },
@@ -110,13 +147,13 @@ function Forecast({ city }) {
                     pointHoverBackgroundColor: function(context) {
                         var temp = context.dataset.data[context.dataIndex];
                         if (temp < 0) {
-                            return "rgba(0, 123, 255, 0.3)"; // Blue for very cold temperatures
+                            return "rgba(0, 123, 255, 1)"; // Blue for very cold temperatures
                         } else if (temp < 10) {
-                            return "rgba(40, 167, 69, 0.3)"; // Green for cool temperatures
+                            return "rgba(40, 167, 69, 1)"; // Green for cool temperatures
                         } else if (temp < 20) {
-                            return "rgba(255, 193, 7, 0.3)"; // Yellow for warm temperatures
+                            return "rgba(255, 193, 7, 1)"; // Yellow for warm temperatures
                         } else {
-                            return "rgba(220, 53, 69, 0.3)"; // Red for hot temperatures
+                            return "rgba(220, 53, 69, 1)"; // Red for hot temperatures
                         }
                         
                     },
@@ -189,6 +226,7 @@ function Forecast({ city }) {
                     },
     
                 plugins: {
+                    
                 tooltip: {
                     enabled: false,
     
@@ -266,7 +304,7 @@ function Forecast({ city }) {
             min={new Date().toISOString().slice(0, 16)}
             max={new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().slice(0, 16)}
             onChange={event => setDate(new Date(event.target.value))}/>
-          <div class="chart-container">
+          <div className="chart-container">
             {!isChartLoaded && <h2>Reload the page to see the chart!</h2>}
             {forecast.length > 0 && (
               <canvas id="chart"></canvas>
