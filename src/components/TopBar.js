@@ -4,14 +4,11 @@ import { Button, Grid, Typography } from "@mui/material";
 import { useWeatherContext } from "../store/WeatherContext";
 import AutoComp from "./AutoComp";
 import TempConvert from "./TempConvert";
-import PauseIcon from "@mui/icons-material/Pause";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import SkipNextIcon from "@mui/icons-material/SkipNext";
+import Spotify from "./Spotify";
 
 export default function TopBar() {
   const { isLoaded, cityHandler, city, temp, tempHandler } =
     useWeatherContext();
-  const [musicPlaying, setMusicPlaying] = useState(false);
 
   return (
     <Grid
@@ -46,7 +43,7 @@ export default function TopBar() {
           </Typography>
         </Grid>
         <Grid container xs={8} direction={"row"} align={"right"}>
-          <Grid item xs={4} padding={"30px"}>
+          <Grid item xs={3} padding={"30px"}>
             {temp ? (
               <TempConvert
                 tempHandler={tempHandler}
@@ -59,27 +56,7 @@ export default function TopBar() {
               <AutoComp cityHandler={cityHandler} city={city}></AutoComp>
             )}
           </Grid>
-          <Grid
-            item
-            xs={2}
-            padding={"20px"}
-            sx={{ display: { xs: "none", sm: "none", md: "block" } }}
-          >
-            {musicPlaying ? (
-              <Button>
-                <PauseIcon sx={{ color: "rgb(191,178,232)" }}></PauseIcon>
-              </Button>
-            ) : (
-              <Button>
-                <PlayArrowIcon
-                  sx={{ color: "rgb(191,178,232)" }}
-                ></PlayArrowIcon>
-              </Button>
-            )}
-            <Button>
-              <SkipNextIcon sx={{ color: "rgb(191,178,232)" }}></SkipNextIcon>
-            </Button>
-          </Grid>
+          <Spotify></Spotify>
         </Grid>
       </Grid>
     </Grid>
