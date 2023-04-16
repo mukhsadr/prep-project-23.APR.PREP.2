@@ -20,6 +20,7 @@ const WeatherStore = ({ children }) => {
   const [temp, setTemp] = useState(null);
   const [unit, setUnit] = useState("C");
   const [results, setResults] = useState(null);
+  const [yourLocation, setYourLocation] = useState("Your location");
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ["places"],
@@ -27,7 +28,11 @@ const WeatherStore = ({ children }) => {
 
   const cityHandler = (city) => {
     console.log("City set to:", city);
-    setCity(city);
+    if (city === "Your location") {
+      setCity(yourLocation);
+    } else {
+      setCity(city);
+    }
   };
 
   const tempHandler = (temp, unit) => {
@@ -40,10 +45,6 @@ const WeatherStore = ({ children }) => {
     setScreen((prev) => !prev);
     console.log("First", screen);
   };
-
-  useEffect(() => {
-    console.log("screen changing");
-  }, [screen]);
 
   useEffect(() => {
     if (city === "Your location") {
@@ -65,9 +66,8 @@ const WeatherStore = ({ children }) => {
               return res.json();
             })
             .then((result) => {
-              console.log(result);
-              console.log("city:", result[0].name);
               setCity(result[0].name);
+              setYourLocation(result[0].name);
             });
         },
         (err) => {
@@ -76,6 +76,9 @@ const WeatherStore = ({ children }) => {
         }
       );
     }
+  }, []);
+
+  useEffect(() => {
     fetch(
       "https://api.openweathermap.org/data/2.5/weather?q=" +
         city +
