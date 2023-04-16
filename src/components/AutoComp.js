@@ -43,8 +43,9 @@ export default function AutoComp(props) {
           style={{
             minWidth: "150px",
             width: "100%",
-            border: "none",
+            border: "none !important",
             borderRadius: "20PX",
+            outline: "none !important",
           }}
         />
         <ComboboxPopover>

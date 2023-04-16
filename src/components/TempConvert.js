@@ -17,36 +17,31 @@ export default function TempConvert(props) {
       MuiSwitch: {
         styleOverrides: {
           root: {
-            width: "38px",
-            height: "16px",
+            width: "45px",
+            height: "20px",
             padding: "0px",
             marginLeft: "10px",
           },
           switchBase: {
             color: "lightgray",
             padding: "1px",
-            "&$checked": {
-              "& + $track": {
-                backgroundColor: "#23bf58",
-              },
-            },
           },
           thumb: {
             color: "white",
-            width: "16px",
-            height: "16px",
+            width: "20px",
+            height: "20px",
             marginTop: "-1px",
             marginLeft: "1px",
           },
           track: {
             borderRadius: "20px",
-            backgroundColor: "#ee0979",
+            backgroundColor: "#ea008c",
             opacity: "1 !important",
             "&:after, &:before": {
               color: "white",
-              fontSize: "10px",
+              fontSize: "14px",
               position: "absolute",
-              top: "2px",
+              top: "1px",
             },
             "&:after": {
               content: "'°F'",
@@ -54,12 +49,8 @@ export default function TempConvert(props) {
             },
             "&:before": {
               content: "'°C'",
-              right: "5px",
+              right: "4px",
             },
-          },
-          checked: {
-            color: "#23bf58 !important",
-            transform: "translateX(26px) !important",
           },
         },
       },
