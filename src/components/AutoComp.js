@@ -20,8 +20,8 @@ export default function AutoComp(props) {
   } = usePlacesAutocomplete();
 
   useEffect(() => {
-    setValue("Your location", false);
-  }, []);
+    setValue(props.city, false);
+  }, [props.city]);
 
   const handleSelect = async (address) => {
     setValue(address, false);
