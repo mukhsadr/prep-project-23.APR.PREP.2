@@ -16,7 +16,7 @@ import rain_img from "../weatherImage/Rain.png";
 import thunderstorm_img from "../weatherImage/Thunderstorm.png";
 import cloudy_img from "../weatherImage/Cloudy.webp"
 import unknown_img from "../weatherImage/unknown.jpeg"
-import { MainScreenTemp, SmallText, SmallTextBold } from "../TextStyle";
+import { MainScreenTemp, SmallText, SmallTextBold, Title } from "../TextStyle";
 
 function InitialScreen() {
   const { yourLocation, temp, unit, isLoaded, results, error, isVarLoaded, changeScreen } =
@@ -42,7 +42,7 @@ function InitialScreen() {
           <TopBar></TopBar>
           </Grid>
           <Grid item maxHeight="100px">
-            <titleSelfDefined>Your current location weather: </titleSelfDefined>
+            <Title text="Your current location weather:" color="White" />
           </Grid>
 
           <Grid item maxHeight="500px">
@@ -50,8 +50,8 @@ function InitialScreen() {
           </Grid>
 
           <Grid item maxHeight="500px">
-            <titleSelfDefined>Good morning Grace.</titleSelfDefined> <br></br>
-            <titleSelfDefined>Here's your favorite cities' weather now:</titleSelfDefined>
+            <Title text="Good morning Grace." color="White" /> <br></br>
+            <Title text="Here's your favorite cities' weather now:" color="White" /> 
             <div style={{ 
               width: '100%',
               height: '500px',
@@ -77,8 +77,8 @@ export default InitialScreen;
 export function InitialScreenUserSection({user}) {
   if (user === null) {
     return (<>
-      <titleSelfDefined>Hi there!</titleSelfDefined> <br></br>
-      <titleSelfDefined>You have no favorite city. </titleSelfDefined>
+      <Title text="Hi there!" color="White" /> <br></br>
+      <Title text="You have no favorite city." color="White" /> 
     </>)
   }
 }

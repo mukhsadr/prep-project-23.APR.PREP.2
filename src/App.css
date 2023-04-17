@@ -119,14 +119,13 @@ input {
   line-height: 24px;
 }
 
-titleSelfDefined {
+.title {
   /* Title */
   font-family: 'Inder';
   font-style: normal;
   font-weight: 400;
   font-size: 50px;
   line-height: 62px;
-  color: -var(--color);
 }
 
 #container {

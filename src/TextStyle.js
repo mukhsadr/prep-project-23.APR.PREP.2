@@ -18,3 +18,9 @@ export function MainScreenTemp({text, color}) {
         <span className='main-screen-temp' style={{color: color}}>{text}</span>
     );
 }
+
+export function Title({text, color}) {
+    return (
+        <span className='title' style={{color: color}}>{text}</span>
+    );
+}
