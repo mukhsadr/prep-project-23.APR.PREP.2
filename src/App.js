@@ -77,8 +77,18 @@ function App() {
               </>
             )}
           </div>
-          <div align="center">
-            <BigCard city={city}/>
+          <div style={{ 
+              width: '100%',
+              height: '500px',
+              overflowX: 'auto',
+              whiteSpace: 'nowrap',
+              }}>
+            <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={city}/></div>
+            <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={city}/></div>
+            <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={city}/></div>
+            <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={city}/></div>
+            <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={city}/></div>
+            <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={city}/></div>
           </div>
         </div>
       </>
@@ -87,7 +97,6 @@ function App() {
 }
 
 export default App;
-
 
 // default keyword: this is the main function
 export function BigCard({city}) {
