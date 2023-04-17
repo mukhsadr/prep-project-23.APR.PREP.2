@@ -17,10 +17,10 @@ export default function TempConvert(props) {
       MuiSwitch: {
         styleOverrides: {
           root: {
-            width: "45px",
+            width: "46px",
             height: "20px",
             padding: "0px",
-            marginLeft: "10px",
+            marginLeft: "8px",
           },
           switchBase: {
             color: "lightgray",
@@ -31,7 +31,7 @@ export default function TempConvert(props) {
             width: "20px",
             height: "20px",
             marginTop: "-1px",
-            marginLeft: "1px",
+            marginLeft: "-4px",
           },
           track: {
             borderRadius: "20px",
@@ -45,7 +45,7 @@ export default function TempConvert(props) {
             },
             "&:after": {
               content: "'°F'",
-              left: "5px",
+              left: "4px",
             },
             "&:before": {
               content: "'°C'",

@@ -133,6 +133,7 @@ export default function MusicPlayer() {
         <Grid
           item
           padding={"26px"}
+          paddingRight={"28px"}
           sx={{ display: { xs: "none", sm: "none", md: "block" } }}
         >
           {" "}
