@@ -7,8 +7,9 @@ import Forecast from "./components/Forecast/Forecast";
 import React from 'react';
 import './App.css';
 import TempConvert from "./components/TempConvert";
-// import { useMediaQuery } from "@material-ui/core";
-
+import EquipmentCard from "./components/EquipmentCard";
+import EquipmentTable from "./components/EquipmentTable";
+import { requiredThings } from "./assets/constants";
 
 function App() {
   const [error, setError] = useState(null);
@@ -113,6 +114,16 @@ function App() {
             {isVarLoaded && results && (
               <>
                 <h3>{results.weather[0].main}</h3>
+                
+                <h4>Things to bring:</h4>
+                {console.log(requiredThings[results.weather[0].main])}
+
+                {!!results.weather[0].main && (
+                  <EquipmentTable
+                    equipments={requiredThings[results.weather[0].main]}
+                  />
+                )}
+
                 {temp ? <p>Feels like {temp.toFixed(2)}°{unit}</p> : null}
                 <i>
                   <p>
