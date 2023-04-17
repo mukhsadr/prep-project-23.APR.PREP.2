@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import "./../App.css";
+import "../TextStyle"
 import logo from "./../mlh-prep.png";
 import AutoComp from "./AutoComp";
 import React from "react";
@@ -15,6 +16,7 @@ import rain_img from "../weatherImage/Rain.png";
 import thunderstorm_img from "../weatherImage/Thunderstorm.png";
 import cloudy_img from "../weatherImage/Cloudy.webp"
 import unknown_img from "../weatherImage/unknown.jpeg"
+import { MainScreenTemp, SmallText, SmallTextBold } from "../TextStyle";
 
 function InitialScreen() {
   const { yourLocation, temp, unit, isLoaded, results, error, isVarLoaded, changeScreen } =
@@ -99,7 +101,7 @@ export function BigCard({city}) {
   api_url += "&appid=" + process.env.REACT_APP_APIKEY
 
   useEffect(() => {
-    console.log(unit, '- Has changed')
+    console.log('Unit Has changed:', unit)
     fetch(api_url)
       .then((res) => res.json())
       .then(
@@ -150,13 +152,13 @@ export function BigCard({city}) {
   return (
     <>
       {isVarLoaded && results && (
-        <div className="bigCard" onClick={handleClick} style={{backgroundImage: background(results.weather[0].id)}}>
+        <div className="BigCard" onClick={handleClick} style={{backgroundImage: background(results.weather[0].id)}}>
           <div align="left">
-            <mainScreenTemp style={{color: 'White'}}>{city}</mainScreenTemp>
+            <MainScreenTemp text={city} color = 'White' />
           </div>
 
           <div align="center">
-            <mainScreenTemp style={{color: 'White'}}>{results.main.temp}°{unit}</mainScreenTemp>
+            <MainScreenTemp text={results.main.temp + "°" + unit} color = 'White' />
           </div>
           
             <div id="container">
@@ -177,10 +179,10 @@ export function BigCardStatArea({firstLine, secondLine}) {
   return (
     <>
     <div align="center">
-      <smallTextBold style={{color: 'White'}}>{firstLine}</smallTextBold>
+      <SmallTextBold text={firstLine} color='white'/>
     </div>
     <div align="center">
-      <smallText style={{color: 'White'}}>{secondLine}</smallText>
+      <SmallText text={secondLine} color='white'/>
     </div>
   </>
   )

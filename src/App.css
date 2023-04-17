@@ -69,7 +69,8 @@ input {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
-.bigCard{
+
+.BigCard{
   /* Big Card */
   box-sizing: border-box;
   width: 850px;
@@ -92,7 +93,7 @@ input {
   border-radius: 78px;
 }
 
-mainScreenTemp {
+.main-screen-temp {
   /* Main Screen Temp */
   font-family: 'Inter';
   font-style: normal;
@@ -102,22 +103,20 @@ mainScreenTemp {
   color: -var(--color);
 }
 
-smallTextBold {
-  font-family: 'Inter';
-  font-style: bold;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  color: -var(--color);
-}
-
-smallText {
+.small-text {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
-  color: -var(--color);
+}
+
+.small-text-bold {
+  font-family: 'Inter';
+  font-style: bold;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
 }
 
 titleSelfDefined {
