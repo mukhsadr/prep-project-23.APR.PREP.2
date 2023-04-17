@@ -310,19 +310,19 @@ function Forecast({ city }) {
 
     return (
         <>
-        <div className="forecast-card" id="forecast-card">
-          <h2>Hourly Forecast for {city} - {date.toLocaleDateString()}</h2>
-          <input type="datetime-local" value={`${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}T${date.toTimeString().slice(0, 5)}`}
-            min={new Date().toISOString().slice(0, 16)}
-            max={new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().slice(0, 16)}
-            onChange={event => setDate(new Date(event.target.value))}/>
-          <div className="chart-container">
-            {!isChartLoaded && <h2>Reload the page to see the chart!</h2>}
-            {forecast.length > 0 && (
-              <canvas id="chart"></canvas>
-            )}
-          </div>
-       </div>
+            <div className="forecast-card" id="forecast-card">
+                <h2>Hourly Forecast for {city} - {date.toLocaleDateString()}</h2>
+                <input type="datetime-local" value={`${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}T${date.toTimeString().slice(0, 5)}`}
+                    min={new Date().toISOString().slice(0, 16)}
+                    max={new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().slice(0, 16)}
+                    onChange={event => setDate(new Date(event.target.value))}/>
+                <div className="chart-container">
+                    {!isChartLoaded && <h2>Reload the page to see the chart!</h2>}
+                    {forecast.length > 0 && (
+                    <canvas id="chart"></canvas>
+                    )}
+                </div>
+            </div>
         </>
     )
 }
