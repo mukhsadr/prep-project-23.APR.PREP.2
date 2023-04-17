@@ -16,6 +16,7 @@ export default function TopBar() {
       sx={{
         minWidth: "100%",
         maxWidth: "100%",
+        maxHeight: "10%",
         alignContent: "flex-start",
       }}
     >

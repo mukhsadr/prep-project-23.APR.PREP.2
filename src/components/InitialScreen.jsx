@@ -9,68 +9,57 @@ import { useWeatherContext } from "../store/WeatherContext";
 import TopBar from "./TopBar";
 import { Grid } from "@mui/material";
 
-import sunny_img from "../sunny.png";
-import snow_img from "../snow.png"
-import rain_img from "../Rain.png";
-import thunderstorm_img from "../Thunderstorm.png";
-import cloudy_img from "../Cloudy.webp"
-import unknown_img from "../unknown.jpg"
+import sunny_img from "../weatherImage/sunny.png";
+import snow_img from "../weatherImage/snow.png"
+import rain_img from "../weatherImage/Rain.png";
+import thunderstorm_img from "../weatherImage/Thunderstorm.png";
+import cloudy_img from "../weatherImage/Cloudy.webp"
+import unknown_img from "../weatherImage/unknown.jpeg"
 
 function InitialScreen() {
-  const { temp, unit, isLoaded, results, error, isVarLoaded, changeScreen } =
+  const { city, temp, unit, isLoaded, results, error, isVarLoaded, changeScreen } =
     useWeatherContext();
 
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
     return (
-      <Grid container direction={"column"}>
-        <TopBar></TopBar>
-        <Grid
-          xs={10}
-          maxWidth={"100%"}
-          minWidth={"100%"}
-          paddingTop={"50px"}
-          align={"center"}
-        >
-          <div
-            className="Results"
-            onClick={changeScreen}
-            style={{ maxWidth: "50%" }}
-          >
-            {!isVarLoaded && <h2>Loading...</h2>}
-            {console.log(results)}
-            {console.log(isLoaded)}
-            {isVarLoaded && results && (
-              <>
-                <h3>{results.weather[0].main}</h3>
-                {temp ? (
-                  <p>
-                    Feels like {temp.toFixed(2)}°{unit}
-                  </p>
-                ) : null}
-                <i>
-                  <p>
-                    {results.name}, {results.sys.country}
-                  </p>
-                </i>
-              </>
-            )}
-          </div>
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+      >
+        <Grid item>
+          <Grid item maxHeight="15%">
+          <TopBar></TopBar>
+          </Grid>
+          <Grid item maxHeight="100px">
+            <titleSelfDefined>Your current location weather: </titleSelfDefined>
+          </Grid>
 
-          <div style={{ 
+          <Grid item maxHeight="500px">
+            <div align="center"><BigCard city={city}/></div>
+          </Grid>
+
+          <Grid item maxHeight="500px">
+            <titleSelfDefined>Good morning Grace.</titleSelfDefined> <br></br>
+            <titleSelfDefined>Here's your favorite cities' weather now:</titleSelfDefined>
+            <div style={{ 
               width: '100%',
               height: '500px',
               overflowX: 'auto',
               whiteSpace: 'nowrap',
               }}>
-            <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
-            <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
-            <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
-            <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
-            <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
-            <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
-          </div>
+              <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
+              <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
+              <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
+              <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
+              <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
+              <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
+            </div>
+          </Grid>
         </Grid>
       </Grid>
     );
