@@ -17,7 +17,7 @@ import cloudy_img from "../weatherImage/Cloudy.webp"
 import unknown_img from "../weatherImage/unknown.jpeg"
 
 function InitialScreen() {
-  const { city, temp, unit, isLoaded, results, error, isVarLoaded, changeScreen } =
+  const { yourLocation, temp, unit, isLoaded, results, error, isVarLoaded, changeScreen } =
     useWeatherContext();
 
   useEffect(() => {
@@ -44,7 +44,7 @@ function InitialScreen() {
           </Grid>
 
           <Grid item maxHeight="500px">
-            <div align="center"><BigCard city={city}/></div>
+            <div align="center"><BigCard city={yourLocation}/></div>
           </Grid>
 
           <Grid item maxHeight="500px">
@@ -86,7 +86,7 @@ export function BigCard({city}) {
   const [isVarLoaded, setIsVarLoaded] = useState(false);
   const [results, setResults] = useState(null);
   
-  const {changeScreen, unit} = useWeatherContext();
+  const {setCity, changeScreen, unit} = useWeatherContext();
 
   var api_url = "https://api.openweathermap.org/data/2.5/weather?q=" + city
 
@@ -142,10 +142,15 @@ export function BigCard({city}) {
 
   const speed = (unit === "C") ? "kph" : "mph";
 
+  const handleClick = () => {
+    setCity(city);
+    changeScreen();
+  }
+
   return (
     <>
       {isVarLoaded && results && (
-        <div className="bigCard" onClick={changeScreen} style={{backgroundImage: background(results.weather[0].id)}}>
+        <div className="bigCard" onClick={handleClick} style={{backgroundImage: background(results.weather[0].id)}}>
           <div align="left">
             <mainScreenTemp style={{color: 'White'}}>{city}</mainScreenTemp>
           </div>

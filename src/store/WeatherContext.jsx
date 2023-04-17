@@ -110,6 +110,8 @@ const WeatherStore = ({ children }) => {
   }, [results]);
 
   const weatherStoreValues = {
+    yourLocation,
+    setYourLocation,
     screen,
     setScreen,
     error,
