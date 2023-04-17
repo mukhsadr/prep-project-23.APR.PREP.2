@@ -20,16 +20,15 @@ export default function MusicPlayer() {
   const RESPONSE_TYPE = "token";
   const scope =
     "streaming \
-    user-read-email \
-    user-read-private   \
-    user-read-currently-playing\
-    user-read-recently-played \
-    user-read-playback-state\
-    user-top-read\
-    user-modify-playback-state";
+      user-read-email \
+      user-read-private   \
+      user-read-currently-playing\
+      user-read-recently-played \
+      user-read-playback-state\
+      user-top-read\
+      user-modify-playback-state";
 
   const [token, setToken] = useState("");
-  const [musicPlaying, setMusicPlaying] = useState(false);
   const [player, setPlayer] = useState(undefined);
   const [music, setMusic] = useState(new Audio());
   const [is_paused, setPaused] = useState(false);
@@ -56,12 +55,10 @@ export default function MusicPlayer() {
 
   const logout = () => {
     setToken("");
+    player.disconnect();
+    setPlayer(undefined);
     window.localStorage.removeItem("token");
   };
-
-  function playMusic(url) {
-    player.togglePlay();
-  }
 
   useEffect(() => {
     if (token !== "") {
@@ -106,6 +103,18 @@ export default function MusicPlayer() {
             });
           };
 
+          player.addListener("player_state_changed", (state) => {
+            if (!state) {
+              return;
+            }
+            setTrack(state.track_window.current_track);
+            setPaused(state.paused);
+
+            player.getCurrentState().then((state) => {
+              !state ? setActive(false) : setActive(true);
+            });
+          });
+
           play({
             playerInstance: player,
             spotify_uri: "spotify:track:3sg1RZE32Qwy8j1T1POnBx",
@@ -118,46 +127,12 @@ export default function MusicPlayer() {
     }
   }, [token]);
 
-  const fetchMusic = () =>
-    axios.get("https://api.spotify.com/v1/search", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      params: {
-        q: "Miley",
-        type: "artist",
-      },
-    });
-  const findMusic = async () => {
-    await fetchMusic()
-      .then((received) => {
-        console.log("here", received.data);
-        setMusicPlaying((prev) => !prev);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const pauseMusic = () => {
-    setMusicPlaying((prev) => !prev);
-    player.togglePlay();
-    player.getCurrentState().then((state) => {
-      if (!state) {
-        console.error("User is not playing music through the Web Playback SDK");
-        return;
-      }
-
-      console.log("State", state);
-    });
-  };
-
   return (
     <Grid xs={3}>
       {!token ? (
         <Grid
           item
-          padding={"20px"}
+          padding={"26px"}
           sx={{ display: { xs: "none", sm: "none", md: "block" } }}
         >
           {" "}
@@ -181,17 +156,17 @@ export default function MusicPlayer() {
           padding={"20px"}
           sx={{ display: { xs: "none", sm: "none", md: "block" } }}
         >
-          {musicPlaying ? (
+          {!is_paused ? (
             <Button width={"30px"}>
               <PauseIcon
-                onClick={pauseMusic}
+                onClick={() => player.togglePlay()}
                 sx={{ color: "rgb(191,178,232)" }}
               ></PauseIcon>
             </Button>
           ) : (
             <Button width={"30px"}>
               <PlayArrowIcon
-                onClick={findMusic}
+                onClick={() => player.togglePlay()}
                 sx={{ color: "rgb(191,178,232)" }}
               ></PlayArrowIcon>
             </Button>
