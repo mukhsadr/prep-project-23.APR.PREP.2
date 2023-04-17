@@ -3,6 +3,7 @@ import "./App.css";
 import logo from "./mlh-prep.png";
 import AutoComp from "./components/AutoComp";
 import { useLoadScript } from "@react-google-maps/api";
+import Forecast from "./components/Forecast/Forecast";
 import React from 'react';
 import './App.css';
 import TempConvert from "./components/TempConvert";
@@ -20,6 +21,7 @@ function App() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ["places"],
   });
+  
 
   useEffect(() => {
     if (city === "Your location") {
@@ -120,6 +122,9 @@ function App() {
               </>
             )}
           </div>
+          {!isVarLoaded && <h2>Loading...</h2>}
+          {isVarLoaded && results && (
+          <Forecast city={city} />)}
         </div>
       </>
     );
