@@ -19,6 +19,12 @@ export function MainScreenTemp({text, color}) {
     );
 }
 
+export function MainScreenCondition({text, color}) {
+    return (
+        <span className='main-screen-condition' style={{color: color}}>{text}</span>
+    );
+}
+
 export function Title({text, color}) {
     return (
         <span className='title' style={{color: color}}>{text}</span>

@@ -15,8 +15,9 @@ import snow_img from "../weatherImage/snow.png"
 import rain_img from "../weatherImage/Rain.png";
 import thunderstorm_img from "../weatherImage/Thunderstorm.png";
 import cloudy_img from "../weatherImage/Cloudy.webp"
+import fog_img from "../weatherImage/fog.jpg"
 import unknown_img from "../weatherImage/unknown.jpeg"
-import { MainScreenTemp, SmallText, SmallTextBold, Title } from "../TextStyle";
+import { MainScreenCondition, MainScreenTemp, SmallText, SmallTextBold, Title } from "../TextStyle";
 
 function InitialScreen() {
   const { yourLocation, temp, unit, isLoaded, results, error, isVarLoaded, changeScreen } =
@@ -138,7 +139,7 @@ export function BigCard({city}) {
     } else if (800 < condition_code && condition_code < 900) {
       return `url(${cloudy_img})`;
     } else {
-      return `url(${unknown_img})`;
+      return `url(${fog_img})`;
     }
   }
 
@@ -158,7 +159,8 @@ export function BigCard({city}) {
           </div>
 
           <div align="center">
-            <MainScreenTemp text={results.main.temp + "°" + unit} color = 'White' />
+            <MainScreenTemp text={results.main.temp + "°" + unit} color = 'White' /> <br></br>
+            <MainScreenCondition text={results.weather[0].main} color = 'White' />
           </div>
           
             <div id="container">

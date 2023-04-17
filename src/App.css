@@ -103,6 +103,16 @@ input {
   color: -var(--color);
 }
 
+.main-screen-condition {
+  /* Main Screen Temp */
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 35px;
+  line-height: 54px;
+  color: -var(--color);
+}
+
 .small-text {
   font-family: 'Inter';
   font-style: normal;
