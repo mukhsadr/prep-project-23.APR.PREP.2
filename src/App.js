@@ -4,6 +4,9 @@ import logo from "./mlh-prep.png";
 import AutoComp from "./components/AutoComp";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import { useLoadScript } from "@react-google-maps/api";
+import EquipmentCard from "./components/EquipmentCard";
+import EquipmentTable from "./components/EquipmentTable";
+import { requiredThings } from "./assets/constants";
 
 function App() {
   const [error, setError] = useState(null);
@@ -45,17 +48,6 @@ function App() {
     console.log("City set to:", city);
     setCity(city);
   };
-  // detect based on main code
-  // If it's raining, bring an umbrella - Rain, Drizzle, Thunderstorm
-  // If it's sunny, bring suncream - 	Clear
-  // If it's cold, bring a coat - 	Snow
-  const weatherEquipment = {
-    Rain: "Bring an umbrella",
-    Drizzle: "Bring an umbrella",
-    Thunderstorm: "Bring an umbrella",
-    Clear: "Bring sunscreen",
-    Snow: "Bring a coat",
-  };
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -73,7 +65,15 @@ function App() {
             {isVarLoaded && results && (
               <>
                 <h3>{results.weather[0].main}</h3>
-                <h4>{weatherEquipment[results.weather[0].main] || null}</h4>
+                
+                <h4>Things to bring:</h4>
+                {console.log(requiredThings[results.weather[0].main])}
+
+                {!!results.weather[0].main && (
+                  <EquipmentTable
+                    equipments={requiredThings[results.weather[0].main]}
+                  />
+                )}
 
                 <p>Feels like {results.main.feels_like}°C</p>
                 <i>
