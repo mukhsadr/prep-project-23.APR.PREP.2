@@ -1,25 +1,16 @@
-import { useEffect, useState } from "react";
 import "./App.css";
-import logo from "./mlh-prep.png";
+import { useWeatherContext } from "./store/WeatherContext";
 import sunny_img from "./sunny.png";
 import snow_img from "./snow.png"
 import rain_img from "./Rain.png";
 import thunderstorm_img from "./Thunderstorm.png";
 import cloudy_img from "./Cloudy.webp"
 import unknown_img from "./unknown.jpg"
-import AutoComp from "./components/AutoComp";
-import usePlacesAutocomplete from "use-places-autocomplete";
-import { useLoadScript } from "@react-google-maps/api";
+import InitialScreen from "./components/InitialScreen";
+import SecondaryScreen from "./components/SecondaryScreen";
 
 function App() {
-  const [error, setError] = useState(null);
-  const [isVarLoaded, setIsVarLoaded] = useState(false);
-  const [city, setCity] = useState("New York City");
-  const [results, setResults] = useState(null);
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-    libraries: ["places"],
-  });
+  const { screen } = useWeatherContext();
 
   useEffect(() => {
     fetch(
