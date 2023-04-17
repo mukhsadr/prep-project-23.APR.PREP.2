@@ -38,8 +38,14 @@ input {
 .bigCard{
   /* Big Card */
   box-sizing: border-box;
+  width: 854px;
+  height: 471px;
   
-  background-color: white;
+  background-image: var(--backgroundImage);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+  
   display: flex;
   flex-direction: column;
 

@@ -5,6 +5,7 @@ import sunny_img from "./sunny.png";
 import snow_img from "./snow.png"
 import rain_img from "./Rain.png";
 import thunderstorm_img from "./Thunderstorm.png";
+import cloudy_img from "./Cloudy.webp"
 import unknown_img from "./unknown.jpg"
 import AutoComp from "./components/AutoComp";
 import usePlacesAutocomplete from "use-places-autocomplete";
@@ -77,7 +78,7 @@ function App() {
             )}
           </div>
           <div align="center">
-            <BigCard city="New York City"/>
+            <BigCard city={city}/>
           </div>
         </div>
       </>
@@ -134,6 +135,8 @@ export function BigCard({city}) {
       return `url(${snow_img})`;
     } else if (condition_code == 800) {
       return `url(${sunny_img})`;
+    } else if (800 < condition_code && condition_code < 900) {
+      return `url(${cloudy_img})`;
     } else {
       return `url(${unknown_img})`;
     }
