@@ -99,6 +99,7 @@ mainScreenTemp {
   font-weight: 900;
   font-size: 45px;
   line-height: 54px;
+  color: -var(--color);
 }
 
 smallTextBold {
@@ -107,6 +108,7 @@ smallTextBold {
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
+  color: -var(--color);
 }
 
 smallText {
@@ -115,6 +117,7 @@ smallText {
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
+  color: -var(--color);
 }
 
 #container {
