@@ -31,14 +31,12 @@ input {
 }
 
 .Equipment {
-  /* flex: content; */
   width: 100px; /* Set the desired width for the cards */
   display: inline-block;
   background-color: grey;
   margin-left: 20px;
   margin-right: 20px;
-  /* 
-  margin-top: 20px; */
+  margin-top: 20px;
   border-radius: 8px;
   color: white;
   padding: 10px;
