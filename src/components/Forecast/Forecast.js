@@ -56,7 +56,7 @@ function Forecast({ city }) {
         const iconData = forecast.map((forecastItem) => forecastItem.icon);
         const weatherType = forecast.map((forecastItem) => forecastItem.weatherType);
         
-        const canvas = document.getElementById("chart");
+        const canvas = document.getElementById("forecast-card");
         const typeCounts = {};
         weatherType.forEach(type => {
         typeCounts[type] = (typeCounts[type] || 0) + 1;
@@ -86,7 +86,7 @@ function Forecast({ city }) {
             backgroundImageUrl = "https://media.giphy.com/media/OWxrxRHY6afRu/giphy.gif";
             break;
         case "Clear":
-            backgroundImageUrl = "https://media.giphy.com/media/1LAArSrLLApVu/giphy.gif";
+            backgroundImageUrl = "https://media.giphy.com/media/fBP0LR3FBUMBZnjBwa/giphy.gif";
             break;
         case "Clouds":
             backgroundImageUrl = "https://media.giphy.com/media/PIh4laWJlz9bq/giphy.gif";
@@ -99,7 +99,6 @@ function Forecast({ city }) {
         canvas.style.backgroundSize = "cover";
         canvas.style.backgroundImage = `url(${backgroundImageUrl})`;
         canvas.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
-        canvas.style.filter = "opacity(0.5)";
         canvas.style.borderRadius = "10px";
         canvas.style.backgroundBlendMode = "true";
 
@@ -124,7 +123,6 @@ function Forecast({ city }) {
                     iconData,
                     data,
                     borderColor: "rgba(75, 192, 192, 1)",
-                    backgroundColor: "rgba(75, 192, 192, 0.5)",
                     pointRadius: 20,
                     pointBorderColor: function(context) {
                         var temp = context.dataset.data[context.dataIndex];
@@ -308,7 +306,7 @@ function Forecast({ city }) {
 
     return (
         <>
-        <div className="forecast-card">
+        <div className="forecast-card" id="forecast-card">
           <h2>Hourly Forecast for {city} - {date.toLocaleDateString()}</h2>
           <input type="datetime-local" value={`${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}T${date.toTimeString().slice(0, 5)}`}
             min={new Date().toISOString().slice(0, 16)}
