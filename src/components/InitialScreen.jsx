@@ -20,6 +20,10 @@ function InitialScreen() {
   const { city, temp, unit, isLoaded, results, error, isVarLoaded, changeScreen } =
     useWeatherContext();
 
+  useEffect(() => {
+    const user = window.localStorage.getItem('MLH_Weather_User');
+  })
+
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
@@ -68,19 +72,35 @@ function InitialScreen() {
 
 export default InitialScreen;
 
+export function InitialScreenUserSection({user}) {
+  if (user === null) {
+    return (<>
+      <titleSelfDefined>Hi there!</titleSelfDefined> <br></br>
+      <titleSelfDefined>You have no favorite city. </titleSelfDefined>
+    </>)
+  }
+}
+
 export function BigCard({city}) {
   const [error, setError] = useState(null);
   const [isVarLoaded, setIsVarLoaded] = useState(false);
   const [results, setResults] = useState(null);
+  
+  const {changeScreen, unit} = useWeatherContext();
+
+  var api_url = "https://api.openweathermap.org/data/2.5/weather?q=" + city
+
+  if (unit === "C") {
+    api_url += "&units=metric"
+  } else {
+    api_url += "&units=imperial"
+  }
+
+  api_url += "&appid=" + process.env.REACT_APP_APIKEY
 
   useEffect(() => {
-    fetch(
-      "https://api.openweathermap.org/data/2.5/weather?q=" +
-        city +
-        "&units=metric" +
-        "&appid=" +
-        process.env.REACT_APP_APIKEY
-    )
+    console.log(unit, '- Has changed')
+    fetch(api_url)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -96,10 +116,10 @@ export function BigCard({city}) {
           setError(error);
         }
       );
-  }, [city]);
+  }, [city, unit]);
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+      return <div>Error: {error.message}</div>;
   }
 
   // Reference: OpenWeatherAPI documentation
@@ -120,24 +140,26 @@ export function BigCard({city}) {
     }
   }
 
+  const speed = (unit === "C") ? "kph" : "mph";
+
   return (
     <>
       {isVarLoaded && results && (
-        <div className="bigCard" style={{backgroundImage: background(results.weather[0].id)}}>
+        <div className="bigCard" onClick={changeScreen} style={{backgroundImage: background(results.weather[0].id)}}>
           <div align="left">
             <mainScreenTemp style={{color: 'White'}}>{city}</mainScreenTemp>
           </div>
 
           <div align="center">
-            <mainScreenTemp style={{color: 'White'}}>{results.main.temp}°C</mainScreenTemp>
+            <mainScreenTemp style={{color: 'White'}}>{results.main.temp}°{unit}</mainScreenTemp>
           </div>
           
             <div id="container">
               <div id="inner">
                 <div class="child"><BigCardStatArea firstLine={"Chance of Rain"} secondLine={"XX%"}/></div>
                 <div class="child"><BigCardStatArea firstLine={"Humidity"} secondLine={results.main.humidity+"%"}/></div>
-                <div class="child"><BigCardStatArea firstLine={"Feel like"} secondLine={results.main.feels_like+"°C"}/></div>
-                <div class="child"><BigCardStatArea firstLine={"Wind speed"} secondLine={results.wind.speed+"mph"}/></div>
+                <div class="child"><BigCardStatArea firstLine={"Feel like"} secondLine={results.main.feels_like+"°"+unit}/></div>
+                <div class="child"><BigCardStatArea firstLine={"Wind speed"} secondLine={results.wind.speed+speed}/></div>
               </div>
             </div>
         </div>
