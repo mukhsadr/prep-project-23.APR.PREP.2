@@ -18,6 +18,7 @@ export default function MusicPlayer() {
     CLIENT_ID,
     REDIRECT_URI,
     RESPONSE_TYPE,
+    img,
   } = useSpotifyContext();
 
   return (
@@ -81,9 +82,14 @@ export default function MusicPlayer() {
           </Button>
           <div className="tooltip">
             <Button onClick={logout}>
-              {current_track.album !== null ? (
-                <img height={"58px"} src={current_track.album.images[0].url} />
-              ) : null}
+              {img !== "" ? (
+                <img height={"58px"} src={img} />
+              ) : (
+                <img
+                  height={"27px"}
+                  src={process.env.PUBLIC_URL + "./pngegg.png"}
+                />
+              )}
             </Button>
             <span className="tooltiptext-2">Logout</span>
           </div>
