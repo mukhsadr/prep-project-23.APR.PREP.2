@@ -11,6 +11,7 @@ import EquipmentCard from "./components/EquipmentCard";
 import EquipmentTable from "./components/EquipmentTable";
 import { requiredThings } from "./assets/constants";
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
+import AirQuality from "./components/AirQuality";
 
 function App() {
   const [error, setError] = useState(null);
@@ -110,7 +111,8 @@ function App() {
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler} city={city}></AutoComp>}
           {temp ? <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert> : null}
-          <div className={`Results ${"smallScreen"}`}>
+          <AirQuality city={city}></AirQuality>
+          <div className={`Results${" smallScreen"}`}>
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
             {console.log(isLoaded)}
