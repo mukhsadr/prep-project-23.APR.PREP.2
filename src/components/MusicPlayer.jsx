@@ -21,7 +21,7 @@ export default function MusicPlayer() {
   } = useSpotifyContext();
 
   return (
-    <Grid xs={3}>
+    <Grid xs={3} position={"absolute"} top={0} right={0}>
       {!token ? (
         <Grid
           item
@@ -47,7 +47,8 @@ export default function MusicPlayer() {
       ) : (
         <Grid
           item
-          padding={"20px"}
+          padding={"5px"}
+          paddingRight={"10px"}
           sx={{ display: { xs: "none", sm: "none", md: "block" } }}
         >
           {!is_paused ? (
@@ -81,8 +82,8 @@ export default function MusicPlayer() {
           <div className="tooltip">
             <Button onClick={logout}>
               <img
-                height={"27px"}
-                src={process.env.PUBLIC_URL + "./pngegg.png"}
+                height={"58px"}
+                src={process.env.PUBLIC_URL + current_track.album.images[0].url}
               />
             </Button>
             <span className="tooltiptext">Logout</span>
