@@ -24,7 +24,7 @@ const SpotifyStore = ({ children }) => {
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
   const CLIENT_SECRET = process.env.REACT_APP_SPOTIFY_CLIENT_KEY;
-  const REDIRECT_URI = "http://localhost:3000";
+  const REDIRECT_URI = process.env.REACT_APP_SPOTIFY_REDIRECT_URI;
   const RESPONSE_TYPE = "token";
   const scope =
     "streaming \
