@@ -10,11 +10,13 @@ import TempConvert from "./components/TempConvert";
 import EquipmentCard from "./components/EquipmentCard";
 import EquipmentTable from "./components/EquipmentTable";
 import { requiredThings } from "./assets/constants";
+import AirQuality1 from './components/AirQuality/AirQuality';
+import { Modal } from "react-bootstrap";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import Map from "./components/Map/Map";
-
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 import AirQuality from "./components/AirQuality";
+
 
 function App() {
   const [error, setError] = useState(null);
@@ -27,8 +29,9 @@ function App() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ["places"],
   });
-  const [location, setLocation] = useState({ lat: 0, lng: 0 });
+  const [showModal, setShowModal] = useState(false);
 
+  const [location, setLocation] = useState({ lat: 0, lng: 0 });
 
   useEffect(() => {
     if (city === "Your location") {
@@ -115,6 +118,9 @@ function App() {
     setCity(city);
   };
 
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
+
   const tempHandler = (temp, unit) => {
     console.log("Temp set to:", temp)
     setTemp(temp);
@@ -130,10 +136,12 @@ function App() {
     return (
       <>
         <img className="logo" src={logo} alt="MLH Prep Logo"></img>
-        <div>
+       <div>
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler} city={city}></AutoComp>}
           {temp ? <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert> : null}
+          <br></br>
+          <button className="btn btn-primary" onClick={() => setShowModal(true)}>Check Air Quality</button>
           {location.lat && location.lng && (
             <div>
               <Map
@@ -178,6 +186,16 @@ function App() {
           <div>
             {results && <SongRecommendation options={results} />}
           </div>
+        </div>
+        <div className="aq-container">
+          <Modal show={showModal} onHide={() => setShowModal(false)} className="my-modal">
+          <Modal.Header closeButton>
+          <Modal.Title>Air Quality in {city}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <AirQuality1 city={city} />          
+          </Modal.Body>
+          </Modal>
         </div>
       </>
     );
