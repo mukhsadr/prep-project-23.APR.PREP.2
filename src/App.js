@@ -12,7 +12,7 @@ import EquipmentTable from "./components/EquipmentTable";
 import { requiredThings } from "./assets/constants";
 import AirQuality from './components/AirQuality/AirQuality';
 import { Modal } from "react-bootstrap";
-import AirQuality from "./components/AirQuality";
+import AirQuality from './components/AirQuality/AirQuality';
 
 function App() {
   const [error, setError] = useState(null);
