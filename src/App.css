@@ -59,7 +59,22 @@ input {
   border-radius: 6px;
   font-size: 12px;
   width: 60px;
-  bottom: 90%;
+
+  left: 50%;
+  margin-left: -30px;
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip .tooltiptext-2 {
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  font-size: 12px;
+  width: 60px;
   left: 50%;
   margin-left: -30px;
   position: absolute;
@@ -68,6 +83,11 @@ input {
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+  bottom: -70%;
+}
+.tooltip:hover .tooltiptext-2 {
+  visibility: visible;
+  bottom: -30%;
 }
 
 .BigCard{
@@ -91,6 +111,11 @@ input {
 
   border: 1px solid #000000;
   border-radius: 78px;
+
+}
+
+.BigCard:hover {
+  cursor: pointer;
 }
 
 .main-screen-temp {

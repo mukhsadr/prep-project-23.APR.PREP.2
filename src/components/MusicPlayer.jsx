@@ -85,7 +85,7 @@ export default function MusicPlayer() {
                 <img height={"58px"} src={current_track.album.images[0].url} />
               ) : null}
             </Button>
-            <span className="tooltiptext">Logout</span>
+            <span className="tooltiptext-2">Logout</span>
           </div>
         </Grid>
       )}
