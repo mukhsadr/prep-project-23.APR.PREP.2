@@ -29,9 +29,9 @@ export default function AirQuality(props) {
         console.log(err)
       });
     }
-
+    
     fetch(
-        "http://api.openweathermap.org/geo/1.0/direct?q="
+        "https://api.openweathermap.org/geo/1.0/direct?q="
         + city +
         "&appid=" +
         process.env.REACT_APP_APIKEY
@@ -44,7 +44,7 @@ export default function AirQuality(props) {
       }
       );
       fetch(
-        "http://api.openweathermap.org/data/2.5/air_pollution?lat="
+        "https://api.openweathermap.org/data/2.5/air_pollution?lat="
         + lat + "&lon=" + lon +  
         "&appid=" +
         process.env.REACT_APP_APIKEY
