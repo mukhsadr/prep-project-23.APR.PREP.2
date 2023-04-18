@@ -28,27 +28,28 @@ const AirQuality = ({ city }) => {
   ];
 
   useEffect(() => {
-    const geocodingUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.REACT_APP_APIKEY}`;
+    const geocodingUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.REACT_APP_APIKEY}`;
     try {
-    fetch(geocodingUrl)
-      .then(response => response.json())
-      .then(data => {
-        const { lat, lon } = data[0];
-        const airQualityUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_APIKEY}`;
-        fetch(airQualityUrl)
-          .then(response => response.json())
-          .then(data => {
-            setAirQuality(data.list[0]);
-            console.log("Data", data)
-            console.log("City", city)
-          })
-          .catch(error => console.log(error));
-      })
-      .catch(error => console.log(error));
-      } catch (error) {
-  console.log(error);
-}
+      fetch(geocodingUrl)
+        .then(response => response.json())
+        .then(data => {
+          const { lat, lon } = data[0];
+          const airQualityUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_APIKEY}`;
+          fetch(airQualityUrl)
+            .then(response => response.json())
+            .then(data => {
+              setAirQuality(data.list[0]);
+              console.log("Data", data)
+              console.log("City", city)
+            })
+            .catch(error => console.log(error));
+        })
+        .catch(error => console.log(error));
+    } catch (error) {
+      console.log(error);
+    }
   }, [city]);
+  
 
   return (
     <section className="info-container">
