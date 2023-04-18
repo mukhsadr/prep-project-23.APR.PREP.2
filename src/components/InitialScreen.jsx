@@ -20,7 +20,7 @@ import unknown_img from "../weatherImage/unknown.jpeg"
 import { MainScreenCondition, MainScreenTemp, SmallText, SmallTextBold, Title } from "../TextStyle";
 
 function InitialScreen() {
-  const { yourLocation, temp, unit, isLoaded, results, error, isVarLoaded, changeScreen } =
+  const { yourLocation, temp, unit, isLoaded, results, error, isVarLoaded, changeScreen, favCities} =
     useWeatherContext();
 
   useEffect(() => {
@@ -51,21 +51,7 @@ function InitialScreen() {
           </Grid>
 
           <Grid item maxHeight="500px">
-            <Title text="Good morning Grace." color="White" /> <br></br>
-            <Title text="Here's your favorite cities' weather now:" color="White" /> 
-            <div style={{ 
-              width: '100%',
-              height: '500px',
-              overflowX: 'auto',
-              whiteSpace: 'nowrap',
-              }}>
-              <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
-              <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
-              <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
-              <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
-              <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
-              <div style={{ display: 'inline-block', padding: '10px' }}><BigCard city={"London, UK"}/></div>
-            </div>
+            <InitialScreenUserSection favCities={favCities}/>
           </Grid>
         </Grid>
       </Grid>
@@ -75,12 +61,33 @@ function InitialScreen() {
 
 export default InitialScreen;
 
-export function InitialScreenUserSection({user}) {
-  if (user === null) {
+export function InitialScreenUserSection({favCities}) {
+  if (favCities === null || favCities.length === 0) {
     return (<>
       <Title text="Hi there!" color="White" /> <br></br>
       <Title text="You have no favorite city." color="White" /> 
     </>)
+  } else {
+
+    const cityBigCards = favCities.map(city => (
+      <div key={city} style={{ display: 'inline-block', padding: '10px' }}>
+        <BigCard city={city}/>
+      </div>
+    ));
+
+    return (
+      <>
+      <Title text="Here's your favorite cities' weather now:" color="White" /> 
+      <div style={{ 
+        width: '100%',
+        height: '500px',
+        overflowX: 'auto',
+        whiteSpace: 'nowrap',
+        }}>
+          {cityBigCards}
+        </div>
+      </>
+    )
   }
 }
 
