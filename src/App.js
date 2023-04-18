@@ -3,9 +3,13 @@ import "./App.css";
 import logo from "./mlh-prep.png";
 import AutoComp from "./components/AutoComp";
 import { useLoadScript } from "@react-google-maps/api";
+import Forecast from "./components/Forecast/Forecast";
 import React from 'react';
 import './App.css';
 import TempConvert from "./components/TempConvert";
+import EquipmentCard from "./components/EquipmentCard";
+import EquipmentTable from "./components/EquipmentTable";
+import { requiredThings } from "./assets/constants";
 
 function App() {
   const [error, setError] = useState(null);
@@ -18,29 +22,29 @@ function App() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ["places"],
   });
+  
 
   useEffect(() => {
     if (city === "Your location") {
       navigator.geolocation.getCurrentPosition((position) => {
-          console.log("you are here", position)
-          let coordX = position.coords.latitude
-          let coordY = position.coords.longitude
-          console.log(coordX, coordY)
-          fetch(
-            "https://api.openweathermap.org/geo/1.0/reverse?lat="
-            + coordX + "&lon=" + coordY +
-            "&appid=" +
-            process.env.REACT_APP_APIKEY
-          ).then((res) =>
-          {return res.json()}).then((result)=> {
-            console.log(result);
-            console.log("city:", result[0].name)
-            setCity(result[0].name);
-          })
-        }, (err) => {
-            console.log("Error:")
-            console.log(err)
-        });
+        console.log("you are here", position)
+        let coordX = position.coords.latitude
+        let coordY = position.coords.longitude
+        console.log(coordX, coordY)
+        fetch(
+          "https://api.openweathermap.org/geo/1.0/reverse?lat="
+          + coordX + "&lon=" + coordY +
+          "&appid=" +
+          process.env.REACT_APP_APIKEY
+        ).then((res) => { return res.json() }).then((result) => {
+          console.log(result);
+          console.log("city:", result[0].name)
+          setCity(result[0].name);
+        })
+      }, (err) => {
+        console.log("Error:")
+        console.log(err)
+      });
     }
     fetch(
       "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -48,7 +52,7 @@ function App() {
       "&units=metric" +
       "&appid=" +
       process.env.REACT_APP_APIKEY
-    ) 
+    )
       .then((res) => res.json())
       .then(
         (result) => {
@@ -57,7 +61,7 @@ function App() {
           } else {
             setIsVarLoaded(true);
             setResults(result);
-            console.log("Result:",result)
+            console.log("Result:", result)
           }
         },
         (error) => {
@@ -67,16 +71,16 @@ function App() {
       );
   }, [city]);
 
-  useEffect(()=> {
-      if (results !== null){
-          if(unit === "F"){
-              let newT = results.main.feels_like * 1.8 + 32;
-              setTemp(newT)
+  useEffect(() => {
+    if (results !== null) {
+      if (unit === "F") {
+        let newT = results.main.feels_like * 1.8 + 32;
+        setTemp(newT)
 
-          } else {
-              setTemp(results.main.feels_like)
-          }
+      } else {
+        setTemp(results.main.feels_like)
       }
+    }
   }, [results])
 
 
@@ -103,13 +107,23 @@ function App() {
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler} city={city}></AutoComp>}
           {temp ? <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert> : null}
-          <div className="Results">
+          <div className={`Results${" smallScreen"}`}>
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
             {console.log(isLoaded)}
             {isVarLoaded && results && (
               <>
                 <h3>{results.weather[0].main}</h3>
+                
+                <h4>Things to bring:</h4>
+                {console.log(requiredThings[results.weather[0].main])}
+
+                {!!results.weather[0].main && (
+                  <EquipmentTable
+                    equipments={requiredThings[results.weather[0].main]}
+                  />
+                )}
+
                 {temp ? <p>Feels like {temp.toFixed(2)}°{unit}</p> : null}
                 <i>
                   <p>
@@ -119,6 +133,9 @@ function App() {
               </>
             )}
           </div>
+          {!isVarLoaded && <h2>Loading...</h2>}
+          {isVarLoaded && results && (
+          <Forecast city={city} />)}
         </div>
       </>
     );
