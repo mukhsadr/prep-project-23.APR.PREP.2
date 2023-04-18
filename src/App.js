@@ -13,6 +13,7 @@ import { requiredThings } from "./assets/constants";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import Map from "./components/Map/Map";
 
+import AirQuality from "./components/AirQuality";
 
 function App() {
   const [error, setError] = useState(null);
@@ -141,6 +142,7 @@ function App() {
             />
           </div>
           )}
+          <AirQuality city={city}></AirQuality>
           <div className={`Results${" smallScreen"}`}>
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
