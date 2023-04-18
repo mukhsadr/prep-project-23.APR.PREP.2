@@ -29,6 +29,7 @@ const AirQuality = ({ city }) => {
 
   useEffect(() => {
     const geocodingUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.REACT_APP_APIKEY}`;
+    try {
     fetch(geocodingUrl)
       .then(response => response.json())
       .then(data => {
@@ -38,10 +39,15 @@ const AirQuality = ({ city }) => {
           .then(response => response.json())
           .then(data => {
             setAirQuality(data.list[0]);
+            console.log("Data", data)
+            console.log("City", city)
           })
           .catch(error => console.log(error));
       })
       .catch(error => console.log(error));
+      } catch (error) {
+  console.log(error);
+}
   }, [city]);
 
   return (
