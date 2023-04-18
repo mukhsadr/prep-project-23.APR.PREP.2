@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useWeatherContext } from "../store/WeatherContext";
 import { Grid } from "@mui/material";
 import TopBar from "./TopBar";
+import { Title } from "../TextStyle";
+import back_button from "../components/BackButton.png"
+import favorite from "../components/Favorite.png"
+import favorite_hollow from "../components/Favorite_hollow.png"
 
 function SecondaryScreen() {
-  const { temp, unit, isLoaded, results, error, isVarLoaded, changeScreen } =
+  const { city, temp, unit, isLoaded, results, error, isVarLoaded, changeScreen, favCities, addFavorite, deleteFromFavorite, favoriteContain } =
     useWeatherContext();
+
+  var fav_img = (favoriteContain(city)) ? favorite : favorite_hollow;
+
+  const handleFavClick = () => {
+    if (fav_img === favorite) {
+      // remove
+      fav_img = (deleteFromFavorite(city)) ? favorite_hollow : favorite;
+    } else {
+      // add
+      fav_img = (addFavorite(city)) ? favorite : favorite_hollow;
+    }
+  }
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -42,7 +58,20 @@ function SecondaryScreen() {
                 height: "100%",
               }}
             >
+              <div style={{display:"flex", 
+                flexDirection:"row", 
+                alignItems: "center",
+                flex: "none",
+                order: 0,
+                alignSelf: "stretch",
+                flexGrow: 0}}>
+                  <img src={back_button} alt="Back Button" onClick={changeScreen} />
+                  <Title text={city} color='White'/>
+                  <img src={fav_img} alt="Favorite Button" onClick={handleFavClick} />
+              </div>
+
               <div>
+                <Title text={city} color='White'/>
                 <div className="Results" onClick={changeScreen}>
                   {!isVarLoaded && <h2>Loading...</h2>}
                   {console.log(results)}

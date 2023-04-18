@@ -21,6 +21,7 @@ const WeatherStore = ({ children }) => {
   const [unit, setUnit] = useState("C");
   const [results, setResults] = useState(null);
   const [yourLocation, setYourLocation] = useState("Your location");
+  const [favCities, setFavCities] = useState(null)
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ["places"],
@@ -31,6 +32,7 @@ const WeatherStore = ({ children }) => {
       setCity(yourLocation);
     } else {
       setCity(city);
+      setScreen(true);
     }
   };
 
@@ -42,6 +44,59 @@ const WeatherStore = ({ children }) => {
   const changeScreen = () => {
     setScreen((prev) => !prev);
   };
+
+  const addFavorite = (city) => {
+
+    if (favCities === null) {
+      setFavCities([city]);
+      window.localStorage.setItem('MLH_FAV_CITIES', JSON.stringify([city]));
+    } else {
+      const cityIndex = favCities.indexOf(city);
+
+      if (cityIndex > -1) {
+        console.log(city, "already in favorite");
+        return false;
+      }
+
+      setFavCities([...favCities, city]);
+
+      // save to local storage
+      window.localStorage.setItem('MLH_FAV_CITIES', JSON.stringify([...favCities, city]));
+    }
+
+    console.log(city, "added to favorite city.");
+    console.log("local storage's favCities = ", JSON.parse(window.localStorage.getItem('MLH_FAV_CITIES')));
+    return true;
+  }
+
+  const deleteFromFavorite = (cityToDelete) => {
+    // Find the index of the city you want to delete
+    const cityIndex = favCities.indexOf(city);
+
+    if (cityIndex > -1) {
+      // Remove the city from the array using splice
+      const newArray = favCities.filter(city => city !== cityToDelete);
+      setFavCities(newArray);
+
+      // Store the updated array back in local storage
+      window.localStorage.setItem('MLH_FAV_CITIES', JSON.stringify(favCities));
+
+      console.log(city, "removed from favorite city.");
+      console.log("Current fav_cities = ", favCities);
+      return true;
+    } else {
+      console.log(city, "is not in favCities");
+      return false;
+    }
+  }
+
+  const favoriteContain = (city) => {
+    if (favCities === null) {
+      return false;
+    } else {
+      return favCities.indexOf(city) > -1;
+    }
+  }
 
   useEffect(() => {
     if (city === "Your location") {
@@ -110,6 +165,8 @@ const WeatherStore = ({ children }) => {
   }, [results]);
 
   const weatherStoreValues = {
+    yourLocation,
+    setYourLocation,
     screen,
     setScreen,
     error,
@@ -128,6 +185,11 @@ const WeatherStore = ({ children }) => {
     cityHandler,
     tempHandler,
     changeScreen,
+    favCities,
+    setFavCities,
+    addFavorite,
+    deleteFromFavorite,
+    favoriteContain
   };
 
   return (
