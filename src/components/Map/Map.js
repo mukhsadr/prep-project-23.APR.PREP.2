@@ -1,14 +1,21 @@
-import React, { useState } from "react";
 import { GoogleMap, Marker } from "@react-google-maps/api";
+import { Autocomplete } from '@react-google-maps/api';
+import React, { useState, useRef } from "react";
+import "./Map.css";
 
-function Map({ location, onMapLoad, setCity, setLocation }) {
-  
+
+function Map({ location, onMapLoad, setCity, setLocation, city }) {
+  const [searchValue, setSearchValue] = useState("");
+  const searchInputRef = useRef(null);
+  const [autocomplete, setAutocomplete] = useState(null);
+  const [markerPosition, setMarkerPosition] = useState(location); // store marker position in state
+
   const containerStyle = {
     width: "80%",
     height: "400px",
     borderRadius: "7%",
     margin: "0 auto",
-    marginTop: "20px",
+    position: "relative",
   };
 
   const center = {
@@ -39,13 +46,15 @@ function Map({ location, onMapLoad, setCity, setLocation }) {
       .catch((error) => {
         console.error("Error:", error);
       });
+      setLocation({ lat: parseFloat(lat), lng: parseFloat(lng) });
+      setMarkerPosition({ lat: parseFloat(lat), lng: parseFloat(lng) }); // update marker position
   };
 
 const options = {
   mapTypeId: "terrain", // choose from roadmap, satellite, hybrid, terrain
-  zoomControl: false,
+  zoomControl: true,
   zoom: 7,
-  streetViewControl: false,
+  streetViewControl: true,
   styles: [ // This is an array of objects that define the visual styles for different features on the map.
     {
       featureType: "administrative.locality", //. The first object in the array targets the "administrative.locality" feature type (which represents cities and towns)
@@ -58,7 +67,16 @@ const options = {
         { saturation: 50 },
         { lightness: 0 },
         { invert_lightness: false },
-        { cursor: "crosshair" }, // add this to change cursor on cities
+      ],
+    },
+    {
+      featureType: "all",
+      elementType: "geometry",
+      stylers: [
+        { hue: "#00bfff" },
+        { saturation: -40 },
+        { lightness: 0 },
+        { visibility: "on" },
       ],
     },
     {
@@ -79,8 +97,29 @@ const options = {
   ],
 };
 
+const handleSubmit = (e) => {
+  e.preventDefault();
+  if (searchValue && autocomplete) {
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ address: searchValue }, (results, status) => {
+      if (status === "OK" && results && results[0].geometry) {
+        const location = {
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng(),
+        };
+        onLocationSelect(location.lat, location.lng);
+        setSearchValue(results[0].formatted_address);
+        searchInputRef.current.blur();
+      } else {
+        console.error("Geocode was not successful for the following reason: ", status);
+      }
+    });
+  }
+};
+
   return (
-    <GoogleMap
+      <div style={containerStyle}>
+            <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
       options={options}
@@ -89,10 +128,49 @@ const options = {
         const lat = event.latLng.lat();
         const lng = event.latLng.lng();
         onLocationSelect(lat, lng);
-      }}
+      } }
     >
-      <Marker position={center} />
-    </GoogleMap>
+        <Marker position={markerPosition} />
+      </GoogleMap>
+      <form onSubmit={handleSubmit} style={{ position: 'absolute', top: '10px', left: '50%', transform: 'translateX(-50%)', zIndex: 1 }}>
+      <Autocomplete
+        onLoad={(autocomplete) => setAutocomplete(autocomplete)}
+        onPlaceChanged={() => {
+          const place = autocomplete.getPlace();
+          console.log(place);
+          if (place.geometry) {
+            onLocationSelect(place.geometry.location.lat(), place.geometry.location.lng());
+          }
+        }}
+        types={['(cities)']}
+      >
+        <input
+          ref={searchInputRef}
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          id="pac-input"
+          className="controls"
+          type="text"
+          placeholder="Enter your location"
+          style={{
+            boxSizing: `border-box`,
+            border: `1px solid transparent`,
+            width: `240px`,
+            height: `32px`,
+            padding: `0 12px`,
+            borderRadius: `3px`,
+            boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+            fontSize: `14px`,
+            outline: `none`,
+            textOverflow: `ellipses`,
+            position: 'relative',
+            zIndex: 2
+          }}
+    />
+</Autocomplete>
+<button type="submit">Search</button>
+</form>
+  </div>
   );
 }
 

@@ -26,7 +26,6 @@ function App() {
     libraries: ["places"],
   });
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
-  const [mapRef, setMapRef] = useState(null);
 
 
   useEffect(() => {
@@ -118,6 +117,7 @@ function App() {
     setTemp(temp);
     setUnit(unit);
   };
+
 
 
   if (error) {
