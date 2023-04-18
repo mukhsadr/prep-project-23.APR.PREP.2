@@ -10,6 +10,9 @@ import TempConvert from "./components/TempConvert";
 import EquipmentCard from "./components/EquipmentCard";
 import EquipmentTable from "./components/EquipmentTable";
 import { requiredThings } from "./assets/constants";
+import { GoogleMap, Marker } from "@react-google-maps/api";
+import Map from "./components/Map/Map";
+
 
 function App() {
   const [error, setError] = useState(null);
@@ -22,7 +25,9 @@ function App() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ["places"],
   });
-  
+  const [location, setLocation] = useState({ lat: 0, lng: 0 });
+  const [mapRef, setMapRef] = useState(null);
+
 
   useEffect(() => {
     if (city === "Your location") {
@@ -40,8 +45,22 @@ function App() {
           console.log(result);
           console.log("city:", result[0].name)
           setCity(result[0].name);
-        })
-      }, (err) => {
+          fetch(
+            "https://nominatim.openstreetmap.org/search?q=" +
+              result[0].name +
+              "&format=json"
+          )
+            .then((res) => res.json())
+            .then((result) => {
+              console.log(result);
+              console.log("coordinates:", result[0].lat, result[0].lon);
+              setLocation({
+                lat: parseFloat(result[0].lat),
+                lng: parseFloat(result[0].lon),
+              });
+            });
+        });
+      },(err) => {
         console.log("Error:")
         console.log(err)
       });
@@ -84,6 +103,9 @@ function App() {
   }, [results])
 
 
+  const onMapLoad = () => {
+    console.log("Map loaded!");
+  };
 
 
   const cityHandler = (city) => {
@@ -96,6 +118,7 @@ function App() {
     setTemp(temp);
     setUnit(unit);
   };
+
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -136,6 +159,17 @@ function App() {
           {!isVarLoaded && <h2>Loading...</h2>}
           {isVarLoaded && results && (
           <Forecast city={city} />)}
+          {location.lat && location.lng && (
+            <div>
+            <Map
+              location={location}
+              onMapLoad={onMapLoad}
+              setCity={setCity}
+              setLocation={setLocation}
+            />
+            <p>Selected city: {city}</p>
+          </div>
+          )}
         </div>
       </>
     );
