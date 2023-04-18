@@ -32,6 +32,7 @@ const WeatherStore = ({ children }) => {
       setCity(yourLocation);
     } else {
       setCity(city);
+      setScreen(true);
     }
   };
 
