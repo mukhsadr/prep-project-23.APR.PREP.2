@@ -12,6 +12,10 @@ import EquipmentTable from "./components/EquipmentTable";
 import { requiredThings } from "./assets/constants";
 import AirQuality1 from './components/AirQuality/AirQuality';
 import { Modal } from "react-bootstrap";
+import { GoogleMap, Marker } from "@react-google-maps/api";
+import Map from "./components/Map/Map";
+
+
 import AirQuality from "./components/AirQuality";
 
 function App() {
@@ -26,7 +30,8 @@ function App() {
     libraries: ["places"],
   });
   const [showModal, setShowModal] = useState(false);
-  
+
+  const [location, setLocation] = useState({ lat: 0, lng: 0 });
 
   useEffect(() => {
     if (city === "Your location") {
@@ -45,6 +50,25 @@ function App() {
           setCity(cityName);
         })
       }, (err) => {
+          console.log(result);
+          console.log("city:", result[0].name)
+          setCity(result[0].name);
+          fetch(
+            "https://nominatim.openstreetmap.org/search?q=" +
+              result[0].name +
+              "&format=json"
+          )
+            .then((res) => res.json())
+            .then((result) => {
+              console.log(result);
+              console.log("coordinates:", result[0].lat, result[0].lon);
+              setLocation({
+                lat: parseFloat(result[0].lat),
+                lng: parseFloat(result[0].lon),
+              });
+            });
+        });
+      },(err) => {
         console.log("Error:")
         console.log(err)
       });
@@ -87,6 +111,9 @@ function App() {
   }, [results])
 
 
+  const onMapLoad = () => {
+    console.log("Map loaded!");
+  };
 
 
   const cityHandler = (city) => {
@@ -103,6 +130,8 @@ function App() {
     setUnit(unit);
   };
 
+
+
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
@@ -115,6 +144,17 @@ function App() {
           {temp ? <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert> : null}
           <br></br>
           <button className="btn btn-primary" onClick={() => setShowModal(true)}>Check Air Quality</button>
+          {location.lat && location.lng && (
+            <div>
+            <Map
+              location={location}
+              onMapLoad={onMapLoad}
+              setCity={setCity}
+              setLocation={setLocation}
+              city={city}
+            />
+          </div>
+          )}
           <AirQuality city={city}></AirQuality>
           <div className={`Results${" smallScreen"}`}>
             {!isVarLoaded && <h2>Loading...</h2>}
