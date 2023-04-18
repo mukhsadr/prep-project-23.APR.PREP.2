@@ -14,9 +14,8 @@ import AirQuality1 from './components/AirQuality/AirQuality';
 import { Modal } from "react-bootstrap";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import Map from "./components/Map/Map";
-
-
 import AirQuality from "./components/AirQuality";
+
 
 function App() {
   const [error, setError] = useState(null);
