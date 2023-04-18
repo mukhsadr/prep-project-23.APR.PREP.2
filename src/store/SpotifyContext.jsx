@@ -28,13 +28,10 @@ const SpotifyStore = ({ children }) => {
   const RESPONSE_TYPE = "token";
   const scope =
     "streaming \
-        user-read-email \
-        user-read-private   \
         user-read-currently-playing\
-        user-read-recently-played \
         user-read-playback-state\
-        user-top-read\
-        user-modify-playback-state";
+        user-modify-playback-state\
+        playlist-read-collaborative";
 
   const [token, setToken] = useState("");
   const [player, setPlayer] = useState(undefined);
@@ -91,7 +88,7 @@ const SpotifyStore = ({ children }) => {
           console.log("Ready with Device ID", device_id);
 
           const play = ({
-            spotify_uri,
+            context_uri,
             playerInstance: {
               _options: { getOAuthToken, id },
             },
@@ -101,7 +98,7 @@ const SpotifyStore = ({ children }) => {
                 `https://api.spotify.com/v1/me/player/play?device_id=${device_id}`,
                 {
                   method: "PUT",
-                  body: JSON.stringify({ uris: [spotify_uri] }),
+                  body: JSON.stringify({ context_uri: context_uri }),
                   headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${access_token}`,
@@ -116,6 +113,7 @@ const SpotifyStore = ({ children }) => {
               return;
             }
             setTrack(state.track_window.current_track);
+            console.log(state.track_window.current_track.album.images[0].url);
             setPaused(state.paused);
 
             player.getCurrentState().then((state) => {
@@ -125,7 +123,8 @@ const SpotifyStore = ({ children }) => {
 
           play({
             playerInstance: player,
-            spotify_uri: "spotify:track:3sg1RZE32Qwy8j1T1POnBx",
+            context_uri: "spotify:playlist:37i9dQZF1DWV7EzJMK2FUI",
+            position_ms: 0,
           });
         });
 

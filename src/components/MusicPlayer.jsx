@@ -81,10 +81,9 @@ export default function MusicPlayer() {
           </Button>
           <div className="tooltip">
             <Button onClick={logout}>
-              <img
-                height={"58px"}
-                src={process.env.PUBLIC_URL + current_track.album.images[0].url}
-              />
+              {current_track.album !== null ? (
+                <img height={"58px"} src={current_track.album.images[0].url} />
+              ) : null}
             </Button>
             <span className="tooltiptext">Logout</span>
           </div>
