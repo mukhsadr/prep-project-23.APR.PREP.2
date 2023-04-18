@@ -10,6 +10,9 @@ import TempConvert from "./components/TempConvert";
 import EquipmentCard from "./components/EquipmentCard";
 import EquipmentTable from "./components/EquipmentTable";
 import { requiredThings } from "./assets/constants";
+import { GoogleMap, Marker } from "@react-google-maps/api";
+import Map from "./components/Map/Map";
+
 import AirQuality from "./components/AirQuality";
 
 function App() {
@@ -23,7 +26,8 @@ function App() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ["places"],
   });
-  
+  const [location, setLocation] = useState({ lat: 0, lng: 0 });
+
 
   useEffect(() => {
     if (city === "Your location") {
@@ -41,8 +45,22 @@ function App() {
           console.log(result);
           console.log("city:", result[0].name)
           setCity(result[0].name);
-        })
-      }, (err) => {
+          fetch(
+            "https://nominatim.openstreetmap.org/search?q=" +
+              result[0].name +
+              "&format=json"
+          )
+            .then((res) => res.json())
+            .then((result) => {
+              console.log(result);
+              console.log("coordinates:", result[0].lat, result[0].lon);
+              setLocation({
+                lat: parseFloat(result[0].lat),
+                lng: parseFloat(result[0].lon),
+              });
+            });
+        });
+      },(err) => {
         console.log("Error:")
         console.log(err)
       });
@@ -85,6 +103,9 @@ function App() {
   }, [results])
 
 
+  const onMapLoad = () => {
+    console.log("Map loaded!");
+  };
 
 
   const cityHandler = (city) => {
@@ -98,6 +119,8 @@ function App() {
     setUnit(unit);
   };
 
+
+
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
@@ -108,6 +131,17 @@ function App() {
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler} city={city}></AutoComp>}
           {temp ? <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert> : null}
+          {location.lat && location.lng && (
+            <div>
+            <Map
+              location={location}
+              onMapLoad={onMapLoad}
+              setCity={setCity}
+              setLocation={setLocation}
+              city={city}
+            />
+          </div>
+          )}
           <AirQuality city={city}></AirQuality>
           <div className={`Results${" smallScreen"}`}>
             {!isVarLoaded && <h2>Loading...</h2>}
