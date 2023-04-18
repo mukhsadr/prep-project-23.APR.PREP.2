@@ -21,11 +21,12 @@ const WeatherStore = ({ children }) => {
   const [unit, setUnit] = useState("C");
   const [results, setResults] = useState(null);
   const [yourLocation, setYourLocation] = useState("Your location");
-  const [favCities, setFavCities] = useState(null)
+  const [favCities, setFavCities] = useState(null);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ["places"],
   });
+  const [condition, setCondition] = useState(0);
 
   const cityHandler = (city) => {
     if (city === "Your location") {
@@ -46,10 +47,9 @@ const WeatherStore = ({ children }) => {
   };
 
   const addFavorite = (city) => {
-
     if (favCities === null) {
       setFavCities([city]);
-      window.localStorage.setItem('MLH_FAV_CITIES', JSON.stringify([city]));
+      window.localStorage.setItem("MLH_FAV_CITIES", JSON.stringify([city]));
     } else {
       const cityIndex = favCities.indexOf(city);
 
@@ -61,13 +61,19 @@ const WeatherStore = ({ children }) => {
       setFavCities([...favCities, city]);
 
       // save to local storage
-      window.localStorage.setItem('MLH_FAV_CITIES', JSON.stringify([...favCities, city]));
+      window.localStorage.setItem(
+        "MLH_FAV_CITIES",
+        JSON.stringify([...favCities, city])
+      );
     }
 
     console.log(city, "added to favorite city.");
-    console.log("local storage's favCities = ", JSON.parse(window.localStorage.getItem('MLH_FAV_CITIES')));
+    console.log(
+      "local storage's favCities = ",
+      JSON.parse(window.localStorage.getItem("MLH_FAV_CITIES"))
+    );
     return true;
-  }
+  };
 
   const deleteFromFavorite = (cityToDelete) => {
     // Find the index of the city you want to delete
@@ -75,11 +81,11 @@ const WeatherStore = ({ children }) => {
 
     if (cityIndex > -1) {
       // Remove the city from the array using splice
-      const newArray = favCities.filter(city => city !== cityToDelete);
+      const newArray = favCities.filter((city) => city !== cityToDelete);
       setFavCities(newArray);
 
       // Store the updated array back in local storage
-      window.localStorage.setItem('MLH_FAV_CITIES', JSON.stringify(favCities));
+      window.localStorage.setItem("MLH_FAV_CITIES", JSON.stringify(favCities));
 
       console.log(city, "removed from favorite city.");
       console.log("Current fav_cities = ", favCities);
@@ -88,7 +94,7 @@ const WeatherStore = ({ children }) => {
       console.log(city, "is not in favCities");
       return false;
     }
-  }
+  };
 
   const favoriteContain = (city) => {
     if (favCities === null) {
@@ -96,7 +102,7 @@ const WeatherStore = ({ children }) => {
     } else {
       return favCities.indexOf(city) > -1;
     }
-  }
+  };
 
   useEffect(() => {
     if (city === "Your location") {
@@ -144,6 +150,8 @@ const WeatherStore = ({ children }) => {
           } else {
             setIsVarLoaded(true);
             setResults(result);
+            setCondition(results.weather[0].id);
+            console.log("condition", results.weather[0].id);
           }
         },
         (error) => {
@@ -189,7 +197,8 @@ const WeatherStore = ({ children }) => {
     setFavCities,
     addFavorite,
     deleteFromFavorite,
-    favoriteContain
+    favoriteContain,
+    condition,
   };
 
   return (

@@ -4,9 +4,9 @@ import SpotifyStore from "./SpotifyContext";
 
 const GlobalStore = ({ children }) => {
   return (
-    <SpotifyStore>
-      <WeatherStore>{children}</WeatherStore>
-    </SpotifyStore>
+    <WeatherStore>
+      <SpotifyStore>{children}</SpotifyStore>
+    </WeatherStore>
   );
 };
 
