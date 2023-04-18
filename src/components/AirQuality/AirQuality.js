@@ -38,8 +38,6 @@ const AirQuality = ({ city }) => {
           .then(response => response.json())
           .then(data => {
             setAirQuality(data.list[0]);
-            console.log("data", data.list[0]);
-            console.log("City", city);
           })
           .catch(error => console.log(error));
       })

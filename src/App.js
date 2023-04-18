@@ -11,7 +11,7 @@ import EquipmentCard from "./components/EquipmentCard";
 import EquipmentTable from "./components/EquipmentTable";
 import { requiredThings } from "./assets/constants";
 import AirQuality from './components/AirQuality/AirQuality';
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 function App() {
   const [error, setError] = useState(null);
@@ -145,14 +145,14 @@ function App() {
           <Forecast city={city} />)}
         </div>
         <div className="aq-container">
-        <Modal show={showModal} onHide={() => setShowModal(false)} className="my-modal">
-        <Modal.Header closeButton>
+          <Modal show={showModal} onHide={() => setShowModal(false)} className="my-modal">
+          <Modal.Header closeButton>
           <Modal.Title>Air Quality in {city}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <AirQuality city={city} />          
-        </Modal.Body>
-      </Modal>
+          </Modal.Header>
+          <Modal.Body>
+          <AirQuality city={city} />          
+          </Modal.Body>
+          </Modal>
         </div>
       </>
     );
