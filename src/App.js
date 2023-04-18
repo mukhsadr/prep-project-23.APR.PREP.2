@@ -6,8 +6,7 @@ import { useLoadScript } from "@react-google-maps/api";
 import React from 'react';
 import './App.css';
 import TempConvert from "./components/TempConvert";
-// import { useMediaQuery } from "@material-ui/core";
-
+import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 
 function App() {
   const [error, setError] = useState(null);
@@ -58,7 +57,7 @@ function App() {
           } else {
             setIsVarLoaded(true);
             setResults(result);
-            console.log("Result:", result)
+            console.log("Result is here:", result)
           }
         },
         (error) => {
@@ -70,6 +69,7 @@ function App() {
 
   useEffect(() => {
     if (results !== null) {
+      console.log("results are here:", results)
       if (unit === "F") {
         let newT = results.main.feels_like * 1.8 + 32;
         setTemp(newT)
@@ -78,7 +78,7 @@ function App() {
         setTemp(results.main.feels_like)
       }
     }
-  }, [results])
+  }, [results, unit])
 
 
 
@@ -92,6 +92,7 @@ function App() {
     console.log("Temp set to:", temp)
     setTemp(temp);
     setUnit(unit);
+
   };
 
   if (error) {
@@ -104,7 +105,7 @@ function App() {
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler} city={city}></AutoComp>}
           {temp ? <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert> : null}
-          <div className={`Results${" smallScreen"}`}>
+          <div className={`Results ${"smallScreen"}`}>
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
             {console.log(isLoaded)}
@@ -119,6 +120,9 @@ function App() {
                 </i>
               </>
             )}
+          </div>
+          <div>
+            {results && <SongRecommendation options={results} />}
           </div>
         </div>
       </>
