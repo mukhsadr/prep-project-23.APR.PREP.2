@@ -14,6 +14,7 @@ import AirQuality1 from './components/AirQuality/AirQuality';
 import { Modal } from "react-bootstrap";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import Map from "./components/Map/Map";
+import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 import AirQuality from "./components/AirQuality";
 
 
@@ -95,6 +96,7 @@ function App() {
 
   useEffect(() => {
     if (results !== null) {
+      console.log("results are here:", results)
       if (unit === "F") {
         let newT = results.main.feels_like * 1.8 + 32;
         setTemp(newT)
@@ -103,7 +105,7 @@ function App() {
         setTemp(results.main.feels_like)
       }
     }
-  }, [results])
+  }, [results, unit])
 
 
   const onMapLoad = () => {
@@ -123,6 +125,7 @@ function App() {
     console.log("Temp set to:", temp)
     setTemp(temp);
     setUnit(unit);
+
   };
 
 
@@ -141,14 +144,14 @@ function App() {
           <button className="btn btn-primary" onClick={() => setShowModal(true)}>Check Air Quality</button>
           {location.lat && location.lng && (
             <div>
-            <Map
-              location={location}
-              onMapLoad={onMapLoad}
-              setCity={setCity}
-              setLocation={setLocation}
-              city={city}
-            />
-          </div>
+              <Map
+                location={location}
+                onMapLoad={onMapLoad}
+                setCity={setCity}
+                setLocation={setLocation}
+                city={city}
+              />
+            </div>
           )}
           <AirQuality city={city}></AirQuality>
           <div className={`Results${" smallScreen"}`}>
@@ -158,7 +161,7 @@ function App() {
             {isVarLoaded && results && (
               <>
                 <h3>{results.weather[0].main}</h3>
-                
+
                 <h4>Things to bring:</h4>
                 {console.log(requiredThings[results.weather[0].main])}
 
@@ -179,7 +182,10 @@ function App() {
           </div>
           {!isVarLoaded && <h2>Loading...</h2>}
           {isVarLoaded && results && (
-          <Forecast city={city} />)}
+            <Forecast city={city} />)}
+          <div>
+            {results && <SongRecommendation options={results} />}
+          </div>
         </div>
         <div className="aq-container">
           <Modal show={showModal} onHide={() => setShowModal(false)} className="my-modal">
