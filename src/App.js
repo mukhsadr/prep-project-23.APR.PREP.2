@@ -10,9 +10,9 @@ import TempConvert from "./components/TempConvert";
 import EquipmentCard from "./components/EquipmentCard";
 import EquipmentTable from "./components/EquipmentTable";
 import { requiredThings } from "./assets/constants";
-import AirQuality from './components/AirQuality/AirQuality';
+import AirQuality1 from './components/AirQuality/AirQuality';
 import { Modal } from "react-bootstrap";
-import AirQuality from './components/AirQuality/AirQuality';
+import AirQuality from "./components/AirQuality";
 
 function App() {
   const [error, setError] = useState(null);
@@ -152,7 +152,7 @@ function App() {
           <Modal.Title>Air Quality in {city}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <AirQuality city={city} />          
+          <AirQuality1 city={city} />          
           </Modal.Body>
           </Modal>
         </div>
