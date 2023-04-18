@@ -67,8 +67,7 @@ function App() {
                 lng: parseFloat(result[0].lon),
               });
             });
-        });
-      },(err) => {
+        }).catch((err)  => {
         console.log("Error:")
         console.log(err)
       });
