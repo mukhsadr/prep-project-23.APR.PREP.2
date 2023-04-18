@@ -13,6 +13,7 @@ import { requiredThings } from "./assets/constants";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import Map from "./components/Map/Map";
 
+import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 import AirQuality from "./components/AirQuality";
 
 function App() {
@@ -47,8 +48,8 @@ function App() {
           setCity(result[0].name);
           fetch(
             "https://nominatim.openstreetmap.org/search?q=" +
-              result[0].name +
-              "&format=json"
+            result[0].name +
+            "&format=json"
           )
             .then((res) => res.json())
             .then((result) => {
@@ -60,7 +61,7 @@ function App() {
               });
             });
         });
-      },(err) => {
+      }, (err) => {
         console.log("Error:")
         console.log(err)
       });
@@ -80,7 +81,7 @@ function App() {
           } else {
             setIsVarLoaded(true);
             setResults(result);
-            console.log("Result:", result)
+            console.log("Result is here:", result)
           }
         },
         (error) => {
@@ -92,6 +93,7 @@ function App() {
 
   useEffect(() => {
     if (results !== null) {
+      console.log("results are here:", results)
       if (unit === "F") {
         let newT = results.main.feels_like * 1.8 + 32;
         setTemp(newT)
@@ -100,7 +102,7 @@ function App() {
         setTemp(results.main.feels_like)
       }
     }
-  }, [results])
+  }, [results, unit])
 
 
   const onMapLoad = () => {
@@ -117,6 +119,7 @@ function App() {
     console.log("Temp set to:", temp)
     setTemp(temp);
     setUnit(unit);
+
   };
 
 
@@ -133,14 +136,14 @@ function App() {
           {temp ? <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert> : null}
           {location.lat && location.lng && (
             <div>
-            <Map
-              location={location}
-              onMapLoad={onMapLoad}
-              setCity={setCity}
-              setLocation={setLocation}
-              city={city}
-            />
-          </div>
+              <Map
+                location={location}
+                onMapLoad={onMapLoad}
+                setCity={setCity}
+                setLocation={setLocation}
+                city={city}
+              />
+            </div>
           )}
           <AirQuality city={city}></AirQuality>
           <div className={`Results${" smallScreen"}`}>
@@ -150,7 +153,7 @@ function App() {
             {isVarLoaded && results && (
               <>
                 <h3>{results.weather[0].main}</h3>
-                
+
                 <h4>Things to bring:</h4>
                 {console.log(requiredThings[results.weather[0].main])}
 
@@ -171,7 +174,10 @@ function App() {
           </div>
           {!isVarLoaded && <h2>Loading...</h2>}
           {isVarLoaded && results && (
-          <Forecast city={city} />)}
+            <Forecast city={city} />)}
+          <div>
+            {results && <SongRecommendation options={results} />}
+          </div>
         </div>
       </>
     );

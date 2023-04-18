@@ -14,3 +14,5 @@ npm install --save use-places-autocomplete
 npm install --save @react-google-maps/api
 
 npm i chart.js
+npm i react-bootstrap
+npm i buffer
