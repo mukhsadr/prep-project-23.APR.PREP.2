@@ -130,6 +130,17 @@ function App() {
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler} city={city}></AutoComp>}
           {temp ? <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert> : null}
+          {location.lat && location.lng && (
+            <div>
+            <Map
+              location={location}
+              onMapLoad={onMapLoad}
+              setCity={setCity}
+              setLocation={setLocation}
+              city={city}
+            />
+          </div>
+          )}
           <div className={`Results${" smallScreen"}`}>
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
@@ -159,17 +170,6 @@ function App() {
           {!isVarLoaded && <h2>Loading...</h2>}
           {isVarLoaded && results && (
           <Forecast city={city} />)}
-          {location.lat && location.lng && (
-            <div>
-            <Map
-              location={location}
-              onMapLoad={onMapLoad}
-              setCity={setCity}
-              setLocation={setLocation}
-            />
-            <p>Selected city: {city}</p>
-          </div>
-          )}
         </div>
       </>
     );

@@ -4,8 +4,11 @@ import { GoogleMap, Marker } from "@react-google-maps/api";
 function Map({ location, onMapLoad, setCity, setLocation }) {
   
   const containerStyle = {
-    width: "100%",
+    width: "80%",
     height: "400px",
+    borderRadius: "7%",
+    margin: "0 auto",
+    marginTop: "20px",
   };
 
   const center = {
