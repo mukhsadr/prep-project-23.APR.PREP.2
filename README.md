@@ -12,3 +12,5 @@ You'll be using React initially to build this. If you're new to React, check out
 npm install --save use-places-autocomplete
 
 npm install --save @react-google-maps/api
+
+npm i chart.js
