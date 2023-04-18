@@ -19,7 +19,7 @@ function SongRecommendation(props) {
     playlistId = {
         // ids can be changed and replaced, more lists should be added
         Clear: "5wcIMnhe5fa1IuSul2Q349",
-        Clouds: "3QrZOF8JmVADH0jl2DZv8r",
+        Clouds: "5YsFFa6GnuJ7YIGRyh306s",
         Smoke: "7MWiSLhNiRaOXhRnFLo9wt",
         Rain: "0qu4MskLUM4hThVXJzxzRp",
         Snow: "7iQ4SQo7LG5ezVKXoeG9oZ",
