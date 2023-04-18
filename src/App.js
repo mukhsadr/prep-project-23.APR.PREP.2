@@ -3,9 +3,13 @@ import "./App.css";
 import logo from "./mlh-prep.png";
 import AutoComp from "./components/AutoComp";
 import { useLoadScript } from "@react-google-maps/api";
+import Forecast from "./components/Forecast/Forecast";
 import React from 'react';
 import './App.css';
 import TempConvert from "./components/TempConvert";
+import EquipmentCard from "./components/EquipmentCard";
+import EquipmentTable from "./components/EquipmentTable";
+import { requiredThings } from "./assets/constants";
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 
 function App() {
@@ -19,6 +23,7 @@ function App() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ["places"],
   });
+
 
   useEffect(() => {
     if (city === "Your location") {
@@ -112,6 +117,16 @@ function App() {
             {isVarLoaded && results && (
               <>
                 <h3>{results.weather[0].main}</h3>
+
+                <h4>Things to bring:</h4>
+                {console.log(requiredThings[results.weather[0].main])}
+
+                {!!results.weather[0].main && (
+                  <EquipmentTable
+                    equipments={requiredThings[results.weather[0].main]}
+                  />
+                )}
+
                 {temp ? <p>Feels like {temp.toFixed(2)}°{unit}</p> : null}
                 <i>
                   <p>
@@ -121,6 +136,9 @@ function App() {
               </>
             )}
           </div>
+          {!isVarLoaded && <h2>Loading...</h2>}
+          {isVarLoaded && results && (
+            <Forecast city={city} />)}
           <div>
             {results && <SongRecommendation options={results} />}
           </div>
