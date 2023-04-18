@@ -8,7 +8,6 @@ import './App.css';
 import TempConvert from "./components/TempConvert";
 import SongRecommendation from "./components/SongRecommendation/SongRecommendation";
 
-
 function App() {
   const [error, setError] = useState(null);
   const [isVarLoaded, setIsVarLoaded] = useState(false);
