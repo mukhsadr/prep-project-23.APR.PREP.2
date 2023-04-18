@@ -40,22 +40,18 @@ function App() {
         let coordY = position.coords.longitude
         console.log(coordX, coordY)
         fetch(
-          "https://api.openweathermap.org/geo/1.0/reverse?lat=" +
-          coordX + "&lon=" + coordY +
+          "https://api.openweathermap.org/geo/1.0/reverse?lat="
+          + coordX + "&lon=" + coordY +
           "&appid=" +
           process.env.REACT_APP_APIKEY
         ).then((res) => { return res.json() }).then((result) => {
-          const cityName = result[0].name.split('-')[0].trim();
-          setCity(cityName);
-        })
-      }, (err) => {
           console.log(result);
           console.log("city:", result[0].name)
           setCity(result[0].name);
           fetch(
             "https://nominatim.openstreetmap.org/search?q=" +
-              result[0].name +
-              "&format=json"
+            result[0].name +
+            "&format=json"
           )
             .then((res) => res.json())
             .then((result) => {
@@ -66,7 +62,8 @@ function App() {
                 lng: parseFloat(result[0].lon),
               });
             });
-        }).catch((err)  => {
+        });
+      }, (err) => {
         console.log("Error:")
         console.log(err)
       });
@@ -86,7 +83,7 @@ function App() {
           } else {
             setIsVarLoaded(true);
             setResults(result);
-            console.log("Result:", result)
+            console.log("Result is here:", result)
           }
         },
         (error) => {
