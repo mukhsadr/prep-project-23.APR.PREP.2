@@ -10,6 +10,8 @@ import TempConvert from "./components/TempConvert";
 import EquipmentCard from "./components/EquipmentCard";
 import EquipmentTable from "./components/EquipmentTable";
 import { requiredThings } from "./assets/constants";
+import AirQuality from './components/AirQuality/AirQuality';
+import { Button, Modal } from "react-bootstrap";
 
 function App() {
   const [error, setError] = useState(null);
@@ -22,6 +24,7 @@ function App() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries: ["places"],
   });
+  const [showModal, setShowModal] = useState(false);
   
 
   useEffect(() => {
@@ -32,14 +35,13 @@ function App() {
         let coordY = position.coords.longitude
         console.log(coordX, coordY)
         fetch(
-          "https://api.openweathermap.org/geo/1.0/reverse?lat="
-          + coordX + "&lon=" + coordY +
+          "https://api.openweathermap.org/geo/1.0/reverse?lat=" +
+          coordX + "&lon=" + coordY +
           "&appid=" +
           process.env.REACT_APP_APIKEY
         ).then((res) => { return res.json() }).then((result) => {
-          console.log(result);
-          console.log("city:", result[0].name)
-          setCity(result[0].name);
+          const cityName = result[0].name.split('-')[0].trim();
+          setCity(cityName);
         })
       }, (err) => {
         console.log("Error:")
@@ -91,6 +93,9 @@ function App() {
     setCity(city);
   };
 
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
+
   const tempHandler = (temp, unit) => {
     console.log("Temp set to:", temp)
     setTemp(temp);
@@ -103,10 +108,12 @@ function App() {
     return (
       <>
         <img className="logo" src={logo} alt="MLH Prep Logo"></img>
-        <div>
+       <div>
           <h2>Enter a city below 👇</h2>
           {isLoaded && <AutoComp cityHandler={cityHandler} city={city}></AutoComp>}
           {temp ? <TempConvert tempHandler={tempHandler} currTemp={temp}></TempConvert> : null}
+          <br></br>
+          <button className="btn btn-primary" onClick={() => setShowModal(true)}>Check Air Quality</button>
           <div className={`Results${" smallScreen"}`}>
             {!isVarLoaded && <h2>Loading...</h2>}
             {console.log(results)}
@@ -136,6 +143,16 @@ function App() {
           {!isVarLoaded && <h2>Loading...</h2>}
           {isVarLoaded && results && (
           <Forecast city={city} />)}
+        </div>
+        <div className="aq-container">
+        <Modal show={showModal} onHide={() => setShowModal(false)} className="my-modal">
+        <Modal.Header closeButton>
+          <Modal.Title>Air Quality in {city}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <AirQuality city={city} />          
+        </Modal.Body>
+      </Modal>
         </div>
       </>
     );
