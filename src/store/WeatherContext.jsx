@@ -49,6 +49,7 @@ const WeatherStore = ({ children }) => {
 
     if (favCities === null) {
       setFavCities([city]);
+      window.localStorage.setItem('MLH_FAV_CITIES', JSON.stringify([city]));
     } else {
       const cityIndex = favCities.indexOf(city);
 
@@ -58,13 +59,12 @@ const WeatherStore = ({ children }) => {
       }
 
       setFavCities([...favCities, city]);
+
+      // save to local storage
+      window.localStorage.setItem('MLH_FAV_CITIES', JSON.stringify([...favCities, city]));
     }
 
-    // save to local storage
-    window.localStorage.setItem('MLH_FAV_CITIES', JSON.stringify([...favCities, city]));
-
     console.log(city, "added to favorite city.");
-    console.log("favCities = ", favCities);
     console.log("local storage's favCities = ", JSON.parse(window.localStorage.getItem('MLH_FAV_CITIES')));
     return true;
   }
