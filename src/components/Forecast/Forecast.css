@@ -1,5 +1,5 @@
 .forecast-card{
-  background-color: white;
+  background-color: rgba(229, 195, 195, 0.25);
   margin-left: 10%;
   margin-right: 10%;
   margin-top: 20px;
@@ -16,7 +16,8 @@ h2 {
 
 .chart-container {
  margin: 10px;
-  height: 60vh;
+  min-height: 20vh;
+  height: 35vh;
 }
 
 .tooltipText{
@@ -26,16 +27,17 @@ h2 {
 }
 
 input[type="datetime-local"] {
-  background-color: white;
+  
   border: none;
   border-radius: 5px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
   color: #000000;
   font-family: Arial, sans-serif;
-  font-size: 20px;
-  padding: 10px;
-  margin: 10px;
-  width: 250px;
+  font-size: 15px;
+  padding-left: 5px;
+  margin: 5px;
+  width: 200px;
+  height: 5vh;
 }
 
 
