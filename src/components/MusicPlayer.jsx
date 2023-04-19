@@ -31,7 +31,7 @@ export default function MusicPlayer() {
           sx={{ display: { xs: "block", sm: "block", md: "block" } }}
         >
           {" "}
-          <div className="tooltip">
+          <div className="tooltip2">
             <a
               href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${scope}`}
             >
