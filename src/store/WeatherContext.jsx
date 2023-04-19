@@ -125,6 +125,7 @@ const WeatherStore = ({ children }) => {
             .then((result) => {
               setCity(result[0].name);
               setYourLocation(result[0].name);
+              setCondition(result.weather[0].id);
               setLocation({
                 lat: parseFloat(result[0].lat),
                 lng: parseFloat(result[0].lon),
@@ -155,8 +156,7 @@ const WeatherStore = ({ children }) => {
           } else {
             setIsVarLoaded(true);
             setResults(result);
-            setCondition(results.weather[0].id);
-            console.log("condition", results.weather[0].id);
+            setCondition(result.weather[0].id);
             setLocation({
               lat: parseFloat(result[0].lat),
               lng: parseFloat(result[0].lon),
