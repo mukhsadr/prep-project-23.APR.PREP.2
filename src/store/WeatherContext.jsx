@@ -30,6 +30,8 @@ const WeatherStore = ({ children }) => {
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
   const [hourlyForecast, setHourlyForecast] = useState(null);
   const [weeklyForecast, setWeeklyForecast] = useState(null);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
 
   const cityHandler = (city) => {
     if (city === "Your location") {
@@ -260,6 +262,10 @@ const WeatherStore = ({ children }) => {
     setHourlyForecast,
     weeklyForecast,
     setWeeklyForecast,
+    screenWidth,
+    setScreenWidth,
+    screenHeight,
+    setScreenHeight
   };
 
   return (
