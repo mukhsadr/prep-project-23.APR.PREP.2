@@ -14,6 +14,7 @@ import SongRecommendation from "./SongRecommendation/SongRecommendation";
 import { requiredThings } from "./../assets/constants";
 import EquipmentTable from "./EquipmentTable";
 import EquipmentCard from "./EquipmentCard";
+import WeeklyForecast from "./WeeklyForecast/WeeklyForecast";
 
 function SecondaryScreen() {
   const {
@@ -31,6 +32,7 @@ function SecondaryScreen() {
     deleteFromFavorite,
     favoriteContain,
     location,
+    weeklyForecast
   } = useWeatherContext();
   const [showModal, setShowModal] = useState(false);
 
@@ -130,6 +132,7 @@ function SecondaryScreen() {
                     </>
                   )}
                 </div>
+                <WeeklyForecast weeklyForecast = {weeklyForecast}/>
               </div>
             </Grid>
             <Grid
