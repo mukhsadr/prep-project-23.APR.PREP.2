@@ -111,27 +111,7 @@ function SecondaryScreen() {
 
               <div>
                 <Title text={city} color="White" />
-                <div className="Results" onClick={changeScreen}>
-                  {!isVarLoaded && <h2>Loading...</h2>}
-                  {isVarLoaded && results && <Forecast city={city} />}
-                  {console.log(results)}
-                  {console.log(isLoaded)}
-                  {isVarLoaded && results && (
-                    <>
-                      <h3>{results.weather[0].main}</h3>
-                      {temp ? (
-                        <p>
-                          Feels like {temp.toFixed(2)}°{unit}
-                        </p>
-                      ) : null}
-                      <i>
-                        <p>
-                          {results.name}, {results.sys.country}
-                        </p>
-                      </i>
-                    </>
-                  )}
-                </div>
+                {isVarLoaded && results && <Forecast city={city} />}
               </div>
             </Grid>
             <Grid
