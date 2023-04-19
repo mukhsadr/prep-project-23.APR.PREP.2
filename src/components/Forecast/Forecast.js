@@ -72,7 +72,7 @@ function Forecast({ city }) {
         (forecastItem) => forecastItem.weatherType
       );
 
-      const canvas = document.getElementById("forecast-card");
+      const canvas = document.getElementById("chart");
       const typeCounts = {};
       weatherType.forEach((type) => {
         typeCounts[type] = (typeCounts[type] || 0) + 1;
@@ -146,7 +146,7 @@ function Forecast({ city }) {
                 iconData,
                 data,
                 borderColor: "rgba(75, 192, 192, 1)",
-                pointRadius: 20,
+                pointRadius: 10,
                 pointBorderColor: function (context) {
                   var temp = context.dataset.data[context.dataIndex];
                   if (temp < 0) {
@@ -321,12 +321,6 @@ function Forecast({ city }) {
               legend: {
                 display: false,
               },
-              title: {
-                display: true,
-                text: `Weather type: ${mostFrequentType}`,
-                fontColor: "black",
-                fontSize: 15,
-              },
             },
           },
         });
@@ -339,9 +333,6 @@ function Forecast({ city }) {
   return (
     <>
       <div className="forecast-card" id="forecast-card">
-        <h2>
-          Hourly Forecast for {city} - {date.toLocaleDateString()}
-        </h2>
         <input
           type="datetime-local"
           value={`${date.getFullYear()}-${(date.getMonth() + 1)
