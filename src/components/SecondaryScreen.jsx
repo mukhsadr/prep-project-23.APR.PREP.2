@@ -1,27 +1,46 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useWeatherContext } from "../store/WeatherContext";
 import { Grid } from "@mui/material";
 import TopBar from "./TopBar";
 import { Title } from "../TextStyle";
-import back_button from "../components/BackButton.png"
-import favorite from "../components/Favorite.png"
-import favorite_hollow from "../components/Favorite_hollow.png"
+import back_button from "../components/BackButton.png";
+import favorite from "../components/Favorite.png";
+import favorite_hollow from "../components/Favorite_hollow.png";
+import AirQuality1 from "./AirQuality/AirQuality";
+import AirQuality from "./AirQuality";
+import { Modal } from "react-bootstrap";
 
 function SecondaryScreen() {
-  const { city, temp, unit, isLoaded, results, error, isVarLoaded, changeScreen, favCities, addFavorite, deleteFromFavorite, favoriteContain } =
-    useWeatherContext();
+  const {
+    city,
+    temp,
+    unit,
+    isLoaded,
+    results,
+    error,
+    isVarLoaded,
+    changeScreen,
+    favCities,
+    addFavorite,
+    deleteFromFavorite,
+    favoriteContain,
+  } = useWeatherContext();
+  const [showModal, setShowModal] = useState(false);
 
-  var fav_img = (favoriteContain(city)) ? favorite : favorite_hollow;
+  let fav_img = favoriteContain(city) ? favorite : favorite_hollow;
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
 
   const handleFavClick = () => {
     if (fav_img === favorite) {
       // remove
-      fav_img = (deleteFromFavorite(city)) ? favorite_hollow : favorite;
+      fav_img = deleteFromFavorite(city) ? favorite_hollow : favorite;
     } else {
       // add
-      fav_img = (addFavorite(city)) ? favorite : favorite_hollow;
+      fav_img = addFavorite(city) ? favorite : favorite_hollow;
     }
-  }
+  };
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -58,20 +77,32 @@ function SecondaryScreen() {
                 height: "100%",
               }}
             >
-              <div style={{display:"flex", 
-                flexDirection:"row", 
-                alignItems: "center",
-                flex: "none",
-                order: 0,
-                alignSelf: "stretch",
-                flexGrow: 0}}>
-                  <img src={back_button} alt="Back Button" onClick={changeScreen} />
-                  <Title text={city} color='White'/>
-                  <img src={fav_img} alt="Favorite Button" onClick={handleFavClick} />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  flex: "none",
+                  order: 0,
+                  alignSelf: "stretch",
+                  flexGrow: 0,
+                }}
+              >
+                <img
+                  src={back_button}
+                  alt="Back Button"
+                  onClick={changeScreen}
+                />
+                <Title text={city} color="White" />
+                <img
+                  src={fav_img}
+                  alt="Favorite Button"
+                  onClick={handleFavClick}
+                />
               </div>
 
               <div>
-                <Title text={city} color='White'/>
+                <Title text={city} color="White" />
                 <div className="Results" onClick={changeScreen}>
                   {!isVarLoaded && <h2>Loading...</h2>}
                   {console.log(results)}
@@ -128,7 +159,27 @@ function SecondaryScreen() {
                   minWidth: "100%",
                 }}
               >
-                bottom right
+                <button
+                  className="btn btn-primary"
+                  onClick={() => setShowModal(true)}
+                >
+                  Check Air Quality
+                </button>
+                <AirQuality city={city}></AirQuality>
+                <div className="aq-container">
+                  <Modal
+                    show={showModal}
+                    onHide={() => setShowModal(false)}
+                    className="my-modal"
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title>Air Quality in {city}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <AirQuality1 city={city} />
+                    </Modal.Body>
+                  </Modal>
+                </div>
               </Grid>
             </Grid>
           </Grid>
