@@ -27,7 +27,7 @@ h2 {
 }
 
 input[type="datetime-local"] {
-  background-color: rgba(248, 228, 228, 0.64);
+  
   border: none;
   border-radius: 5px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
@@ -37,7 +37,7 @@ input[type="datetime-local"] {
   padding-left: 5px;
   margin: 5px;
   width: 200px;
-  height: 7vh;
+  height: 5vh;
 }
 
 
