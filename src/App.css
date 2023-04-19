@@ -90,10 +90,10 @@ input {
   padding: 5px 0;
   border-radius: 6px;
   font-size: 12px;
-  width: 60px;
+  width: 100px;
 
   left: 50%;
-  margin-left: -30px;
+  margin-left: -80px;
   position: absolute;
   z-index: 100;
 }

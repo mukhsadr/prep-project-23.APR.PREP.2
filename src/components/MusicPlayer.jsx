@@ -42,7 +42,7 @@ export default function MusicPlayer() {
                 />
               }
             </a>{" "}
-            <span className="tooltiptext">Login</span>
+            <span className="tooltiptext">Login to Premium</span>
           </div>
         </Grid>
       ) : (
