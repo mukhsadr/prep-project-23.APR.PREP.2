@@ -135,6 +135,8 @@ input {
   display: flex;
   flex-direction: column;
   height: auto;
+  min-width: 350px;
+  min-height: 379px;
 
   color: black;
   padding: 5% 5% 5%;

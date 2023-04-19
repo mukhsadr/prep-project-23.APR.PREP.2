@@ -43,6 +43,9 @@ function InitialScreen() {
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
+
+    const currentWeatherTextAreaHeight = screenWidth>600 ? "100px":"150px"
+
     return (
       <Grid
         container
@@ -55,11 +58,11 @@ function InitialScreen() {
           <Grid item maxHeight="15%">
           <TopBar></TopBar>
           </Grid>
-          <Grid item maxHeight="100px">
+          <Grid item maxHeight={currentWeatherTextAreaHeight}>
             <Title text="Your current location weather:" color="White" />
           </Grid>
 
-          <Grid item maxHeight="500px">
+          <Grid item maxHeight="425px">
             <div align="center"><BigCard city={yourLocation} screenWidth={screenWidth} screenHeight={screenHeight}/></div>
           </Grid>
 
@@ -91,6 +94,7 @@ export function InitialScreenUserSection({favCities, screenWidth, screenHeight})
     return (
       <>
       <Title text="Here's your favorite cities' weather now:" color="White" /> 
+      <div style={{height:"40px"}}></div>
       <div style={{ 
         width: '100%',
         height: '500px',
@@ -173,7 +177,7 @@ export function BigCard({city, screenWidth, screenHeight}) {
   return (
     <>
       {isVarLoaded && results && (
-        <div className="BigCard" onClick={handleClick} style={{backgroundImage: background(results.weather[0].id), width: screenWidth * 0.6}}>
+        <div className="BigCard" onClick={handleClick} style={{backgroundImage: background(results.weather[0].id), width: screenWidth * 0.8}}>
           <div align="left">
             <MainScreenTemp text={city} color = 'White' />
           </div>
