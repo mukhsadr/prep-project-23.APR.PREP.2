@@ -190,7 +190,7 @@ const SpotifyStore = ({ children }) => {
               }
             });
           });
-          console.log("Cond", condition);
+          console.log("Cond", condition, playListURIs[condition]);
           play({
             playerInstance: player,
             context_uri:

@@ -15,3 +15,13 @@ npm install --save @react-google-maps/api
 
 Spotify logo:
 https://www.pngegg.com/en/png-zdflz/download
+Website icon:
+<a href="https://iconscout.com/icons/sun" target="_blank">Sun Icon</a> by <a href="https://iconscout.com/contributors/twitter-inc">Twitter Emoji</a> on <a href="https://iconscout.com">IconScout</a>
+
+
+npm install react-bootstrap
+
+npm install chart.js
+npm i chart.js
+npm i react-bootstrap
+npm i buffer

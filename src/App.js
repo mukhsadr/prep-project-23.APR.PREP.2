@@ -9,12 +9,12 @@ function App() {
 
   useEffect(() => {
     if (favCities === null) {
-      const storedCities = window.localStorage.getItem('MLH_FAV_CITIES');
+      const storedCities = window.localStorage.getItem("MLH_FAV_CITIES");
       if (storedCities) {
         setFavCities(JSON.parse(storedCities));
       }
     }
-  })
+  });
 
   return <>{!screen ? <InitialScreen /> : <SecondaryScreen />}</>;
 }

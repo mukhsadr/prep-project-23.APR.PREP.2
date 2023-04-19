@@ -27,6 +27,7 @@ const WeatherStore = ({ children }) => {
     libraries: ["places"],
   });
   const [condition, setCondition] = useState(0);
+  const [location, setLocation] = useState({ lat: 0, lng: 0 });
 
   const cityHandler = (city) => {
     if (city === "Your location") {
@@ -110,6 +111,7 @@ const WeatherStore = ({ children }) => {
         (position) => {
           let coordX = position.coords.latitude;
           let coordY = position.coords.longitude;
+          setLocation({ lat: coordX, lng: coordY });
           fetch(
             "https://api.openweathermap.org/geo/1.0/reverse?lat=" +
               coordX +
@@ -124,6 +126,11 @@ const WeatherStore = ({ children }) => {
             .then((result) => {
               setCity(result[0].name);
               setYourLocation(result[0].name);
+              setCondition(result.weather[0].id);
+              setLocation({
+                lat: parseFloat(result[0].lat),
+                lng: parseFloat(result[0].lon),
+              });
             });
         },
         (err) => {
@@ -150,8 +157,11 @@ const WeatherStore = ({ children }) => {
           } else {
             setIsVarLoaded(true);
             setResults(result);
-            setCondition(results.weather[0].id);
-            console.log("condition", results.weather[0].id);
+            setCondition(result.weather[0].id);
+            setLocation({
+              lat: parseFloat(result[0].lat),
+              lng: parseFloat(result[0].lon),
+            });
           }
         },
         (error) => {
@@ -173,6 +183,8 @@ const WeatherStore = ({ children }) => {
   }, [results]);
 
   const weatherStoreValues = {
+    location,
+    setLocation,
     yourLocation,
     setYourLocation,
     screen,

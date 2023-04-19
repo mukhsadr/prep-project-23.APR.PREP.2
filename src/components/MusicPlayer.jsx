@@ -22,16 +22,16 @@ export default function MusicPlayer() {
   } = useSpotifyContext();
 
   return (
-    <Grid xs={3} position={"absolute"} top={0} right={0}>
+    <Grid xs={3} position={"relative"}>
       {!token ? (
         <Grid
           item
           padding={"26px"}
           paddingRight={"28px"}
-          sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+          sx={{ display: { xs: "block", sm: "block", md: "block" } }}
         >
           {" "}
-          <div className="tooltip">
+          <div className="tooltip2">
             <a
               href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${scope}`}
             >
@@ -42,7 +42,7 @@ export default function MusicPlayer() {
                 />
               }
             </a>{" "}
-            <span className="tooltiptext">Login</span>
+            <span className="tooltiptext">Login to Premium</span>
           </div>
         </Grid>
       ) : (
@@ -80,7 +80,7 @@ export default function MusicPlayer() {
               }}
             ></SkipNextIcon>
           </Button>
-          <div className="tooltip">
+          <div className="tooltip2">
             <Button onClick={logout}>
               {img !== "" ? (
                 <img height={"58px"} src={img} />
