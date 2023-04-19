@@ -68,8 +68,6 @@ function SecondaryScreen() {
         <Grid
           xs={7}
           sx={{
-            border: "solid",
-            borderColor: "white",
             minWidth: "100%",
             maxWidth: "100%",
           }}
@@ -80,8 +78,6 @@ function SecondaryScreen() {
               sm={12}
               md={6}
               sx={{
-                border: "solid",
-                borderColor: "white",
                 height: "100%",
               }}
             >
@@ -117,8 +113,6 @@ function SecondaryScreen() {
               sm={12}
               md={6}
               sx={{
-                border: "solid",
-                borderColor: "white",
                 height: "100%",
                 display: { xs: "none", sm: "none", md: "grid" },
               }}
@@ -126,8 +120,6 @@ function SecondaryScreen() {
               <Grid
                 xs={6}
                 sx={{
-                  border: "solid",
-                  borderColor: "white",
                   height: "100%",
                   maxWidth: "100%",
                   minWidth: "100%",
@@ -142,8 +134,6 @@ function SecondaryScreen() {
               <Grid
                 xs={6}
                 sx={{
-                  border: "solid",
-                  borderColor: "white",
                   height: "100%",
                   maxWidth: "100%",
                   minWidth: "100%",
@@ -184,8 +174,6 @@ function SecondaryScreen() {
         <Grid
           xs={3}
           sx={{
-            border: "solid",
-            borderColor: "white",
             minWidth: "100%",
             maxWidth: "100%",
           }}
