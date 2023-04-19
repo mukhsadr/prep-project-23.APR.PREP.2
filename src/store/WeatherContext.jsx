@@ -27,6 +27,7 @@ const WeatherStore = ({ children }) => {
     libraries: ["places"],
   });
   const [condition, setCondition] = useState(0);
+  const [location, setLocation] = useState({ lat: 0, lng: 0 });
 
   const cityHandler = (city) => {
     if (city === "Your location") {
@@ -124,6 +125,10 @@ const WeatherStore = ({ children }) => {
             .then((result) => {
               setCity(result[0].name);
               setYourLocation(result[0].name);
+              setLocation({
+                lat: parseFloat(result[0].lat),
+                lng: parseFloat(result[0].lon),
+              });
             });
         },
         (err) => {
@@ -152,6 +157,10 @@ const WeatherStore = ({ children }) => {
             setResults(result);
             setCondition(results.weather[0].id);
             console.log("condition", results.weather[0].id);
+            setLocation({
+              lat: parseFloat(result[0].lat),
+              lng: parseFloat(result[0].lon),
+            });
           }
         },
         (error) => {
@@ -173,6 +182,8 @@ const WeatherStore = ({ children }) => {
   }, [results]);
 
   const weatherStoreValues = {
+    location,
+    setLocation,
     yourLocation,
     setYourLocation,
     screen,

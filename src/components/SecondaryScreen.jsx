@@ -9,10 +9,12 @@ import favorite_hollow from "../components/Favorite_hollow.png";
 import AirQuality1 from "./AirQuality/AirQuality";
 import AirQuality from "./AirQuality";
 import { Modal } from "react-bootstrap";
+import Map from "./Map/Map";
 
 function SecondaryScreen() {
   const {
     city,
+    setCity,
     temp,
     unit,
     isLoaded,
@@ -24,6 +26,7 @@ function SecondaryScreen() {
     addFavorite,
     deleteFromFavorite,
     favoriteContain,
+    location,
   } = useWeatherContext();
   const [showModal, setShowModal] = useState(false);
 
@@ -147,7 +150,11 @@ function SecondaryScreen() {
                   minWidth: "100%",
                 }}
               >
-                top right
+                {location.lat && location.lng && (
+                  <div>
+                    <Map />
+                  </div>
+                )}
               </Grid>
               <Grid
                 xs={6}
