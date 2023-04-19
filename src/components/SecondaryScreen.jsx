@@ -144,7 +144,7 @@ function SecondaryScreen() {
                 {" "}
                 <Grid xs={6}>
                   <h4>Things to bring:</h4>
-                  {!!results.weather[0].main && (
+                  {!!results.weather && !!results.weather[0].main && (
                     <EquipmentTable
                       equipments={requiredThings[results.weather[0].main]}
                     />
