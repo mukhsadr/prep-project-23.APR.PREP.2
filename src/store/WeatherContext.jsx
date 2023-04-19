@@ -28,6 +28,8 @@ const WeatherStore = ({ children }) => {
   });
   const [condition, setCondition] = useState(0);
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
+  const [hourlyForecast, setHourlyForecast] = useState(null);
+  const [weeklyForecast, setWeeklyForecast] = useState(null);
 
   const cityHandler = (city) => {
     if (city === "Your location") {
@@ -182,6 +184,49 @@ const WeatherStore = ({ children }) => {
     }
   }, [results]);
 
+  useEffect(() => {
+    if (!results) return;
+  
+    const fetchForecast = async () => {
+      try {
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${process.env.REACT_APP_APIKEY}`
+        );
+        const data = await response.json();
+        console.log("Forecast Data: ", data);
+  
+        // Hourly Forecast: slice the list array to get the next 24 hours of data
+        const hourlyForecastData = data.list.slice(0, 8).map((item) => ({
+          date: item.dt_txt,
+          temp: item.main.temp,
+          description: item.weather[0].description,
+          icon: item.weather[0].icon,
+        }));
+        setHourlyForecast(hourlyForecastData);
+  
+        // Weekly Forecast: group the list array by date to get 7 days of data
+        const weeklyForecastData = data.list.reduce((acc, item) => {
+          const date = item.dt_txt.split(" ")[0];
+          const hour = item.dt_txt.split(" ")[1];
+          if (hour === "12:00:00") {
+            acc.push({
+              date,
+              temp: item.main.temp,
+              description: item.weather[0].description,
+              icon: item.weather[0].icon,
+            });
+          }
+          return acc;
+        }, []);
+        setWeeklyForecast(weeklyForecastData.slice(0, 7));
+      } catch (error) {
+        console.log("Error fetching forecast data: ", error);
+      }
+    };
+  
+    fetchForecast();
+  }, [results, location]);
+
   const weatherStoreValues = {
     location,
     setLocation,
@@ -211,6 +256,10 @@ const WeatherStore = ({ children }) => {
     deleteFromFavorite,
     favoriteContain,
     condition,
+    hourlyForecast,
+    setHourlyForecast,
+    weeklyForecast,
+    setWeeklyForecast,
   };
 
   return (

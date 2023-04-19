@@ -15,6 +15,7 @@ import { requiredThings } from "./../assets/constants";
 import EquipmentTable from "./EquipmentTable";
 import EquipmentCard from "./EquipmentCard";
 import Forecast from "./Forecast/Forecast";
+import WeeklyForecast from "./WeeklyForecast/WeeklyForecast";
 
 function SecondaryScreen() {
   const {
@@ -32,6 +33,7 @@ function SecondaryScreen() {
     deleteFromFavorite,
     favoriteContain,
     location,
+    weeklyForecast
   } = useWeatherContext();
   const [showModal, setShowModal] = useState(false);
 
@@ -106,6 +108,7 @@ function SecondaryScreen() {
               </div>
 
               <div>{isVarLoaded && results && <Forecast city={city} />}</div>
+              <div>{isVarLoaded && results &&<WeeklyForecast weeklyForecast = {weeklyForecast}/>}</div>
             </Grid>
             <Grid
               container
@@ -152,26 +155,8 @@ function SecondaryScreen() {
                 </Grid>
                 <Grid xs={6} padding={"10%"}>
                   <AirQuality city={city}></AirQuality>
-                  <Button
-                    variant={"contained"}
-                    onClick={() => setShowModal(true)}
-                  >
-                    Check Air Quality
-                  </Button>
-
                   <div className="aq-container">
-                    <Modal
-                      show={showModal}
-                      onHide={() => setShowModal(false)}
-                      className="my-modal"
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title>Air Quality in {city}</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <AirQuality1 city={city} />
-                      </Modal.Body>
-                    </Modal>
+                      <AirQuality1 city={city} />
                   </div>
                 </Grid>
               </Grid>
