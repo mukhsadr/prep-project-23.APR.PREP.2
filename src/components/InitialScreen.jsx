@@ -20,12 +20,25 @@ import unknown_img from "../weatherImage/unknown.jpeg"
 import { MainScreenCondition, MainScreenTemp, SmallText, SmallTextBold, Title } from "../TextStyle";
 
 function InitialScreen() {
-  const { yourLocation, temp, unit, isLoaded, results, error, isVarLoaded, changeScreen, favCities} =
+  const { yourLocation, temp, unit, isLoaded, results, error, 
+    isVarLoaded, changeScreen, favCities, 
+    screenWidth, setScreenWidth, screenHeight, setScreenHeight} =
     useWeatherContext();
 
   useEffect(() => {
-    const user = window.localStorage.getItem('MLH_Weather_User');
-  })
+    function handleResize() {
+      setScreenWidth(window.innerWidth);
+      setScreenHeight(window.innerHeight);
+      console.log("Screen width: ", screenWidth);
+      console.log("Screen height: ", screenHeight);
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, []);
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -47,11 +60,11 @@ function InitialScreen() {
           </Grid>
 
           <Grid item maxHeight="500px">
-            <div align="center"><BigCard city={yourLocation}/></div>
+            <div align="center"><BigCard city={yourLocation} screenWidth={screenWidth} screenHeight={screenHeight}/></div>
           </Grid>
 
           <Grid item maxHeight="500px">
-            <InitialScreenUserSection favCities={favCities}/>
+            <InitialScreenUserSection favCities={favCities} screenWidth={screenWidth} screenHeight={screenHeight}/>
           </Grid>
         </Grid>
       </Grid>
@@ -61,7 +74,7 @@ function InitialScreen() {
 
 export default InitialScreen;
 
-export function InitialScreenUserSection({favCities}) {
+export function InitialScreenUserSection({favCities, screenWidth, screenHeight}) {
   if (favCities === null || favCities.length === 0) {
     return (<>
       <Title text="Hi there!" color="White" /> <br></br>
@@ -71,7 +84,7 @@ export function InitialScreenUserSection({favCities}) {
 
     const cityBigCards = favCities.map(city => (
       <div key={city} style={{ display: 'inline-block', padding: '10px' }}>
-        <BigCard city={city}/>
+        <BigCard city={city} screenWidth={screenWidth} screenHeight={screenHeight}/>
       </div>
     ));
 
@@ -91,7 +104,7 @@ export function InitialScreenUserSection({favCities}) {
   }
 }
 
-export function BigCard({city}) {
+export function BigCard({city, screenWidth, screenHeight}) {
   const [error, setError] = useState(null);
   const [isVarLoaded, setIsVarLoaded] = useState(false);
   const [results, setResults] = useState(null);
@@ -160,7 +173,7 @@ export function BigCard({city}) {
   return (
     <>
       {isVarLoaded && results && (
-        <div className="BigCard" onClick={handleClick} style={{backgroundImage: background(results.weather[0].id)}}>
+        <div className="BigCard" onClick={handleClick} style={{backgroundImage: background(results.weather[0].id), width: screenWidth * 0.6}}>
           <div align="left">
             <MainScreenTemp text={city} color = 'White' />
           </div>
@@ -169,19 +182,40 @@ export function BigCard({city}) {
             <MainScreenTemp text={results.main.temp + "°" + unit} color = 'White' /> <br></br>
             <MainScreenCondition text={results.weather[0].main} color = 'White' />
           </div>
+
+          <div style={{height:"40px"}}></div>
           
-            <div id="container">
-              <div id="inner">
-                <div class="child"><BigCardStatArea firstLine={"Chance of Rain"} secondLine={"XX%"}/></div>
-                <div class="child"><BigCardStatArea firstLine={"Humidity"} secondLine={results.main.humidity+"%"}/></div>
-                <div class="child"><BigCardStatArea firstLine={"Feel like"} secondLine={results.main.feels_like+"°"+unit}/></div>
-                <div class="child"><BigCardStatArea firstLine={"Wind speed"} secondLine={results.wind.speed+speed}/></div>
-              </div>
-            </div>
+          <BigCardStatContainer screenWidth={screenWidth} results={results} unit={unit} speed={speed} />
+            
         </div>
       )}
     </>
   );
+}
+
+export function BigCardStatContainer({screenWidth, results, unit, speed}) {
+  if (screenWidth > 700) {
+    return (<div id="container">
+        <div id="inner">
+          <div class="child" style={{width:"25%"}}><BigCardStatArea firstLine={"Chance of Rain"} secondLine={"XX%"}/></div>
+          <div class="child" style={{width:"25%"}}><BigCardStatArea firstLine={"Humidity"} secondLine={results.main.humidity+"%"}/></div>
+          <div class="child" style={{width:"25%"}}><BigCardStatArea firstLine={"Feel like"} secondLine={results.main.feels_like+"°"+unit}/></div>
+          <div class="child" style={{width:"25%"}}><BigCardStatArea firstLine={"Wind speed"} secondLine={results.wind.speed+speed}/></div>
+        </div>
+      </div>);
+  } else {
+    return (<div id="container">
+        <div id="inner">
+          <div class="child" style={{width:"50%"}}><BigCardStatArea firstLine={"Chance of Rain"} secondLine={"XX%"}/></div>
+          <div class="child" style={{width:"50%"}}><BigCardStatArea firstLine={"Humidity"} secondLine={results.main.humidity+"%"}/></div>
+        </div>
+        <div style={{height:"40px"}}></div>
+        <div id="inner">
+        <div class="child" style={{width:"50%"}}><BigCardStatArea firstLine={"Feel like"} secondLine={results.main.feels_like+"°"+unit}/></div>
+          <div class="child" style={{width:"50%"}}><BigCardStatArea firstLine={"Wind speed"} secondLine={results.wind.speed+speed}/></div>
+        </div>
+      </div>);
+  }
 }
 
 export function BigCardStatArea({firstLine, secondLine}) {

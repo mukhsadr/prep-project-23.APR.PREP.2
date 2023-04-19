@@ -28,6 +28,8 @@ const WeatherStore = ({ children }) => {
   });
   const [condition, setCondition] = useState(0);
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
 
   const cityHandler = (city) => {
     if (city === "Your location") {
@@ -211,6 +213,10 @@ const WeatherStore = ({ children }) => {
     deleteFromFavorite,
     favoriteContain,
     condition,
+    screenWidth,
+    setScreenWidth,
+    screenHeight,
+    setScreenHeight
   };
 
   return (
