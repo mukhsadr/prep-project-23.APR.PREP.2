@@ -28,7 +28,7 @@ export default function MusicPlayer() {
           item
           padding={"26px"}
           paddingRight={"28px"}
-          sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+          sx={{ display: { xs: "block", sm: "block", md: "block" } }}
         >
           {" "}
           <div className="tooltip">
