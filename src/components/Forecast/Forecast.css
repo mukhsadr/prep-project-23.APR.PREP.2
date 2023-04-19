@@ -16,7 +16,8 @@ h2 {
 
 .chart-container {
  margin: 10px;
-  height: 60vh;
+  min-height: 20vh;
+  height: 35vh;
 }
 
 .tooltipText{
