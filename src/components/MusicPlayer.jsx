@@ -22,7 +22,7 @@ export default function MusicPlayer() {
   } = useSpotifyContext();
 
   return (
-    <Grid xs={3} position={"absolute"} top={0} right={0}>
+    <Grid xs={3} position={"relative"}>
       {!token ? (
         <Grid
           item
