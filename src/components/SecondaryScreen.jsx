@@ -109,10 +109,7 @@ function SecondaryScreen() {
                 />
               </div>
 
-              <div>
-                <Title text={city} color="White" />
-                {isVarLoaded && results && <Forecast city={city} />}
-              </div>
+              <div>{isVarLoaded && results && <Forecast city={city} />}</div>
             </Grid>
             <Grid
               container
