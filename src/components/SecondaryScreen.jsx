@@ -14,6 +14,7 @@ import SongRecommendation from "./SongRecommendation/SongRecommendation";
 import { requiredThings } from "./../assets/constants";
 import EquipmentTable from "./EquipmentTable";
 import EquipmentCard from "./EquipmentCard";
+import Forecast from "./Forecast/Forecast";
 
 function SecondaryScreen() {
   const {
@@ -112,6 +113,7 @@ function SecondaryScreen() {
                 <Title text={city} color="White" />
                 <div className="Results" onClick={changeScreen}>
                   {!isVarLoaded && <h2>Loading...</h2>}
+                  {isVarLoaded && results && <Forecast city={city} />}
                   {console.log(results)}
                   {console.log(isLoaded)}
                   {isVarLoaded && results && (
