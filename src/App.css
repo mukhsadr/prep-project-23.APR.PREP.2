@@ -75,12 +75,14 @@ input {
   color: black;
   text-align: left;
 }
-.tooltip {
+.tooltip2 {
   position: relative;
   display: inline-block;
+  z-index: 10000;
+
 }
 
-.tooltip .tooltiptext {
+.tooltip2 .tooltiptext {
   visibility: hidden;
   background-color: rgba(0, 0, 0, 0.75);
   color: #fff;
@@ -96,7 +98,7 @@ input {
   z-index: 100;
 }
 
-.tooltip .tooltiptext-2 {
+.tooltip2 .tooltiptext-2 {
   visibility: hidden;
   background-color: rgba(0, 0, 0, 0.75);
   color: #fff;
@@ -111,11 +113,11 @@ input {
   z-index: 100;
 }
 
-.tooltip:hover .tooltiptext {
+.tooltip2:hover .tooltiptext {
   visibility: visible;
   bottom: -70%;
 }
-.tooltip:hover .tooltiptext-2 {
+.tooltip2:hover .tooltiptext-2 {
   visibility: visible;
   bottom: -30%;
 }

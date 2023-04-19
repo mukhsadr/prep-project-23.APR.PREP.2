@@ -80,7 +80,7 @@ export default function MusicPlayer() {
               }}
             ></SkipNextIcon>
           </Button>
-          <div className="tooltip">
+          <div className="tooltip2">
             <Button onClick={logout}>
               {img !== "" ? (
                 <img height={"58px"} src={img} />
