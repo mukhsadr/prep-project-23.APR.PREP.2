@@ -1,5 +1,5 @@
 html, body, #root, .App{
-  background-color: #001560;
+  background: conic-gradient(from 180deg at 49.63% 50%, #307DE1 -54.29deg, rgba(85, 36, 99, 0) 125.98deg, #307DE1 305.71deg, rgba(85, 36, 99, 0) 485.98deg), #552463;
   color: white;
   text-align: center;
   height: 100%;
