@@ -190,7 +190,7 @@ const WeatherStore = ({ children }) => {
     const fetchForecast = async () => {
       try {
         const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lng}&units=metric&appid=${process.env.REACT_APP_APIKEY}`
+          `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${process.env.REACT_APP_APIKEY}`
         );
         const data = await response.json();
         console.log("Forecast Data: ", data);
