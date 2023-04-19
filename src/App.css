@@ -137,6 +137,7 @@ input {
   height: auto;
   min-width: 350px;
   min-height: 379px;
+  max-width: 600px;
 
   color: black;
   padding: 5% 5% 5%;
