@@ -111,6 +111,7 @@ const WeatherStore = ({ children }) => {
         (position) => {
           let coordX = position.coords.latitude;
           let coordY = position.coords.longitude;
+          setLocation({ lat: coordX, lng: coordY });
           fetch(
             "https://api.openweathermap.org/geo/1.0/reverse?lat=" +
               coordX +
