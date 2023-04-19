@@ -32,16 +32,46 @@ input {
 
 .Results {
   background-color: white;
-  margin-left: 150px;
+  /* margin-left: 150px;
   margin-right: 150px;
-  margin-top: 20px;
+  margin-top: 20px; */
   border-radius: 8px;
   color: black;
   padding: 10px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  /* added code, makes it so it doesnt become too big and is centered on the page  */
+  max-width: 70%;
+  margin: 0px auto;
+  margin-top: 20px;
 }
 
-.optionBox{
+.Equipment {
+  width: 100px; /* Set the desired width for the cards */
+  display: inline-block;
+  background-color: grey;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  color: white;
+  padding: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.EquipmentTable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* CSS classes for table cells */
+.table td, .table th {
+  padding: 1rem; /* Set the desired padding for cells */
+  text-align: center; /* Set the desired text alignment for cells */
+}
+
+
+.optionBox  {
   color: black;
   text-align: left;
 }
@@ -95,7 +125,7 @@ input {
   box-sizing: border-box;
   width: 850px;
   height: 471px;
-  
+
   background-image: var(--backgroundImage);
   background-position: center center;
   background-repeat: no-repeat;
@@ -174,4 +204,19 @@ input {
 .child {
   float: left;
   width: 25%
+}
+/* added code, make sure it takes up the full width, seperates it from other
+elements */
+@media (max-width: 768px) {
+  .Results {
+    max-width: 70%;
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 0px) {
+  .Results {
+    max-width: 100%;
+    font-size: 0.7em;
+  }
 }
