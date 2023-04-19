@@ -10,6 +10,10 @@ import AirQuality1 from "./AirQuality/AirQuality";
 import AirQuality from "./AirQuality";
 import { Modal } from "react-bootstrap";
 import Map from "./Map/Map";
+import SongRecommendation from "./SongRecommendation/SongRecommendation";
+import { requiredThings } from "./../assets/constants";
+import EquipmentTable from "./EquipmentTable";
+import EquipmentCard from "./EquipmentCard";
 
 function SecondaryScreen() {
   const {
@@ -166,6 +170,13 @@ function SecondaryScreen() {
                   minWidth: "100%",
                 }}
               >
+                {" "}
+                <h4>Things to bring:</h4>
+                {!!results.weather[0].main && (
+                  <EquipmentTable
+                    equipments={requiredThings[results.weather[0].main]}
+                  />
+                )}
                 <button
                   className="btn btn-primary"
                   onClick={() => setShowModal(true)}
@@ -200,6 +211,7 @@ function SecondaryScreen() {
             maxWidth: "100%",
           }}
         >
+          <div>{results && <SongRecommendation options={results} />}</div>
           Bottom part
         </Grid>
       </Grid>
