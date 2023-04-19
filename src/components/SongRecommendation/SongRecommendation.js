@@ -80,8 +80,8 @@ function SongRecommendation(props) {
 
     useEffect(() => {
         const getToken = async () => {
-            console.log("clientID: ", process.env.REACT_APP_SPOTIFY_CLIENT_ID)
-            const auth = Buffer.from(`${process.env.REACT_APP_SPOTIFY_CLIENT_ID}:${process.env.REACT_APP_SPOTIFY_CLIENT_SECRET}`, 'utf-8').toString('base64');
+            console.log("clientID: ", process.env.REACT_APP_SPOTIFY_CLIENT_ID2)
+            const auth = Buffer.from(`${process.env.REACT_APP_SPOTIFY_CLIENT_ID2}:${process.env.REACT_APP_SPOTIFY_CLIENT_SECRET2}`, 'utf-8').toString('base64');
             const response = await fetch(ACCESS_TOKEN_ENDPOINT, {
                 method: 'POST',
                 headers: {

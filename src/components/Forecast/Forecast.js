@@ -72,7 +72,7 @@ function Forecast({ city }) {
         (forecastItem) => forecastItem.weatherType
       );
 
-      const canvas = document.getElementById("forecast-card");
+      const canvas = document.getElementById("chart");
       const typeCounts = {};
       weatherType.forEach((type) => {
         typeCounts[type] = (typeCounts[type] || 0) + 1;
@@ -121,9 +121,8 @@ function Forecast({ city }) {
       canvas.style.backgroundSize = "cover";
       canvas.style.backgroundImage = `url(${backgroundImageUrl})`;
       canvas.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
-      canvas.style.borderRadius = "2vh";
-      canvas.style.boxShadow =
-        "inset 0 0 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.5)";
+      canvas.style.borderRadius = "0.5vh";
+      canvas.style.boxShadow = "inset 0 0 30px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.5)";
       canvas.style.backgroundBlendMode = "true";
 
       if (chart) {
@@ -146,7 +145,7 @@ function Forecast({ city }) {
                 iconData,
                 data,
                 borderColor: "rgba(75, 192, 192, 1)",
-                pointRadius: 20,
+                pointRadius: 10,
                 pointBorderColor: function (context) {
                   var temp = context.dataset.data[context.dataIndex];
                   if (temp < 0) {
@@ -234,7 +233,7 @@ function Forecast({ city }) {
                     }
                   },
                   font: {
-                    size: 20,
+                    size: 10,
                     weight: "bold",
                   },
                 },
@@ -245,7 +244,7 @@ function Forecast({ city }) {
                   color: "blue",
                   type: "time",
                   font: {
-                    size: 20,
+                    size: 10,
                     weight: "bold",
                   },
                 },
@@ -283,10 +282,10 @@ function Forecast({ city }) {
                       tooltipModel.chart.tooltip.labelColors[0].backgroundColor;
                     const innerHtml = `
                             <div style="border-collapse: separate; overflow: hidden; border-radius: 10px; box-shadow: 0 6px 12px rgba(0,0,0,.175);">
-                                <div style="background-color: ${borderColor}; padding-top: 5px; padding-bottom: 6px; padding-left: 7px; color: #000; font-family: 'Poppins'; font-size: 14px; border-bottom: solid 1px #DDD">
+                                <div style="background-color: ${borderColor}; padding-top: 0.5px; padding-bottom: 0.5px; padding-left: 4px; color: #000; font-family: 'Poppins'; font-size: 14px; border-bottom: solid 1px #DDD">
                                 <img src="https://openweathermap.org/img/wn/${icon}.png" alt="Weather Icon" style="width:50px;height:50px;margin-left:auto;">
                                 </div>
-                                <div style="display: flex; padding: 1.2rem; background-color: rgba(75, 192, 192, 0.5)">
+                                <div style="display: flex; padding: 0.5rem; background-color: rgba(75, 192, 192, 0.5)">
                                 <div class="tooltipText" style="display: flex; flex-direction: column; font-family: 'Poppins'; font-size: 14px; justify-content: flex-end;">
                                     <span style="font-weight: 600; color:black;">Time: ${time}</span>
                                     <span style="font-weight: 600;  color:black;">Temp: ${temp} °C</span>
@@ -321,12 +320,6 @@ function Forecast({ city }) {
               legend: {
                 display: false,
               },
-              title: {
-                display: true,
-                text: `Weather type: ${mostFrequentType}`,
-                fontColor: "black",
-                fontSize: 15,
-              },
             },
           },
         });
@@ -339,9 +332,6 @@ function Forecast({ city }) {
   return (
     <>
       <div className="forecast-card" id="forecast-card">
-        <h2>
-          Hourly Forecast for {city} - {date.toLocaleDateString()}
-        </h2>
         <input
           type="datetime-local"
           value={`${date.getFullYear()}-${(date.getMonth() + 1)
