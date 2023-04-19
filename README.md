@@ -15,6 +15,9 @@ npm install --save @react-google-maps/api
 
 Spotify logo:
 https://www.pngegg.com/en/png-zdflz/download
+Website icon:
+<a href="https://www.freeiconspng.com/img/8577">Png Sun Save</a>
+
 
 npm install react-bootstrap
 
