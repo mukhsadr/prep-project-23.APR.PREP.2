@@ -12,7 +12,7 @@ function Map() {
   const [markerPosition, setMarkerPosition] = useState(location); // store marker position in state
   const containerStyle = {
     width: "80%",
-    height: "350px",
+    height: "300px",
     borderRadius: "7%",
     margin: "0 auto",
     position: "relative",

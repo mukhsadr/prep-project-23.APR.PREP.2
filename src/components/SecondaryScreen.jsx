@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useWeatherContext } from "../store/WeatherContext";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import TopBar from "./TopBar";
 import { Title } from "../TextStyle";
 import back_button from "../components/BackButton.png";
@@ -123,6 +123,7 @@ function SecondaryScreen() {
                   height: "100%",
                   maxWidth: "100%",
                   minWidth: "100%",
+                  paddingTop: "15%",
                 }}
               >
                 {location.lat && location.lng && (
@@ -133,6 +134,7 @@ function SecondaryScreen() {
               </Grid>
               <Grid
                 xs={6}
+                container
                 sx={{
                   height: "100%",
                   maxWidth: "100%",
@@ -140,33 +142,38 @@ function SecondaryScreen() {
                 }}
               >
                 {" "}
-                <h4>Things to bring:</h4>
-                {!!results.weather[0].main && (
-                  <EquipmentTable
-                    equipments={requiredThings[results.weather[0].main]}
-                  />
-                )}
-                <button
-                  className="btn btn-primary"
-                  onClick={() => setShowModal(true)}
-                >
-                  Check Air Quality
-                </button>
-                <AirQuality city={city}></AirQuality>
-                <div className="aq-container">
-                  <Modal
-                    show={showModal}
-                    onHide={() => setShowModal(false)}
-                    className="my-modal"
+                <Grid xs={6}>
+                  <h4>Things to bring:</h4>
+                  {!!results.weather[0].main && (
+                    <EquipmentTable
+                      equipments={requiredThings[results.weather[0].main]}
+                    />
+                  )}
+                </Grid>
+                <Grid xs={6} padding={"10%"}>
+                  <AirQuality city={city}></AirQuality>
+                  <Button
+                    variant={"contained"}
+                    onClick={() => setShowModal(true)}
                   >
-                    <Modal.Header closeButton>
-                      <Modal.Title>Air Quality in {city}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <AirQuality1 city={city} />
-                    </Modal.Body>
-                  </Modal>
-                </div>
+                    Check Air Quality
+                  </Button>
+
+                  <div className="aq-container">
+                    <Modal
+                      show={showModal}
+                      onHide={() => setShowModal(false)}
+                      className="my-modal"
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title>Air Quality in {city}</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <AirQuality1 city={city} />
+                      </Modal.Body>
+                    </Modal>
+                  </div>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
