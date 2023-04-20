@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useWeatherContext } from "../store/WeatherContext";
 import { Button, Grid } from "@mui/material";
 import TopBar from "./TopBar";
-import { MainScreenCondition, MainScreenTemp, SmallText, SmallTextBold, Title } from "../TextStyle";
+import {
+  MainScreenCondition,
+  MainScreenTemp,
+  SmallText,
+  SmallTextBold,
+  Title,
+} from "../TextStyle";
 import back_button from "../components/BackButton.png";
 import favorite from "../components/Favorite.png";
 import favorite_hollow from "../components/Favorite_hollow.png";
@@ -37,7 +43,7 @@ function SecondaryScreen() {
     screenWidth,
     setScreenWidth,
     screenHeight,
-    setScreenHeight
+    setScreenHeight,
   } = useWeatherContext();
   const [showModal, setShowModal] = useState(false);
 
@@ -58,21 +64,21 @@ function SecondaryScreen() {
 
   const leftSectionCardStyle = {
     minHeight: "60vh",
-    WebkitBackdropFilter: 'blur(5px)', 
-    backdropFilter: 'blur(5px)',
+    WebkitBackdropFilter: "blur(5px)",
+    backdropFilter: "blur(5px)",
     borderRadius: "8px",
     boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
-    backgroundColor: 'rgba(229, 195, 195, 0.25)'
+    backgroundColor: "rgba(229, 195, 195, 0.25)",
   };
 
   const rightSectionCardStyle = {
     maxHeight: "250px",
-    WebkitBackdropFilter: 'blur(5px)', 
-    backdropFilter: 'blur(5px)',
+    WebkitBackdropFilter: "blur(5px)",
+    backdropFilter: "blur(5px)",
     borderRadius: "8px",
     boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
-    backgroundColor: 'rgba(229, 195, 195, 0.25)',
-    padding: "20px"
+    backgroundColor: "rgba(229, 195, 195, 0.25)",
+    padding: "20px",
   };
 
   if (error) {
@@ -82,12 +88,25 @@ function SecondaryScreen() {
       <div>
         <TopBar></TopBar>
 
-        <div style={{ display: 'flex', flexDirection: 'row', padding: "0px 20px 0px"}}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            padding: "0px 20px 0px",
+          }}
+        >
           {/* function area */}
 
-          <div style={{ width: screenWidth*0.5}}>
+          <div style={{ width: screenWidth * 0.5 }}>
             {/* Left side */}
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: "0px 10px 0px"}}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                padding: "0px 10px 0px",
+              }}
+            >
               <img
                 src={back_button}
                 alt="Back Button"
@@ -95,9 +114,12 @@ function SecondaryScreen() {
                 height={30}
                 width={30}
               />
-              <MainScreenTemp text={city} color = 'White' />
-              <MainScreenTemp text={temp.toFixed(2) + "°" + unit} color = 'White' />
-              <MainScreenTemp text={results.weather[0].main} color = 'White' />
+              <MainScreenTemp text={city} color="White" />
+              <MainScreenTemp
+                text={temp.toFixed(2) + "°" + unit}
+                color="White"
+              />
+              <MainScreenTemp text={results.weather[0].main} color="White" />
               <img
                 src={fav_img}
                 alt="Favorite Button"
@@ -108,20 +130,20 @@ function SecondaryScreen() {
             </div>
             <div style={{ width: "100%" }}>
               <div style={leftSectionCardStyle}>
-                {isVarLoaded && results && <Forecast city={city}/>}
+                {isVarLoaded && results && <Forecast city={city} />}
               </div>
             </div>
           </div>
 
-          <div style={{ width: screenWidth*0.5, padding: "10px"}}>
+          <div style={{ width: screenWidth * 0.5, padding: "10px" }}>
             {/* right side */}
-            {location.lat && location.lng && (
-              <Map />
-            )}
+            {location.lat && location.lng && <Map />}
 
-            <div style={{ height: '10px' }}></div>
+            <div style={{ height: "10px" }}></div>
 
-            <div style={{ display: "flex",
+            <div
+              style={{
+                display: "flex",
                 flex_direction: "row",
                 justify_content: "space-between",
                 align_items: "flex-start",
@@ -130,20 +152,23 @@ function SecondaryScreen() {
                 /* Inside auto layout */
                 order: 1,
                 align_self: "stretch",
-                flex_grow: 1
-                }}>
+                flex_grow: 1,
+              }}
+            >
               {/* Reminder and airquality area */}
 
               <div style={{ width: "50%" }}>
                 <div style={rightSectionCardStyle}>
                   {/* Reminder area */}
-                  <SmallText text={"Things to brings:"}/>
-                  <div style={{ 
-                    overflowX: 'auto',
-                    display: "flex",
-                    whiteSpace: 'nowrap',
-                    height: "200px"
-                    }}>
+                  <SmallText text={"Things to brings:"} />
+                  <div
+                    style={{
+                      overflowX: "auto",
+                      display: "flex",
+                      whiteSpace: "nowrap",
+                      height: "200px",
+                    }}
+                  >
                     {!!results.weather && !!results.weather[0].main && (
                       <EquipmentTable
                         equipments={requiredThings[results.weather[0].main]}
@@ -153,144 +178,27 @@ function SecondaryScreen() {
                 </div>
               </div>
 
-              <div style={{ width: "50%"}}>
+              <div style={{ width: "50%" }}>
                 <div style={rightSectionCardStyle}>
                   {/* Area Quality area */}
-                  <AirQuality city={city}></AirQuality>
-                    <div className="aq-container">
-                        <AirQuality1 city={city} />
-                    </div>
+                  <div className="aq-container">
+                    <AirQuality1 city={city} />
+                  </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
 
         <div>
-            {/* Button part */}
-            <div>{isVarLoaded && results &&<WeeklyForecast weeklyForecast = {weeklyForecast}/>}</div>
+          {/* Button part */}
+          <div>
+            {isVarLoaded && results && (
+              <WeeklyForecast weeklyForecast={weeklyForecast} />
+            )}
+          </div>
         </div>
       </div>
-      // <Grid
-      //   container
-      //   wrap="nowrap"
-      //   direction={"column"}
-      //   sx={{
-      //     height: "100%",
-      //     width: "100%",
-      //     overflowY: "scroll",
-      //   }}
-      // >
-      //   <TopBar></TopBar>
-      //   <Grid
-      //     xs={7}
-      //     sx={{
-      //       minWidth: "100%",
-      //       maxWidth: "100%",
-      //     }}
-      //   >
-      //     {" "}
-      //     <Grid container direction={"row"} className={"LeftSide"}>
-      //       <Grid
-      //         sm={12}
-      //         md={6}
-      //         sx={{
-      //           height: "100%",
-      //         }}
-      //       >
-      //         <div
-      //           style={{
-      //             display: "flex",
-      //             flexDirection: "row",
-      //             alignItems: "center",
-      //             flex: "none",
-      //             order: 0,
-      //             alignSelf: "stretch",
-      //             flexGrow: 0,
-      //           }}
-      //         >
-      //           <img
-      //             src={back_button}
-      //             alt="Back Button"
-      //             onClick={changeScreen}
-      //           />
-      //           <Title text={city} color="White" />
-      //           <img
-      //             src={fav_img}
-      //             alt="Favorite Button"
-      //             onClick={handleFavClick}
-      //           />
-      //         </div>
-
-      //         <div>{isVarLoaded && results && <Forecast city={city}/>}</div>
-              
-      //       </Grid>
-      //       <Grid
-      //         container
-      //         direction={"column"}
-      //         sm={12}
-      //         md={6}
-      //         sx={{
-      //           height: "100%",
-      //           display: { xs: "none", sm: "none", md: "grid" },
-      //         }}
-      //       >
-      //         <Grid
-      //           xs={6}
-      //           sx={{
-      //             height: "100%",
-      //             maxWidth: "100%",
-      //             minWidth: "100%",
-      //             paddingTop: "15%",
-      //           }}
-      //         >
-      //           {location.lat && location.lng && (
-      //             <div>
-      //               <Map />
-      //             </div>
-      //           )}
-      //         </Grid>
-      //         <Grid
-      //           xs={6}
-      //           container
-      //           sx={{
-      //             height: "100%",
-      //             maxWidth: "100%",
-      //             minWidth: "100%",
-      //           }}
-      //         >
-      //           {" "}
-      //           <Grid xs={6}>
-      //             <h4>Things to bring:</h4>
-      //             {!!results.weather && !!results.weather[0].main && (
-      //               <EquipmentTable
-      //                 equipments={requiredThings[results.weather[0].main]}
-      //               />
-      //             )}
-      //           </Grid>
-      //           <Grid xs={6} padding={"10%"}>
-      //             <AirQuality city={city}></AirQuality>
-      //             <div className="aq-container">
-      //                 <AirQuality1 city={city} />
-      //             </div>
-      //           </Grid>
-      //         </Grid>
-      //       </Grid>
-      //     </Grid>
-      //   </Grid>
-      //   <Grid
-      //     xs={3}
-      //     sx={{
-      //       minWidth: "100%",
-      //       maxWidth: "100%",
-      //     }}
-      //   >
-      //     <div>{isVarLoaded && results &&<WeeklyForecast weeklyForecast = {weeklyForecast}/>}</div>
-      //     <div>{results && <SongRecommendation options={results} />}</div>
-      //     Bottom part
-      //   </Grid>
-      // </Grid>
     );
   }
 }
