@@ -25,21 +25,6 @@ function InitialScreen() {
     screenWidth, setScreenWidth, screenHeight, setScreenHeight} =
     useWeatherContext();
 
-  useEffect(() => {
-    function handleResize() {
-      setScreenWidth(window.innerWidth);
-      setScreenHeight(window.innerHeight);
-      console.log("Screen width: ", screenWidth);
-      console.log("Screen height: ", screenHeight);
-    }
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    }
-  }, []);
-
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
@@ -87,7 +72,7 @@ export function InitialScreenUserSection({favCities, screenWidth, screenHeight})
 
     const cityBigCards = favCities.map(city => (
       <div key={city} style={{ display: 'inline-block', padding: '10px' }}>
-        <BigCard city={city} screenWidth={screenWidth} screenHeight={screenHeight}/>
+        <BigCard city={city} screenWidth={600} screenHeight={screenHeight}/>
       </div>
     ));
 
@@ -177,21 +162,23 @@ export function BigCard({city, screenWidth, screenHeight}) {
   return (
     <>
       {isVarLoaded && results && (
-        <div className="BigCard" onClick={handleClick} style={{backgroundImage: background(results.weather[0].id), width: screenWidth * 0.8}}>
-          <div align="left">
-            <MainScreenTemp text={city} color = 'White' />
-          </div>
+        <>
+          <div className="BigCard" onClick={handleClick} style={{backgroundImage: background(results.weather[0].id), width: screenWidth * 0.8}}>
+            <div align="left">
+              <MainScreenTemp text={city} color = 'White' />
+            </div>
 
-          <div align="center">
-            <MainScreenTemp text={results.main.temp + "°" + unit} color = 'White' /> <br></br>
-            <MainScreenCondition text={results.weather[0].main} color = 'White' />
-          </div>
+            <div align="center">
+              <MainScreenTemp text={results.main.temp + "°" + unit} color = 'White' /> <br></br>
+              <MainScreenCondition text={results.weather[0].main} color = 'White' />
+            </div>
 
-          <div style={{height:"40px"}}></div>
-          
-          <BigCardStatContainer screenWidth={screenWidth} results={results} unit={unit} speed={speed} />
+            <div style={{height:"40px"}}></div>
             
-        </div>
+            <BigCardStatContainer screenWidth={screenWidth} results={results} unit={unit} speed={speed} />
+              
+          </div>
+        </>
       )}
     </>
   );
