@@ -147,27 +147,13 @@ input {
   border: 1px solid #000000;
   border-radius: 78px;
 
-}
+  transition: transform 0.2s ease-in-out;
 
-.BigCardBackground {
-  /* The image used */
-  background-image: var(--backgroundImage);
-  
-  /* Add the blur effect */
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
-  
-  /* Full height */
-  height: 100%; 
-  
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .BigCard:hover {
   cursor: pointer;
+  transform: scale(1.05);
 }
 
 .main-screen-temp {
@@ -213,6 +199,31 @@ input {
   font-weight: 400;
   font-size: 40px;
   line-height: 62px;
+}
+
+.scrolling-text-container {
+  overflow: hidden;
+  max-width: 30%;
+}
+
+.scrolling-text {
+  white-space: nowrap;
+}
+
+.scrolling-text.scroll {
+  animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 #container {
