@@ -131,7 +131,7 @@ function SecondaryScreen() {
               >
                 {location.lat && location.lng && (
                   <div>
-                    <Map />
+                    <Map city={city}/>
                   </div>
                 )}
               </Grid>

@@ -1,13 +1,9 @@
 import { GoogleMap, Marker } from "@react-google-maps/api";
-import { Autocomplete } from "@react-google-maps/api";
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./Map.css";
 import { useWeatherContext } from "../../store/WeatherContext";
 
-function Map() {
-  const [searchValue, setSearchValue] = useState("");
-  const searchInputRef = useRef(null);
-  const [autocomplete, setAutocomplete] = useState(null);
+function Map(props) {
   const { location, setLocation, city, setCity } = useWeatherContext();
   const [markerPosition, setMarkerPosition] = useState(location); // store marker position in state
   const containerStyle = {
@@ -17,6 +13,21 @@ function Map() {
     margin: "0 auto",
     position: "relative",
   };
+
+  useEffect(() => {
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ address: props.city }, (results, status) => {
+      if (status === "OK") {
+        const lat = results[0].geometry.location.lat();
+        const lng = results[0].geometry.location.lng();
+        setLocation({ lat, lng });
+        setMarkerPosition({ lat, lng });
+      } else {
+        console.error("Geocode was not successful for the following reason: ", status);
+      }
+    });
+    setCity(props.city);
+  }, [props.city, setLocation, setCity]);
 
   const center = {
     lat: location.lat,
@@ -103,29 +114,6 @@ function Map() {
     ],
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (searchValue && autocomplete) {
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ address: searchValue }, (results, status) => {
-        if (status === "OK" && results && results[0].geometry) {
-          const location = {
-            lat: results[0].geometry.location.lat(),
-            lng: results[0].geometry.location.lng(),
-          };
-          onLocationSelect(location.lat, location.lng);
-          setSearchValue(results[0].formatted_address);
-          searchInputRef.current.blur();
-        } else {
-          console.error(
-            "Geocode was not successful for the following reason: ",
-            status
-          );
-        }
-      });
-    }
-  };
-
   return (
     <div style={containerStyle}>
       <GoogleMap
@@ -141,7 +129,15 @@ function Map() {
       >
         <Marker position={markerPosition} />
       </GoogleMap>
-      <form
+    </div>
+  );
+}
+
+export default Map;
+
+/**
+ * 
+ *       <form
         onSubmit={handleSubmit}
         style={{
           position: "absolute",
@@ -189,10 +185,28 @@ function Map() {
             }}
           />
         </Autocomplete>
-        <button type="submit">Search</button>
       </form>
-    </div>
-  );
-}
 
-export default Map;
+        const handleSubmit = (e) => {
+    e.preventDefault();
+    if (searchValue && autocomplete) {
+      const geocoder = new window.google.maps.Geocoder();
+      geocoder.geocode({ address: searchValue }, (results, status) => {
+        if (status === "OK" && results && results[0].geometry) {
+          const location = {
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng(),
+          };
+          onLocationSelect(location.lat, location.lng);
+          setSearchValue(results[0].formatted_address);
+          searchInputRef.current.blur();
+        } else {
+          console.error(
+            "Geocode was not successful for the following reason: ",
+            status
+          );
+        }
+      });
+    }
+  };
+ */
