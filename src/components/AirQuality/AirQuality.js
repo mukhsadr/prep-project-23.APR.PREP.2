@@ -36,7 +36,7 @@ const AirQuality = () => {
   ];
 
   useEffect(() => {
-    const geocodingUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city, state, country}&limit=1&appid=${process.env.REACT_APP_APIKEY}`;
+    const geocodingUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.REACT_APP_APIKEY}`;
     try {
       fetch(geocodingUrl)
         .then(response => response.json())
@@ -49,7 +49,6 @@ const AirQuality = () => {
               .then(data => {
                 setAirQuality(data.list[0]);
                 setAirQualityIndex(data.list[0].main.aqi)
-                console.log("Air Quality Data:", data.list[0])
               })
               .catch(error => console.log(error));
           }
@@ -58,7 +57,7 @@ const AirQuality = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [city]);
+  }, [city, airQuality, airQualityIndex]);
   
 
   return (
@@ -81,7 +80,7 @@ const AirQuality = () => {
     </div>
     </div>
     )}>
-    <ReactTooltip id="my-tooltip" place="top" type="light" effect="float"/>
+    <ReactTooltip id="my-tooltip" place="bottom"  type="info" effect="float"/>
     <section className="info-container">
       <h4>Air Quality Index: <AirQualityAlisha airQualityIndex={airQualityIndex} /></h4>
       {airQuality ? (
