@@ -262,7 +262,7 @@ function Forecast({ city }) {
                 grid: { borderColor: "rgba(75, 192, 192, 1)", borderWidth: 5 },
                 ticks: {
                   callback: function (value, index, ticks) {
-                    return value.toFixed(1) + "°" + unit;
+                    return value.toFixed(1);
                    
                   },
                   color: function (context) {
@@ -333,7 +333,7 @@ function Forecast({ city }) {
                                 <div style="display: flex; padding: 0.5rem; background-color: rgba(75, 192, 192, 0.5)">
                                 <div class="tooltipText" style="display: flex; flex-direction: column; font-family: 'Poppins'; font-size: 14px; justify-content: flex-end;">
                                     <span style="font-weight: 600; color:black;">Time: ${time}</span>
-                                    <span style="font-weight: 600;  color:black;">Temp: ${temp} °${unit}</span>
+                                    <span style="font-weight: 600;  color:black;">Temp: ${temp}</span>
                                     <span style="font-weight: 600;  color:black;">${humidityLine}</span>
                                     <span style="font-weight: 600;  color:black;">${pressureLine}</span>
                                 </div>                          
@@ -372,7 +372,7 @@ function Forecast({ city }) {
         setIsChartLoaded(!isChartLoaded);
       }
     }
-  }, [forecast, unit, chart, isChartLoaded]);
+  }, [forecast, unit]);
 
   return (
     <>
