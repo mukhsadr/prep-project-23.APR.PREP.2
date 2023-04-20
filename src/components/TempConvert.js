@@ -9,7 +9,7 @@ import {
 import { useWeatherContext } from "../store/WeatherContext";
 
 export default function TempConvert(props) {
-  const { unit, setUnit } = useWeatherContext();
+  const { unit, setUnit, setUnits, } = useWeatherContext();
   const [label, setLabel] = useState("Convert to °F");
 
   const toggleTheme = createTheme({
@@ -66,11 +66,13 @@ export default function TempConvert(props) {
       newUnit = "F";
       setUnit("F");
       setLabel("Convert to °C");
+      setUnits("metric")
     } else if (unit === "F") {
       newT = ((props.currTemp - 32) * 5) / 9;
       newUnit = "C";
       setUnit("C");
       setLabel("Convert to °F");
+      setUnits("imperial")
     }
     props.tempHandler(newT, newUnit);
   };

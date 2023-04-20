@@ -30,6 +30,7 @@ const WeatherStore = ({ children }) => {
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
   const [hourlyForecast, setHourlyForecast] = useState(null);
   const [weeklyForecast, setWeeklyForecast] = useState(null);
+  const [units, setUnits] = useState("metric");
 
   const cityHandler = (city) => {
     if (city === "Your location") {
@@ -190,20 +191,11 @@ const WeatherStore = ({ children }) => {
     const fetchForecast = async () => {
       try {
         const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${process.env.REACT_APP_APIKEY}`
+          `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=${units}&appid=${process.env.REACT_APP_APIKEY}`
         );
-        const data = await response.json();
-        console.log("Forecast Data: ", data);
-  
-        // Hourly Forecast: slice the list array to get the next 24 hours of data
-        const hourlyForecastData = data.list.slice(0, 8).map((item) => ({
-          date: item.dt_txt,
-          temp: item.main.temp,
-          description: item.weather[0].description,
-          icon: item.weather[0].icon,
-        }));
-        setHourlyForecast(hourlyForecastData);
-  
+        const data = await response.json();  
+        setHourlyForecast(data);
+
         // Weekly Forecast: group the list array by date to get 7 days of data
         const weeklyForecastData = data.list.reduce((acc, item) => {
           const date = item.dt_txt.split(" ")[0];
@@ -225,7 +217,7 @@ const WeatherStore = ({ children }) => {
     };
   
     fetchForecast();
-  }, [results, location]);
+  }, [results, location, units]);
 
   const weatherStoreValues = {
     location,
@@ -260,6 +252,8 @@ const WeatherStore = ({ children }) => {
     setHourlyForecast,
     weeklyForecast,
     setWeeklyForecast,
+    units,
+    setUnits,
   };
 
   return (

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import "./AirQuality.css"
+import { useWeatherContext } from "../../store/WeatherContext";
+import AirQualityAlisha from '../AirQuality';
 
-const AirQuality = ({ city }) => {
+const AirQuality = () => {
   const [airQuality, setAirQuality] = useState(null);
+  const { city } = useWeatherContext();
   
   const aqi = [
     {
@@ -33,16 +36,16 @@ const AirQuality = ({ city }) => {
       fetch(geocodingUrl)
         .then(response => response.json())
         .then(data => {
-          const { lat, lon } = data[0];
-          const airQualityUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_APIKEY}`;
-          fetch(airQualityUrl)
-            .then(response => response.json())
-            .then(data => {
-              setAirQuality(data.list[0]);
-              console.log("Data", data)
-              console.log("City", city)
-            })
-            .catch(error => console.log(error));
+          if(data.length > 0 && data[0].hasOwnProperty('lat') && data[0].hasOwnProperty('lon')){
+            const { lat, lon } = data[0];
+            const airQualityUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_APIKEY}`;
+            fetch(airQualityUrl)
+              .then(response => response.json())
+              .then(data => {
+                setAirQuality(data.list[0]);
+              })
+              .catch(error => console.log(error));
+          }
         })
         .catch(error => console.log(error));
     } catch (error) {
@@ -53,7 +56,7 @@ const AirQuality = ({ city }) => {
 
   return (
     <section className="info-container">
-      <h2>Air Quality</h2>
+      <h4>Air Quality Index: <AirQualityAlisha city={city} /></h4>
       {airQuality ? (
         <>
           <div className="aqi-container">

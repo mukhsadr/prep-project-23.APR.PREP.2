@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import Chart from "chart.js/auto";
 import "./Forecast.css";
+import { useWeatherContext } from "../../store/WeatherContext";
 
-function Forecast({ city }) {
+function Forecast() {
   const [chart, setChart] = useState(null);
   const [forecast, setForecast] = useState([]);
   const [date, setDate] = useState(new Date());
   const [isChartLoaded, setIsChartLoaded] = useState(false);
+  const { hourlyForecast, units, city } = useWeatherContext();
 
   useEffect(() => {
     const now = new Date();
@@ -45,17 +47,9 @@ function Forecast({ city }) {
       return parsedData;
     };
 
-    fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&dt=${date}&appid=${process.env.REACT_APP_APIKEY}`
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        if (result.cod === "200") {
-          const parsedData = parseForecast(result);
-          setForecast(parsedData);
-        }
-      });
-  }, [city, date]);
+    const parsedData = parseForecast(hourlyForecast);
+    setForecast(parsedData);
+  }, [city, date, units]);
 
   useEffect(() => {
     if (forecast.length > 0) {
@@ -87,7 +81,6 @@ function Forecast({ city }) {
         }
       }
       const weatherCondition = mostFrequentType;
-      console.log("Type", weatherType);
       let backgroundImageUrl;
 
       switch (weatherCondition) {
@@ -188,6 +181,9 @@ function Forecast({ city }) {
                 hoverBorderWidth: 30,
                 pointBackgroundColor: function (context) {
                   let temp = context.dataset.data[context.dataIndex];
+                  if (units === 'imperial') {
+                    temp = (temp - 32) * 5/9; // convert Fahrenheit to Celsius
+                  }
                   if (temp < 0) {
                     return "rgba(0, 123, 255, 0.7)"; // Blue for very cold temperatures
                   } else if (temp < 10) {
@@ -218,7 +214,7 @@ function Forecast({ city }) {
                 grid: { borderColor: "rgba(75, 192, 192, 1)", borderWidth: 5 },
                 ticks: {
                   callback: function (value, index, ticks) {
-                    return value.toFixed(1) + " °C";
+                    return units === 'imperial' ? value.toFixed(1) + "" : value.toFixed(1) + "";
                   },
                   color: function (context) {
                     const temp = context.tick.value;
@@ -327,7 +323,7 @@ function Forecast({ city }) {
         setIsChartLoaded(!isChartLoaded);
       }
     }
-  }, [forecast]);
+  }, [forecast, units]);
 
   return (
     <>

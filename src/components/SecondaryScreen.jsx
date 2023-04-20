@@ -6,9 +6,7 @@ import { Title } from "../TextStyle";
 import back_button from "../components/BackButton.png";
 import favorite from "../components/Favorite.png";
 import favorite_hollow from "../components/Favorite_hollow.png";
-import AirQuality1 from "./AirQuality/AirQuality";
-import AirQuality from "./AirQuality";
-import { Modal } from "react-bootstrap";
+import AirQuality from "./AirQuality/AirQuality";
 import Map from "./Map/Map";
 import SongRecommendation from "./SongRecommendation/SongRecommendation";
 import { requiredThings } from "./../assets/constants";
@@ -107,7 +105,7 @@ function SecondaryScreen() {
                 />
               </div>
 
-              <div>{isVarLoaded && results && <Forecast city={city} />}</div>
+              <div>{isVarLoaded && results && <Forecast />}</div>
               <div>{isVarLoaded && results &&<WeeklyForecast weeklyForecast = {weeklyForecast}/>}</div>
             </Grid>
             <Grid
@@ -147,16 +145,15 @@ function SecondaryScreen() {
                 {" "}
                 <Grid xs={6}>
                   <h4>Things to bring:</h4>
-                  {!!results.weather && !!results.weather[0].main && (
+                  {!!results.weather[0].main && (
                     <EquipmentTable
                       equipments={requiredThings[results.weather[0].main]}
                     />
                   )}
                 </Grid>
                 <Grid xs={6} padding={"10%"}>
-                  <AirQuality city={city}></AirQuality>
                   <div className="aq-container">
-                      <AirQuality1 city={city} />
+                      <AirQuality/>
                   </div>
                 </Grid>
               </Grid>
