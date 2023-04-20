@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useWeatherContext } from "../store/WeatherContext";
 import { Button, Grid } from "@mui/material";
 import TopBar from "./TopBar";
@@ -114,7 +114,10 @@ function SecondaryScreen() {
                 height={30}
                 width={30}
               />
-              <MainScreenTemp text={city} color="White" />
+
+              <ScrollingText text={
+                <MainScreenTemp text={city} color="White"
+              />} />
               <MainScreenTemp
                 text={temp.toFixed(2) + "°" + unit}
                 color="White"
@@ -204,3 +207,23 @@ function SecondaryScreen() {
 }
 
 export default SecondaryScreen;
+
+
+const ScrollingText = ({ text }) => {
+  const containerRef = useRef(null);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+
+  useEffect(() => {
+    if (containerRef.current.scrollWidth > containerRef.current.clientWidth) {
+      setIsOverflowing(true);
+    } else {
+      setIsOverflowing(false);
+    }
+  }, [text]);
+
+  return (
+    <div className="scrolling-text-container" ref={containerRef}>
+      <div className={`scrolling-text ${isOverflowing ? "scroll" : ""}`}>{text}</div>
+    </div>
+  );
+};
