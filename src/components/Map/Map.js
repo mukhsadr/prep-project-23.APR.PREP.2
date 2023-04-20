@@ -12,6 +12,7 @@ function Map(props) {
     borderRadius: "7%",
     margin: "0 auto",
     paddingRight: "50px", //move it away from the screen
+    paddingLeft: "70px", //move it away from the forecast
     position: "relative",
   };
 
