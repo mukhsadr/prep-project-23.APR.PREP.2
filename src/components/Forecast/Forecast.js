@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Chart from "chart.js/auto";
 import "./Forecast.css";
+import { Height } from "@mui/icons-material";
 
 function Forecast({ city }) {
   const [chart, setChart] = useState(null);
