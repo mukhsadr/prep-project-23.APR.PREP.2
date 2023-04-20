@@ -148,7 +148,7 @@ const WeatherStore = ({ children }) => {
         }
       );
     }
-  }, [city, yourLocation]);
+  }, []);
 
   useEffect(() => {
     fetch(
@@ -178,7 +178,7 @@ const WeatherStore = ({ children }) => {
           setError(error);
         }
       );
-  }, [city, results]);
+  }, [city]);
 
   useEffect(() => {
     if (results !== null) {
@@ -223,7 +223,7 @@ const WeatherStore = ({ children }) => {
     };
   
     fetchForecast();
-  }, [results, location, units, city, yourLocation]);
+  }, [results, location, units]);
 
   const weatherStoreValues = {
     location,

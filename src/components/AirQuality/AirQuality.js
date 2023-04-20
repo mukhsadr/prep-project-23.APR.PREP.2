@@ -57,7 +57,7 @@ const AirQuality = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [city, airQuality, airQualityIndex]);
+  }, [city]);
   
 
   return (
