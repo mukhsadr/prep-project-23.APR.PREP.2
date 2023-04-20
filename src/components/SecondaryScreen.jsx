@@ -10,7 +10,7 @@ import AirQuality1 from "./AirQuality/AirQuality";
 import AirQuality from "./AirQuality";
 import { Modal } from "react-bootstrap";
 import Map from "./Map/Map";
-import SongRecommendation from "./SongRecommendation/SongRecommendation";
+// import SongRecommendation from "./SongRecommendation/SongRecommendation";
 import { requiredThings } from "./../assets/constants";
 import EquipmentTable from "./EquipmentTable";
 import EquipmentCard from "./EquipmentCard";
@@ -108,7 +108,7 @@ function SecondaryScreen() {
               </div>
 
               <div>{isVarLoaded && results && <Forecast city={city} />}</div>
-              <div>{isVarLoaded && results &&<WeeklyForecast weeklyForecast = {weeklyForecast}/>}</div>
+              <div>{isVarLoaded && results && <WeeklyForecast weeklyForecast={weeklyForecast} />}</div>
             </Grid>
             <Grid
               container
@@ -156,7 +156,7 @@ function SecondaryScreen() {
                 <Grid xs={6} padding={"10%"}>
                   <AirQuality city={city}></AirQuality>
                   <div className="aq-container">
-                      <AirQuality1 city={city} />
+                    <AirQuality1 city={city} />
                   </div>
                 </Grid>
               </Grid>
@@ -170,7 +170,7 @@ function SecondaryScreen() {
             maxWidth: "100%",
           }}
         >
-          <div>{results && <SongRecommendation options={results} />}</div>
+          {/* <div>{results && <SongRecommendation options={results} />}</div> */}
           Bottom part
         </Grid>
       </Grid>

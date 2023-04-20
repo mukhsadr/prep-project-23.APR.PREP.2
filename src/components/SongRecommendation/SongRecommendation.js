@@ -122,7 +122,7 @@ function SongRecommendation(props) {
 
     return (
         <div className='recommendedSongs'>
-            <h2>Songs based on the forecast</h2>
+            {/* <h2>Songs based on the forecast</h2> */}
             {/* <button onClick={handleReloadSongs}>Reload Songs</button> */}
             {!isLoaded && <h2>Loading...</h2>}
 

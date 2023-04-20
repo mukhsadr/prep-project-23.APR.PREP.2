@@ -1,6 +1,6 @@
 .recommendedSongs {
     /* background-color: white; */
-    margin-top: 2rem;
+    margin-top: 0rem;
 
 }
 
@@ -38,8 +38,8 @@
 
 .tracks-container {
     margin-top: 1rem;
-    padding-left: 12%;
-    padding-right: 12%;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .track-card {
