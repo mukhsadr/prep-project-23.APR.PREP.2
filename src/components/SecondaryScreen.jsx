@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useWeatherContext } from "../store/WeatherContext";
 import { Button, Grid } from "@mui/material";
 import TopBar from "./TopBar";
-import { SmallText, Title } from "../TextStyle";
+import { MainScreenCondition, MainScreenTemp, SmallText, SmallTextBold, Title } from "../TextStyle";
 import back_button from "../components/BackButton.png";
 import favorite from "../components/Favorite.png";
 import favorite_hollow from "../components/Favorite_hollow.png";
@@ -66,7 +66,7 @@ function SecondaryScreen() {
   };
 
   const rightSectionCardStyle = {
-    maxHeight: "260px",
+    maxHeight: "250px",
     WebkitBackdropFilter: 'blur(5px)', 
     backdropFilter: 'blur(5px)',
     borderRadius: "8px",
@@ -95,7 +95,9 @@ function SecondaryScreen() {
                 height={30}
                 width={30}
               />
-              <Title text={city} color="White" />
+              <MainScreenTemp text={city} color = 'White' />
+              <MainScreenTemp text={temp.toFixed(2) + "°" + unit} color = 'White' />
+              <MainScreenTemp text={results.weather[0].main} color = 'White' />
               <img
                 src={fav_img}
                 alt="Favorite Button"
@@ -136,15 +138,22 @@ function SecondaryScreen() {
                 <div style={rightSectionCardStyle}>
                   {/* Reminder area */}
                   <SmallText text={"Things to brings:"}/>
-                  {!!results.weather && !!results.weather[0].main && (
-                    <EquipmentTable
-                      equipments={requiredThings[results.weather[0].main]}
-                    />
-                  )}
+                  <div style={{ 
+                    overflowX: 'auto',
+                    display: "flex",
+                    whiteSpace: 'nowrap',
+                    height: "200px"
+                    }}>
+                    {!!results.weather && !!results.weather[0].main && (
+                      <EquipmentTable
+                        equipments={requiredThings[results.weather[0].main]}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
 
-              <div style={{ width: "50%", height: "200px"}}>
+              <div style={{ width: "50%"}}>
                 <div style={rightSectionCardStyle}>
                   {/* Area Quality area */}
                   <AirQuality city={city}></AirQuality>

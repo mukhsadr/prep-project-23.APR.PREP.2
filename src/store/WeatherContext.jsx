@@ -178,10 +178,10 @@ const WeatherStore = ({ children }) => {
   useEffect(() => {
     if (results !== null) {
       if (unit === "F") {
-        let newT = results.main.feels_like * 1.8 + 32;
+        let newT = results.main.temp * 1.8 + 32;
         setTemp(newT);
       } else {
-        setTemp(results.main.feels_like);
+        setTemp(results.main.temp);
       }
     }
   }, [results]);
