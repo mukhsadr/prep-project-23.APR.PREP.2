@@ -11,7 +11,7 @@ function Map() {
   const { location, setLocation, city, setCity } = useWeatherContext();
   const [markerPosition, setMarkerPosition] = useState(location); // store marker position in state
   const containerStyle = {
-    width: "80%",
+    width: "100%",
     height: "300px",
     borderRadius: "7%",
     margin: "0 auto",
