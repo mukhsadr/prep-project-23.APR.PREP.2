@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useWeatherContext } from "../../store/WeatherContext";
 import Chart from "chart.js/auto";
 import "./Forecast.css";
 
 function Forecast({ city }) {
+  const { temp, unit} = useWeatherContext();
   const [chart, setChart] = useState(null);
   const [forecast, setForecast] = useState([]);
   const [date, setDate] = useState(new Date());
