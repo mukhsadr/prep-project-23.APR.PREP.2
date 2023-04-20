@@ -16,7 +16,7 @@ import AirQuality1 from "./AirQuality/AirQuality";
 import AirQuality from "./AirQuality";
 import { Modal } from "react-bootstrap";
 import Map from "./Map/Map";
-import SongRecommendation from "./SongRecommendation/SongRecommendation";
+// import SongRecommendation from "./SongRecommendation/SongRecommendation";
 import { requiredThings } from "./../assets/constants";
 import EquipmentTable from "./EquipmentTable";
 import EquipmentCard from "./EquipmentCard";
