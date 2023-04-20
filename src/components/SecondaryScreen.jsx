@@ -33,7 +33,11 @@ function SecondaryScreen() {
     deleteFromFavorite,
     favoriteContain,
     location,
-    weeklyForecast
+    weeklyForecast,
+    screenWidth,
+    setScreenWidth,
+    screenHeight,
+    setScreenHeight
   } = useWeatherContext();
   const [showModal, setShowModal] = useState(false);
 
@@ -108,7 +112,7 @@ function SecondaryScreen() {
               </div>
 
               <div>{isVarLoaded && results && <Forecast city={city} />}</div>
-              <div>{isVarLoaded && results &&<WeeklyForecast weeklyForecast = {weeklyForecast}/>}</div>
+              
             </Grid>
             <Grid
               container
@@ -170,6 +174,7 @@ function SecondaryScreen() {
             maxWidth: "100%",
           }}
         >
+          <div>{isVarLoaded && results &&<WeeklyForecast weeklyForecast = {weeklyForecast}/>}</div>
           <div>{results && <SongRecommendation options={results} />}</div>
           Bottom part
         </Grid>

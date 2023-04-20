@@ -25,21 +25,6 @@ function InitialScreen() {
     screenWidth, setScreenWidth, screenHeight, setScreenHeight} =
     useWeatherContext();
 
-  useEffect(() => {
-    function handleResize() {
-      setScreenWidth(window.innerWidth);
-      setScreenHeight(window.innerHeight);
-      console.log("Screen width: ", screenWidth);
-      console.log("Screen height: ", screenHeight);
-    }
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    }
-  }, []);
-
   if (error) {
     return <div>Error: {error.message}</div>;
   } else {
@@ -87,7 +72,7 @@ export function InitialScreenUserSection({favCities, screenWidth, screenHeight})
 
     const cityBigCards = favCities.map(city => (
       <div key={city} style={{ display: 'inline-block', padding: '10px' }}>
-        <BigCard city={city} screenWidth={screenWidth} screenHeight={screenHeight}/>
+        <BigCard city={city} screenWidth={600} screenHeight={screenHeight}/>
       </div>
     ));
 
