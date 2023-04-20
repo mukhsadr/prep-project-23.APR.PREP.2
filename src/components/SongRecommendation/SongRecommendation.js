@@ -122,7 +122,7 @@ function SongRecommendation(props) {
 
     return (
         <div className='recommendedSongs'>
-            <h2>Songs based on the forecast</h2>
+            {/* <h2>Songs based on the forecast</h2> */}
             {/* <button onClick={handleReloadSongs}>Reload Songs</button> */}
             {!isLoaded && <h2>Loading...</h2>}
 
@@ -135,7 +135,7 @@ function SongRecommendation(props) {
                             <Row className="tracks-row" key={i}>
                                 {
                                     singleRow.map((singleTrack, j) => (
-                                        <Col xs={12} sm={6} md={4} lg={3} fluid="true" className="d-flex align-items-center justify-content-center track-card" key={j}>
+                                        <Col xs={12} sm={6} md={3} lg={3} fluid="true" className="d-flex align-items-center justify-content-center track-card" key={j}>
                                             <div className="card">
                                                 <div className="overlayer">
 

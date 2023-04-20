@@ -1,22 +1,35 @@
 import { GoogleMap, Marker } from "@react-google-maps/api";
-import { Autocomplete } from "@react-google-maps/api";
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./Map.css";
 import { useWeatherContext } from "../../store/WeatherContext";
 
-function Map() {
-  const [searchValue, setSearchValue] = useState("");
-  const searchInputRef = useRef(null);
-  const [autocomplete, setAutocomplete] = useState(null);
-  const { location, setLocation, city, setCity } = useWeatherContext();
+function Map(props) {
+  const { location, setLocation, setCity } = useWeatherContext();
   const [markerPosition, setMarkerPosition] = useState(location); // store marker position in state
   const containerStyle = {
-    width: "80%",
+    width: "100%",
     height: "300px",
     borderRadius: "7%",
     margin: "0 auto",
+    paddingRight: "50px", //move it away from the screen
+    paddingLeft: "70px", //move it away from the forecast
     position: "relative",
   };
+
+  useEffect(() => {
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ address: props.city }, (results, status) => {
+      if (status === "OK") {
+        const lat = results[0].geometry.location.lat();
+        const lng = results[0].geometry.location.lng();
+        setLocation({ lat, lng });
+        setMarkerPosition({ lat, lng });
+      } else {
+        console.error("Geocode was not successful for the following reason: ", status);
+      }
+    });
+    setCity(props.city);
+  }, [props.city, setLocation, setCity]);
 
   const center = {
     lat: location.lat,
@@ -27,38 +40,59 @@ function Map() {
     console.log("Map loaded!");
   };
 
-  const onLocationSelect = (lat, lng) => {
+  // const onLocationSelect = (lat, lng) => {
+  //   console.log("Location selected:", lat, lng);
+  //   fetch(
+  //     "https://nominatim.openstreetmap.org/reverse?format=json&lat=" +
+  //       lat +
+  //       "&lon=" +
+  //       lng +
+  //       "&zoom=18&addressdetails=1"
+  //   )
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       console.log(result);
+  //       if (result.address && result.address.city) {
+  //         // Only set city and location if the selected location has a city in the address
+  //         console.log("city:", result.address.city);
+  //         setCity(result.address.city);
+  //         setLocation({ lat: parseFloat(lat), lng: parseFloat(lng) });
+  //       } else {
+  //         console.log("No city found for selected location");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  //   setLocation({ lat: parseFloat(lat), lng: parseFloat(lng) });
+  //   setMarkerPosition({ lat: parseFloat(lat), lng: parseFloat(lng) }); // update marker position
+  // };
+  const onLocationSelect = async (lat, lng) => {
     console.log("Location selected:", lat, lng);
-    fetch(
-      "https://nominatim.openstreetmap.org/reverse?format=json&lat=" +
-        lat +
-        "&lon=" +
-        lng +
-        "&zoom=18&addressdetails=1"
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        if (result.address && result.address.city) {
-          // Only set city and location if the selected location has a city in the address
-          console.log("city:", result.address.city);
-          setCity(result.address.city);
-          setLocation({ lat: parseFloat(lat), lng: parseFloat(lng) });
-        } else {
-          console.log("No city found for selected location");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    setLocation({ lat: parseFloat(lat), lng: parseFloat(lng) });
-    setMarkerPosition({ lat: parseFloat(lat), lng: parseFloat(lng) }); // update marker position
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${process.env.REACT_APP_APIKEY}`
+      );
+      const data = await response.json();
+      if (data.cod === 200) {
+        // Only set city and location if the selected location has streetweather data
+        const place = data.name;
+        console.log("city:", place);
+        setCity(place);
+        setLocation({ lat: parseFloat(lat), lng: parseFloat(lng) });
+        setMarkerPosition({ lat: parseFloat(lat), lng: parseFloat(lng) }); // update marker position
+      } else {
+        console.log("No streetweather data found for selected location");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const options = {
     mapTypeId: "terrain", // choose from roadmap, satellite, hybrid, terrain
     zoomControl: true,
-    zoom: 7,
+    zoom: 11,
     streetViewControl: true,
     styles: [
       // This is an array of objects that define the visual styles for different features on the map.
@@ -103,29 +137,6 @@ function Map() {
     ],
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (searchValue && autocomplete) {
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ address: searchValue }, (results, status) => {
-        if (status === "OK" && results && results[0].geometry) {
-          const location = {
-            lat: results[0].geometry.location.lat(),
-            lng: results[0].geometry.location.lng(),
-          };
-          onLocationSelect(location.lat, location.lng);
-          setSearchValue(results[0].formatted_address);
-          searchInputRef.current.blur();
-        } else {
-          console.error(
-            "Geocode was not successful for the following reason: ",
-            status
-          );
-        }
-      });
-    }
-  };
-
   return (
     <div style={containerStyle}>
       <GoogleMap
@@ -141,56 +152,6 @@ function Map() {
       >
         <Marker position={markerPosition} />
       </GoogleMap>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 1,
-        }}
-      >
-        <Autocomplete
-          onLoad={(autocomplete) => setAutocomplete(autocomplete)}
-          onPlaceChanged={() => {
-            const place = autocomplete.getPlace();
-            console.log(place);
-            if (place.geometry) {
-              onLocationSelect(
-                place.geometry.location.lat(),
-                place.geometry.location.lng()
-              );
-            }
-          }}
-          types={["(cities)"]}
-        >
-          <input
-            ref={searchInputRef}
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            id="pac-input"
-            className="controls"
-            type="text"
-            placeholder="Enter your location"
-            style={{
-              boxSizing: `border-box`,
-              border: `1px solid transparent`,
-              width: `240px`,
-              height: `32px`,
-              padding: `0 12px`,
-              borderRadius: `3px`,
-              boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-              fontSize: `14px`,
-              outline: `none`,
-              textOverflow: `ellipses`,
-              position: "relative",
-              zIndex: 2,
-            }}
-          />
-        </Autocomplete>
-        <button type="submit">Search</button>
-      </form>
     </div>
   );
 }

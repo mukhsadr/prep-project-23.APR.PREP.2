@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useWeatherContext } from "../../store/WeatherContext";
 import Chart from "chart.js/auto";
 import "./Forecast.css";
+import { Height } from "@mui/icons-material";
 
 function Forecast({ city }) {
   const { unit} = useWeatherContext();
