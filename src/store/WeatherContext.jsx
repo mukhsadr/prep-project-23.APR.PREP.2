@@ -198,6 +198,7 @@ const WeatherStore = ({ children }) => {
         console.log("Forecast Data: ", data);
   
         // Hourly Forecast: slice the list array to get the next 24 hours of data
+        if (unit === "C") {
         const hourlyForecastData = data.list.slice(0, 8).map((item) => ({
           date: item.dt_txt,
           temp: item.main.temp,
@@ -205,6 +206,15 @@ const WeatherStore = ({ children }) => {
           icon: item.weather[0].icon,
         }));
         setHourlyForecast(hourlyForecastData);
+      } else {
+        const hourlyForecastData = data.list.slice(0, 8).map((item) => ({
+          date: item.dt_txt,
+          temp: (item.main.temp * 1.8 + 32).toFixed(2),
+          description: item.weather[0].description,
+          icon: item.weather[0].icon,
+        }));
+        setHourlyForecast(hourlyForecastData);
+      }
   
         // Weekly Forecast: group the list array by date to get 7 days of data
         if (unit === "C") {

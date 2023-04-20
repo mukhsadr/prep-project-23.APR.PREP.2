@@ -4,7 +4,7 @@ import Chart from "chart.js/auto";
 import "./Forecast.css";
 
 function Forecast({ city }) {
-  const { temp, unit} = useWeatherContext();
+  const { unit} = useWeatherContext();
   const [chart, setChart] = useState(null);
   const [forecast, setForecast] = useState([]);
   const [date, setDate] = useState(new Date());
@@ -15,7 +15,8 @@ function Forecast({ city }) {
     const isToday =
       date.getFullYear() === now.getFullYear() &&
       date.getMonth() === now.getMonth() &&
-      date.getDate() === now.getDate();
+      date.getDate() === now.getDate();    
+    if (unit === "C") {  
     const parseForecast = (data) => {
       let filteredData = data.list;
       if (!isToday) {
@@ -26,7 +27,6 @@ function Forecast({ city }) {
           item.dt_txt.includes(formattedDate)
         );
       }
-
       const parsedData = filteredData.map((item) => ({
         time: new Date(item.dt_txt).toLocaleString("en-US", {
           weekday: "short",
@@ -46,7 +46,6 @@ function Forecast({ city }) {
       }
       return parsedData;
     };
-
     fetch(
       `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&dt=${date}&appid=${process.env.REACT_APP_APIKEY}`
     )
@@ -57,7 +56,49 @@ function Forecast({ city }) {
           setForecast(parsedData);
         }
       });
-  }, [city, date]);
+    } else {
+      const parseForecast = (data) => {
+        let filteredData = data.list;
+        if (!isToday) {
+          const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+            .toString()
+            .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+          filteredData = data.list.filter((item) =>
+            item.dt_txt.includes(formattedDate)
+          );
+        }
+        const parsedData = filteredData.map((item) => ({
+          time: new Date(item.dt_txt).toLocaleString("en-US", {
+            weekday: "short",
+            hour: "numeric",
+            hour12: true,
+          }),
+          temp: Math.round((item.main.temp) * 1.8 + 32),
+          icon: item.weather[0].icon,
+          humidity: item.main.humidity,
+          pressure: item.main.pressure,
+          weatherType: item.weather[0].main,
+        }));
+        if (isToday) {
+          const nowHour = now.getHours();
+          const maxHours = 24 - nowHour;
+          parsedData.splice(maxHours);
+        }
+        return parsedData;
+      };
+      fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&dt=${date}&appid=${process.env.REACT_APP_APIKEY}`
+      )
+        .then((res) => res.json())
+        .then((result) => {
+          if (result.cod === "200") {
+            const parsedData = parseForecast(result);
+            setForecast(parsedData);
+          }
+        });
+    }
+  }, [city, date, unit]);
+
 
   useEffect(() => {
     if (forecast.length > 0) {
@@ -220,7 +261,8 @@ function Forecast({ city }) {
                 grid: { borderColor: "rgba(75, 192, 192, 1)", borderWidth: 5 },
                 ticks: {
                   callback: function (value, index, ticks) {
-                    return value.toFixed(1) + " °C";
+                    return value.toFixed(1) + "°" + unit;
+                   
                   },
                   color: function (context) {
                     const temp = context.tick.value;
@@ -290,7 +332,7 @@ function Forecast({ city }) {
                                 <div style="display: flex; padding: 0.5rem; background-color: rgba(75, 192, 192, 0.5)">
                                 <div class="tooltipText" style="display: flex; flex-direction: column; font-family: 'Poppins'; font-size: 14px; justify-content: flex-end;">
                                     <span style="font-weight: 600; color:black;">Time: ${time}</span>
-                                    <span style="font-weight: 600;  color:black;">Temp: ${temp} °C</span>
+                                    <span style="font-weight: 600;  color:black;">Temp: ${temp} °${unit}</span>
                                     <span style="font-weight: 600;  color:black;">${humidityLine}</span>
                                     <span style="font-weight: 600;  color:black;">${pressureLine}</span>
                                 </div>                          
@@ -329,7 +371,7 @@ function Forecast({ city }) {
         setIsChartLoaded(!isChartLoaded);
       }
     }
-  }, [forecast]);
+  }, [forecast, unit, chart, isChartLoaded]);
 
   return (
     <>
