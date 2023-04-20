@@ -48,7 +48,7 @@ input {
 .Equipment {
   width: 100px; /* Set the desired width for the cards */
   display: inline-block;
-  background-color: grey;
+  background-color: rgba(94, 0, 234, 0.41);
   margin-left: 20px;
   margin-right: 20px;
   margin-top: 20px;
