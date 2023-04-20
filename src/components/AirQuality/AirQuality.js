@@ -3,6 +3,9 @@ import "./AirQuality.css"
 import { useWeatherContext } from "../../store/WeatherContext";
 import AirQualityAlisha from '../AirQuality';
 import { main } from '@popperjs/core';
+import 'react-tooltip/dist/react-tooltip.css';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
+import ReactDOMServer from 'react-dom/server';
 
 const AirQuality = () => {
   const [airQuality, setAirQuality] = useState(null);
@@ -46,6 +49,7 @@ const AirQuality = () => {
               .then(data => {
                 setAirQuality(data.list[0]);
                 setAirQualityIndex(data.list[0].main.aqi)
+                console.log("Air Quality Data:", data.list[0])
               })
               .catch(error => console.log(error));
           }
@@ -58,6 +62,26 @@ const AirQuality = () => {
   
 
   return (
+    <>
+    <a data-tooltip-id="my-tooltip" data-tooltip-html={ReactDOMServer.renderToStaticMarkup(
+      <div> <h6>Air Quality Index Content</h6>
+      <div className='aqi-tooltip'>
+      <div className='tooltip-contianer'>
+      <p>CO: {airQuality?.components?.co} µg/m³</p>
+      <p>NO: {airQuality?.components?.no} µg/m³</p>
+      <p>NO2: {airQuality?.components?.no2} µg/m³</p>
+      <p>O3: {airQuality?.components?.o3} µg/m³</p>
+      </div>
+      <div className='tooltip-contianer'>
+      <p>SO2: {airQuality?.components?.so2} µg/m³</p>
+      <p>PM2.5: {airQuality?.components?.pm2_5} µg/m³</p>
+      <p>PM10: {airQuality?.components?.pm10} µg/m³</p>
+      <p>NH3: {airQuality?.components?.nh3} µg/m³</p>
+      </div>
+    </div>
+    </div>
+    )}>
+    <ReactTooltip id="my-tooltip" place="top" type="light" effect="float"/>
     <section className="info-container">
       <h4>Air Quality Index: <AirQualityAlisha airQualityIndex={airQualityIndex} /></h4>
       {airQuality ? (
@@ -95,6 +119,8 @@ const AirQuality = () => {
         <p>Loading air quality data...</p>
       )}
     </section>
+    </a>
+    </>
   );
 };
 
