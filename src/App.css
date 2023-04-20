@@ -48,7 +48,7 @@ input {
 .Equipment {
   width: 100px; /* Set the desired width for the cards */
   display: inline-block;
-  background-color: grey;
+  background-color: rgba(94, 0, 234, 0.41);
   margin-left: 20px;
   margin-right: 20px;
   margin-top: 20px;
@@ -130,7 +130,7 @@ input {
   background-image: var(--backgroundImage);
   background-position: center center;
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: cover;
 
   display: flex;
   flex-direction: column;
@@ -147,6 +147,23 @@ input {
   border: 1px solid #000000;
   border-radius: 78px;
 
+}
+
+.BigCardBackground {
+  /* The image used */
+  background-image: var(--backgroundImage);
+  
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  
+  /* Full height */
+  height: 100%; 
+  
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .BigCard:hover {
@@ -191,10 +208,10 @@ input {
 
 .title {
   /* Title */
-  font-family: 'Inder';
+  /* font-family: 'Inder'; */
   font-style: normal;
   font-weight: 400;
-  font-size: 50px;
+  font-size: 40px;
   line-height: 62px;
 }
 

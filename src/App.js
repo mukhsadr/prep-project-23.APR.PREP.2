@@ -5,7 +5,7 @@ import SecondaryScreen from "./components/SecondaryScreen";
 import { useEffect } from "react";
 
 function App() {
-  const { screen, favCities, setFavCities } = useWeatherContext();
+  const { screen, favCities, setFavCities, screenWidth, screenHeight, setScreenWidth, setScreenHeight } = useWeatherContext();
 
   useEffect(() => {
     if (favCities === null) {
@@ -13,6 +13,19 @@ function App() {
       if (storedCities) {
         setFavCities(JSON.parse(storedCities));
       }
+    }
+
+    function handleResize() {
+      setScreenWidth(window.innerWidth);
+      setScreenHeight(window.innerHeight);
+      console.log("Screen width: ", screenWidth);
+      console.log("Screen height: ", screenHeight);
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
     }
   });
 

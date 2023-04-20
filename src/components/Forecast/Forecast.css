@@ -1,11 +1,9 @@
 .forecast-card{
-  background-color: rgba(229, 195, 195, 0.25);
-  margin-left: 10%;
-  margin-right: 10%;
   margin-top: 20px;
+  padding-bottom: 60px;
+  padding-top: 20px;
   border-radius: 8px;
   color: black;
-  padding: 10px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
@@ -17,7 +15,7 @@ h2 {
 .chart-container {
  margin: 10px;
   min-height: 20vh;
-  height: 35vh;
+  height: 43vh;
 }
 
 .tooltipText{
