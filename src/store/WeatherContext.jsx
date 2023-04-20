@@ -33,6 +33,8 @@ const WeatherStore = ({ children }) => {
   const [units, setUnits] = useState("metric");
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+  const [state, setState] = useState(null);
+  const [country, setCountry] = useState(null);
 
   const cityHandler = (city) => {
     if (city === "Your location") {
@@ -129,8 +131,10 @@ const WeatherStore = ({ children }) => {
               return res.json();
             })
             .then((result) => {
-              setCity(result[0].name);
-              setYourLocation(result[0].name);
+              setCity(result[0].name.split("-")[0]);
+              setState(result[0].state);
+              setCountry(result[0].country);
+              setYourLocation(result[0].name.split("-")[0]);
               setCondition(result.weather[0].id);
               setLocation({
                 lat: parseFloat(result[0].lat),
@@ -259,7 +263,11 @@ const WeatherStore = ({ children }) => {
     screenWidth,
     setScreenWidth,
     screenHeight,
-    setScreenHeight
+    setScreenHeight,
+    state,
+    setState,
+    country,
+    setCountry,
   };
 
   return (

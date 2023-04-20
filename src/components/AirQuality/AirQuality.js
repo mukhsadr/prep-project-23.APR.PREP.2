@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import "./AirQuality.css"
 import { useWeatherContext } from "../../store/WeatherContext";
 import AirQualityAlisha from '../AirQuality';
+import { main } from '@popperjs/core';
 
 const AirQuality = () => {
   const [airQuality, setAirQuality] = useState(null);
-  const { city } = useWeatherContext();
+  const [airQualityIndex, setAirQualityIndex] = useState(null);
+  const { city, state, country } = useWeatherContext();
   
   const aqi = [
     {
@@ -31,7 +33,7 @@ const AirQuality = () => {
   ];
 
   useEffect(() => {
-    const geocodingUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.REACT_APP_APIKEY}`;
+    const geocodingUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city, state, country}&limit=1&appid=${process.env.REACT_APP_APIKEY}`;
     try {
       fetch(geocodingUrl)
         .then(response => response.json())
@@ -43,6 +45,7 @@ const AirQuality = () => {
               .then(response => response.json())
               .then(data => {
                 setAirQuality(data.list[0]);
+                setAirQualityIndex(data.list[0].main.aqi)
               })
               .catch(error => console.log(error));
           }
@@ -56,7 +59,7 @@ const AirQuality = () => {
 
   return (
     <section className="info-container">
-      <h4>Air Quality Index: <AirQualityAlisha city={city} /></h4>
+      <h4>Air Quality Index: <AirQualityAlisha airQualityIndex={airQualityIndex} /></h4>
       {airQuality ? (
         <>
           <div className="aqi-container">
