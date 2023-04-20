@@ -25,6 +25,7 @@ import {
   Title,
 } from "../TextStyle";
 import AirQuality from "./AirQuality";
+import LoadingSpinner from "./LoadingSpinner";
 
 function InitialScreen() {
   const {
@@ -66,11 +67,15 @@ function InitialScreen() {
 
           <Grid item maxHeight="425px">
             <div align="center">
-              <BigCard
-                city={yourLocation}
-                screenWidth={screenWidth}
-                screenHeight={screenHeight}
-              />
+              {isVarLoaded ? (
+                <BigCard
+                  city={yourLocation}
+                  screenWidth={screenWidth}
+                  screenHeight={screenHeight}
+                />
+              ) : (
+                <LoadingSpinner />
+              )}
             </div>
           </Grid>
 
