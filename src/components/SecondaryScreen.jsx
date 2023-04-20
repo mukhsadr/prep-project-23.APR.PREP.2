@@ -154,9 +154,8 @@ function SecondaryScreen() {
                   )}
                 </Grid>
                 <Grid xs={6} padding={"10%"}>
-                  <AirQuality city={city}></AirQuality>
                   <div className="aq-container">
-                      <AirQuality1 city={city} />
+                      <AirQuality1 />
                   </div>
                 </Grid>
               </Grid>
