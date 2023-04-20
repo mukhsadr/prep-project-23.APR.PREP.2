@@ -135,7 +135,7 @@ function SongRecommendation(props) {
                             <Row className="tracks-row" key={i}>
                                 {
                                     singleRow.map((singleTrack, j) => (
-                                        <Col xs={12} sm={6} md={4} lg={3} fluid="true" className="d-flex align-items-center justify-content-center track-card" key={j}>
+                                        <Col xs={12} sm={6} md={3} lg={3} fluid="true" className="d-flex align-items-center justify-content-center track-card" key={j}>
                                             <div className="card">
                                                 <div className="overlayer">
 

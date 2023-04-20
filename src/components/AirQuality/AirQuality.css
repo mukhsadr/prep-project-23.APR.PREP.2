@@ -1,10 +1,10 @@
-.modal .modal-two{
-  --bs-modal-width: 1000px;
+.modal-two {
+  --bs-modal-width: 1200px;
 }
+
 
 .my-modal .modal-content {
   background-color: #133667;
-
 
 }
 
