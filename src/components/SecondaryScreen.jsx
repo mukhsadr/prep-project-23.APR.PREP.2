@@ -137,7 +137,7 @@ function SecondaryScreen() {
 
           <div style={{ width: screenWidth * 0.5, padding: "10px" }}>
             {/* right side */}
-            {location.lat && location.lng && <Map />}
+            {location.lat && location.lng && <Map city={city}/>}
 
             <div style={{ height: "10px" }}></div>
 
