@@ -12,9 +12,9 @@ import { Grid } from "@mui/material";
 
 import sunny_img from "../weatherImage/sunny.png";
 import snow_img from "../weatherImage/snow.png";
-import rain_img from "../weatherImage/Rain.png";
+import rain_img from "../weatherImage/rain.jpeg";
 import thunderstorm_img from "../weatherImage/Thunderstorm.png";
-import cloudy_img from "../weatherImage/Cloudy.webp";
+import cloudy_img from "../weatherImage/cloud.jpeg";
 import fog_img from "../weatherImage/fog.jpg";
 import unknown_img from "../weatherImage/unknown.jpeg";
 import {
@@ -23,6 +23,7 @@ import {
   SmallText,
   SmallTextBold,
   Title,
+  ScrollingText
 } from "../TextStyle";
 import AirQuality from "./AirQuality";
 import LoadingSpinner from "./LoadingSpinner";
@@ -40,6 +41,17 @@ function InitialScreen() {
 
   if (error) {
     return <div>Error: {error.message}</div>;
+  } else if (results === null) {
+    return (
+      <div style={{display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center",
+        height: "100vh",
+        flexDirection: "column"}}>
+        <div>Sorry, we will get back soon. </div> <br></br>
+        <div>Err: results is null. Check if API key expired. </div>
+      </div>
+      );
   } else {
     const currentWeatherTextAreaHeight = screenWidth > 600 ? "100px" : "150px";
 
@@ -199,6 +211,11 @@ export function BigCard({ city, screenWidth, screenHeight }) {
     changeScreen();
   };
 
+  let cityString = city;
+  if (cityString.length > 15) {
+    cityString = cityString.slice(0, 15) + "...";
+  }
+
   return (
     <>
       {isVarLoaded && results && (
@@ -212,7 +229,7 @@ export function BigCard({ city, screenWidth, screenHeight }) {
             }}
           >
             <div align="left">
-              <MainScreenTemp text={city} color="White" />
+                <MainScreenTemp text={cityString} color="White"/>
             </div>
 
             <div align="center">

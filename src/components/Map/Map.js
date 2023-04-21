@@ -8,11 +8,9 @@ function Map(props) {
   const [markerPosition, setMarkerPosition] = useState(location); // store marker position in state
   const containerStyle = {
     width: "100%",
-    height: "300px",
-    borderRadius: "7%",
+    height: "40vh",
+    borderRadius: "2%",
     margin: "0 auto",
-    paddingRight: "50px", //move it away from the screen
-    paddingLeft: "70px", //move it away from the forecast
     position: "relative",
   };
 
