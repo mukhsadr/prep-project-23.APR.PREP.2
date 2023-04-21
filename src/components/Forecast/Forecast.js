@@ -5,7 +5,7 @@ import "./Forecast.css";
 import { Height } from "@mui/icons-material";
 
 function Forecast({ city }) {
-  const { unit} = useWeatherContext();
+  const { unit } = useWeatherContext();
   const [chart, setChart] = useState(null);
   const [forecast, setForecast] = useState([]);
   const [date, setDate] = useState(new Date());
@@ -16,47 +16,47 @@ function Forecast({ city }) {
     const isToday =
       date.getFullYear() === now.getFullYear() &&
       date.getMonth() === now.getMonth() &&
-      date.getDate() === now.getDate();    
-    if (unit === "C") {  
-    const parseForecast = (data) => {
-      let filteredData = data.list;
-      if (!isToday) {
-        const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
-          .toString()
-          .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-        filteredData = data.list.filter((item) =>
-          item.dt_txt.includes(formattedDate)
-        );
-      }
-      const parsedData = filteredData.map((item) => ({
-        time: new Date(item.dt_txt).toLocaleString("en-US", {
-          weekday: "short",
-          hour: "numeric",
-          hour12: true,
-        }),
-        temp: Math.round(item.main.temp),
-        icon: item.weather[0].icon,
-        humidity: item.main.humidity,
-        pressure: item.main.pressure,
-        weatherType: item.weather[0].main,
-      }));
-      if (isToday) {
-        const nowHour = now.getHours();
-        const maxHours = 24 - nowHour;
-        parsedData.splice(maxHours);
-      }
-      return parsedData;
-    };
-    fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&dt=${date}&appid=${process.env.REACT_APP_APIKEY}`
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        if (result.cod === "200") {
-          const parsedData = parseForecast(result);
-          setForecast(parsedData);
+      date.getDate() === now.getDate();
+    if (unit === "C") {
+      const parseForecast = (data) => {
+        let filteredData = data.list;
+        if (!isToday) {
+          const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+            .toString()
+            .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+          filteredData = data.list.filter((item) =>
+            item.dt_txt.includes(formattedDate)
+          );
         }
-      });
+        const parsedData = filteredData.map((item) => ({
+          time: new Date(item.dt_txt).toLocaleString("en-US", {
+            weekday: "short",
+            hour: "numeric",
+            hour12: true,
+          }),
+          temp: Math.round(item.main.temp),
+          icon: item.weather[0].icon,
+          humidity: item.main.humidity,
+          pressure: item.main.pressure,
+          weatherType: item.weather[0].main,
+        }));
+        if (isToday) {
+          const nowHour = now.getHours();
+          const maxHours = 24 - nowHour;
+          parsedData.splice(maxHours);
+        }
+        return parsedData;
+      };
+      fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&dt=${date}&appid=${process.env.REACT_APP_APIKEY}`
+      )
+        .then((res) => res.json())
+        .then((result) => {
+          if (result.cod === "200") {
+            const parsedData = parseForecast(result);
+            setForecast(parsedData);
+          }
+        });
     } else {
       const parseForecast = (data) => {
         let filteredData = data.list;
@@ -74,7 +74,7 @@ function Forecast({ city }) {
             hour: "numeric",
             hour12: true,
           }),
-          temp: Math.round((item.main.temp) * 1.8 + 32),
+          temp: Math.round(item.main.temp * 1.8 + 32),
           icon: item.weather[0].icon,
           humidity: item.main.humidity,
           pressure: item.main.pressure,
@@ -99,7 +99,6 @@ function Forecast({ city }) {
         });
     }
   }, [city, date, unit]);
-
 
   useEffect(() => {
     if (forecast.length > 0) {
@@ -166,7 +165,8 @@ function Forecast({ city }) {
       canvas.style.backgroundImage = `url(${backgroundImageUrl})`;
       canvas.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
       canvas.style.borderRadius = "0.5vh";
-      canvas.style.boxShadow = "inset 0 0 30px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.5)";
+      canvas.style.boxShadow =
+        "inset 0 0 30px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.5)";
       canvas.style.backgroundBlendMode = "true";
 
       if (chart) {
@@ -263,33 +263,35 @@ function Forecast({ city }) {
                 ticks: {
                   callback: function (value, index, ticks) {
                     return value.toFixed(1);
-                   
                   },
                   color: function (context) {
                     const temp = context.tick.value;
                     if (temp < 0) {
-                      return "rgba(0, 123, 255, 0.7)"; // Blue for very cold temperatures
+                      return "rgba(255,255,255,0.7)"; // Blue for very cold temperatures
                     } else if (temp < 10) {
-                      return "rgba(40, 167, 69, 0.7)"; // Green for cool temperatures
+                      return "rgb(255,255,255)"; // Green for cool temperatures
                     } else if (temp < 20) {
-                      return "rgba(255, 193, 7, 0.7)"; // Yellow for warm temperatures
+                      return "rgb(255,255,255)"; // Yellow for warm temperatures
                     } else {
-                      return "rgba(220, 53, 69, 0.7)"; // Red for hot temperatures
+                      return "rgb(255,255,255)"; // Red for hot temperatures
                     }
                   },
                   font: {
-                    size: 10,
+                    size: 13,
                     weight: "bold",
                   },
                 },
               },
               x: {
-                grid: { borderColor: "rgba(75, 192, 192, 1)", borderWidth: 5 },
+                grid: {
+                  borderColor: "rgba(0,234,207,0.68)",
+                  borderWidth: 5,
+                },
                 ticks: {
-                  color: "blue",
+                  color: "rgb(43,0,234)",
                   type: "time",
                   font: {
-                    size: 10,
+                    size: 13,
                     weight: "bold",
                   },
                 },
@@ -330,12 +332,12 @@ function Forecast({ city }) {
                                 <div style="background-color: ${borderColor}; padding-top: 0.5px; padding-bottom: 0.5px; padding-left: 4px; color: #000; font-family: 'Poppins'; font-size: 14px; border-bottom: solid 1px #DDD">
                                 <img src="https://openweathermap.org/img/wn/${icon}.png" alt="Weather Icon" style="width:50px;height:50px;margin-left:auto;">
                                 </div>
-                                <div style="display: flex; padding: 0.5rem; background-color: rgba(75, 192, 192, 0.5)">
+                                <div style="display: flex; padding: 0.5rem; background-color: rgba(114,75,192,0.5)">
                                 <div class="tooltipText" style="display: flex; flex-direction: column; font-family: 'Poppins'; font-size: 14px; justify-content: flex-end;">
-                                    <span style="font-weight: 600; color:black;">Time: ${time}</span>
-                                    <span style="font-weight: 600;  color:black;">Temp: ${temp}</span>
-                                    <span style="font-weight: 600;  color:black;">${humidityLine}</span>
-                                    <span style="font-weight: 600;  color:black;">${pressureLine}</span>
+                                    <span style="font-weight: 600; color:#ffffff;">Time: ${time}</span>
+                                    <span style="font-weight: 600;  color:#ffffff;">Temp: ${temp}</span>
+                                    <span style="font-weight: 600;  color:#ffffff;">${humidityLine}</span>
+                                    <span style="font-weight: 600;  color:#ffffff;">${pressureLine}</span>
                                 </div>                          
                                 </div>
                             </div>
