@@ -3,8 +3,6 @@ import { useState } from "react";
 import "../AirQuality.css";
 
 export default function AirQuality(props) {
-  const [lat, setLat] = useState(0);
-  const [lon, setLong] = useState(0);
   const [aqi, setAQI] = useState(null);
   let city = props.city;
 
@@ -26,7 +24,7 @@ export default function AirQuality(props) {
         setAQI(result.list[0].main.aqi);
         console.log("aqi: ", result.list[0].main.aqi);
       });
-  }, [lat, lon]);
+  }, [props.lat, props.lon]);
 
   if (city != null) {
     if (aqi == 1) {
