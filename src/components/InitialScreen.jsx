@@ -30,18 +30,12 @@ import LoadingSpinner from "./LoadingSpinner";
 function InitialScreen() {
   const {
     yourLocation,
-    temp,
-    unit,
-    isLoaded,
-    results,
     error,
     isVarLoaded,
-    changeScreen,
     favCities,
     screenWidth,
-    setScreenWidth,
     screenHeight,
-    setScreenHeight,
+    noLocation,
   } = useWeatherContext();
 
   if (error) {
@@ -62,7 +56,14 @@ function InitialScreen() {
             <TopBar></TopBar>
           </Grid>
           <Grid item maxHeight={currentWeatherTextAreaHeight}>
-            <Title text="Your current location weather:" color="White" />
+            <Title
+              text={
+                noLocation
+                  ? "Default location weather:"
+                  : "Your current location weather:"
+              }
+              color="White"
+            />
           </Grid>
 
           <Grid item maxHeight="425px">
@@ -136,7 +137,6 @@ export function BigCard({ city, screenWidth, screenHeight }) {
   const [error, setError] = useState(null);
   const [isVarLoaded, setIsVarLoaded] = useState(false);
   const [results, setResults] = useState(null);
-
   const { setCity, changeScreen, unit } = useWeatherContext();
 
   var api_url = "https://api.openweathermap.org/data/2.5/weather?q=" + city;
@@ -250,7 +250,13 @@ export function BigCardStatContainer({ screenWidth, results, unit, speed }) {
           <div class="child" style={{ width: "25%" }}>
             <BigCardStatArea
               firstLine={"Air Quality"}
-              secondLine={<AirQuality city={results.name}></AirQuality>}
+              secondLine={
+                <AirQuality
+                  city={results.name}
+                  lat={results.coord.lat}
+                  lon={results.coord.lon}
+                ></AirQuality>
+              }
             />
           </div>
           <div class="child" style={{ width: "25%" }}>
@@ -281,7 +287,13 @@ export function BigCardStatContainer({ screenWidth, results, unit, speed }) {
           <div class="child" style={{ width: "50%" }}>
             <BigCardStatArea
               firstLine={"Air Quality"}
-              secondLine={<AirQuality city={results.name}></AirQuality>}
+              secondLine={
+                <AirQuality
+                  city={results.name}
+                  lat={results.coord.lat}
+                  lon={results.coord.lon}
+                ></AirQuality>
+              }
             />
           </div>
           <div class="child" style={{ width: "50%" }}>

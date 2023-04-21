@@ -110,13 +110,43 @@ input {
   position: absolute;
 }
 
+.modal-two {
+  --bs-modal-width: 1200px;
+}
+
+
+.my-modal .modal-content {
+  background-color: #133667;
+
+
+}
+
+.my-modal .aq-container {
+  background-color: rgba(106, 159, 239, 0.555);
+  border-radius: 2vh;
+  box-shadow: inset(0 0 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.5));
+}
+.info-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
 .tooltip2:hover .tooltiptext {
   visibility: visible;
   bottom: -100%;
+  z-index: 113;
 }
 .tooltip2:hover .tooltiptext-2 {
   visibility: visible;
   bottom: -30%;
+  z-index: 113;
 }
 
 .BigCard{

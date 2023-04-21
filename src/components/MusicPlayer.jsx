@@ -3,11 +3,11 @@ import { Button, Grid } from "@mui/material";
 import PauseIcon from "@mui/icons-material/Pause";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
-import axios from "axios";
 import { useSpotifyContext } from "../store/SpotifyContext";
 import { Modal } from "react-bootstrap";
 import SongRecommendation from "./SongRecommendation/SongRecommendation";
 import { useWeatherContext } from "../store/WeatherContext";
+import "./AirQuality/AirQuality.css";
 
 export default function MusicPlayer() {
   const {
@@ -105,6 +105,7 @@ export default function MusicPlayer() {
             show={showModal}
             onHide={() => setShowModal(false)}
             className="my-modal modal-two"
+            style={{ width: "90vw" }}
           >
             <Modal.Header closeButton>
               <Modal.Title>Songs based on the Forecast</Modal.Title>
