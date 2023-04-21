@@ -11,9 +11,6 @@ import SongRecommendation from "./SongRecommendation/SongRecommendation";
 export default function TopBar() {
   const { isLoaded, cityHandler, city, temp, tempHandler, results } =
     useWeatherContext();
-  const [showModal, setShowModal] = useState(false);
-  const handleCloseModal = () => setShowModal(false);
-  const handleShowModal = () => setShowModal(true);
 
   return (
     <Grid
@@ -63,18 +60,6 @@ export default function TopBar() {
             )}
           </Grid>
           <MusicPlayer></MusicPlayer>
-          <button className="btn btn-primary" onClick={() => setShowModal(true)}>Song Recommendations</button>
-          <div className="songRec">
-            <Modal show={showModal} onHide={() => setShowModal(false)} className="my-modal modal-two">
-              <Modal.Header closeButton>
-                <Modal.Title>Songs based on the Forecast</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                {results && <SongRecommendation options={results} />}
-
-              </Modal.Body>
-            </Modal>
-          </div>
         </Grid>
       </Grid>
     </Grid>
