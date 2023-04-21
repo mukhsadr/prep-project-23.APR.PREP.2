@@ -465,7 +465,7 @@ export function BigScreenLayout({screenWidth, handleBackButtonClick,
                     overflowX: "auto",
                     display: "flex",
                     whiteSpace: "nowrap",
-                    height: "200px",
+                    height: "172px",
                   }}
                 >
                   {equipmentCard}

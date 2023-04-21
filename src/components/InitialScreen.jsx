@@ -12,9 +12,9 @@ import { Grid } from "@mui/material";
 
 import sunny_img from "../weatherImage/sunny.png";
 import snow_img from "../weatherImage/snow.png";
-import rain_img from "../weatherImage/Rain.png";
+import rain_img from "../weatherImage/rain.jpeg";
 import thunderstorm_img from "../weatherImage/Thunderstorm.png";
-import cloudy_img from "../weatherImage/Cloudy.webp";
+import cloudy_img from "../weatherImage/cloud.jpeg";
 import fog_img from "../weatherImage/fog.jpg";
 import unknown_img from "../weatherImage/unknown.jpeg";
 import {

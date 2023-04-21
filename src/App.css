@@ -154,10 +154,6 @@ input {
   transform: scale(1.05);
 }
 
-.BigCard > * {
-  backdrop-filter: blur(5px);
-}
-
 .main-screen-temp {
   /* Main Screen Temp */
   font-family: 'Inter';

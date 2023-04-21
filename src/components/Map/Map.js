@@ -8,7 +8,7 @@ function Map(props) {
   const [markerPosition, setMarkerPosition] = useState(location); // store marker position in state
   const containerStyle = {
     width: "100%",
-    height: "300px",
+    height: "40vh",
     borderRadius: "2%",
     margin: "0 auto",
     position: "relative",
