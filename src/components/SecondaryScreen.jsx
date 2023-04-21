@@ -27,6 +27,7 @@ function SecondaryScreen() {
   const {
     city,
     setCity,
+    yourLocation,
     temp,
     unit,
     isLoaded,
@@ -60,6 +61,11 @@ function SecondaryScreen() {
       // add
       fav_img = addFavorite(city) ? favorite : favorite_hollow;
     }
+  };
+
+  const handleBackButtonClick = () => {
+    changeScreen();
+    setCity(yourLocation);
   };
 
   const leftSectionCardStyle = {
@@ -110,7 +116,7 @@ function SecondaryScreen() {
               <img
                 src={back_button}
                 alt="Back Button"
-                onClick={changeScreen}
+                onClick={handleBackButtonClick}
                 height={30}
                 width={30}
               />
