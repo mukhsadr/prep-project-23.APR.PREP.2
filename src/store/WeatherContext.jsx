@@ -208,6 +208,7 @@ const WeatherStore = ({ children }) => {
         console.log("Forecast Data: ", data);
 
         // Hourly Forecast: slice the list array to get the next 24 hours of data
+        if (unit === "C") {
         const hourlyForecastData = data.list.slice(0, 8).map((item) => ({
           date: item.dt_txt,
           temp: item.main.temp,
@@ -215,8 +216,18 @@ const WeatherStore = ({ children }) => {
           icon: item.weather[0].icon,
         }));
         setHourlyForecast(hourlyForecastData);
+      } else {
+        const hourlyForecastData = data.list.slice(0, 8).map((item) => ({
+          date: item.dt_txt,
+          temp: (item.main.temp * 1.8 + 32).toFixed(2),
+          description: item.weather[0].description,
+          icon: item.weather[0].icon,
+        }));
+        setHourlyForecast(hourlyForecastData);
+      }
 
         // Weekly Forecast: group the list array by date to get 7 days of data
+        if (unit === "C") {
         const weeklyForecastData = data.list.reduce((acc, item) => {
           const date = item.dt_txt.split(" ")[0];
           const hour = item.dt_txt.split(" ")[1];
@@ -231,13 +242,30 @@ const WeatherStore = ({ children }) => {
           return acc;
         }, []);
         setWeeklyForecast(weeklyForecastData.slice(0, 7));
+      } else {
+        const weeklyForecastData = data.list.reduce((acc, item) => {
+          const date = item.dt_txt.split(" ")[0];
+          const hour = item.dt_txt.split(" ")[1];
+          if (hour === "12:00:00") {
+            acc.push({
+              date,
+              temp: (item.main.temp * 1.8 + 32).toFixed(2),
+              description: item.weather[0].description,
+              icon: item.weather[0].icon,
+            });
+          }
+          return acc;
+        }, []);
+        setWeeklyForecast(weeklyForecastData.slice(0, 7));
+      }
+
       } catch (error) {
         console.log("Error fetching forecast data: ", error);
       }
     };
 
     fetchForecast();
-  }, [results, location]);
+  }, [results, location, unit, city]);
 
   const weatherStoreValues = {
     location,

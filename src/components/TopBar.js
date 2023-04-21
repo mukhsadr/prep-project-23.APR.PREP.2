@@ -51,6 +51,7 @@ export default function TopBar() {
               <TempConvert
                 tempHandler={tempHandler}
                 currTemp={temp}
+                showButton={"true"}
               ></TempConvert>
             ) : null}
           </Grid>
