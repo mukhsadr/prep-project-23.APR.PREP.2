@@ -16,7 +16,7 @@ import AirQuality1 from "./AirQuality/AirQuality";
 import AirQuality from "./AirQuality";
 import { Modal } from "react-bootstrap";
 import Map from "./Map/Map";
-import SongRecommendation from "./SongRecommendation/SongRecommendation";
+// import SongRecommendation from "./SongRecommendation/SongRecommendation";
 import { requiredThings } from "./../assets/constants";
 import EquipmentTable from "./EquipmentTable";
 import EquipmentCard from "./EquipmentCard";
@@ -140,7 +140,7 @@ function SecondaryScreen() {
 
           <div style={{ width: screenWidth * 0.5, padding: "10px" }}>
             {/* right side */}
-            {location.lat && location.lng && <Map />}
+            {location.lat && location.lng && <Map city={city}/>}
 
             <div style={{ height: "10px" }}></div>
 

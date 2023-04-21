@@ -25,3 +25,6 @@ npm install chart.js
 npm i chart.js
 npm i react-bootstrap
 npm i buffer
+
+npm install react react-dom
+npm i react-tooltip

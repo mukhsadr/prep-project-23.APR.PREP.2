@@ -5,9 +5,11 @@ import { useWeatherContext } from "../store/WeatherContext";
 import AutoComp from "./AutoComp";
 import TempConvert from "./TempConvert";
 import MusicPlayer from "./MusicPlayer";
+import { Modal } from "react-bootstrap";
+import SongRecommendation from "./SongRecommendation/SongRecommendation";
 
 export default function TopBar() {
-  const { isLoaded, cityHandler, city, temp, tempHandler } =
+  const { isLoaded, cityHandler, city, temp, tempHandler, results } =
     useWeatherContext();
 
   return (
@@ -49,6 +51,7 @@ export default function TopBar() {
               <TempConvert
                 tempHandler={tempHandler}
                 currTemp={temp}
+                showButton={"true"}
               ></TempConvert>
             ) : null}
           </Grid>

@@ -74,7 +74,9 @@ export default function TempConvert(props) {
     }
     props.tempHandler(newT, newUnit);
   };
-
+  if (props.showButton == "false") {
+    return (null);
+  } else {
   return (
     <ThemeProvider theme={toggleTheme}>
       <FormControlLabel
@@ -82,4 +84,5 @@ export default function TempConvert(props) {
       />
     </ThemeProvider>
   );
+  }
 }
