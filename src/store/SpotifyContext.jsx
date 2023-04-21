@@ -98,7 +98,6 @@ const SpotifyStore = ({ children }) => {
   const [is_active, setActive] = useState(false);
   const [current_track, setTrack] = useState(track);
   const [img, setImg] = useState("");
-  const [playlist, setPlaylist] = useState(playListURIs.default);
   const { condition } = useWeatherContext();
 
   useEffect(() => {
@@ -206,7 +205,7 @@ const SpotifyStore = ({ children }) => {
         setPlayer(player);
       };
     }
-  }, [token, condition]);
+  }, [token]);
 
   const spotifyStoreValues = {
     token,
