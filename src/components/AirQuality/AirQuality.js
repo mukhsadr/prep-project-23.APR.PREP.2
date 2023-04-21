@@ -82,7 +82,7 @@ const AirQuality = () => {
     )}>
     <ReactTooltip id="my-tooltip" place="top"  type="info" effect="float"/>
     <section className="info-container">
-      <h4>Air Quality Index: <AirQualityAlisha airQualityIndex={airQualityIndex} /></h4>
+      <h4>Air Quality Index: <AirQualityAlisha city={city} /></h4>
       {airQuality ? (
         <>
           <div className="aqi-container">
