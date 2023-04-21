@@ -277,7 +277,7 @@ function Forecast({ city }) {
                     }
                   },
                   font: {
-                    size: 12,
+                    size: 13,
                     weight: "bold",
                   },
                 },
@@ -291,7 +291,7 @@ function Forecast({ city }) {
                   color: "rgb(43,0,234)",
                   type: "time",
                   font: {
-                    size: 12,
+                    size: 13,
                     weight: "bold",
                   },
                 },
