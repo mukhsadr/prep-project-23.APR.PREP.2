@@ -1,7 +1,6 @@
 import * as React from "react";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
-import { options } from "axios";
 
 const WeatherContext = createContext(undefined);
 
@@ -111,7 +110,7 @@ const WeatherStore = ({ children }) => {
   };
 
   const options = {
-    timeout: 3000,
+    timeout: 5000,
   };
 
   useEffect(() => {
@@ -209,56 +208,55 @@ const WeatherStore = ({ children }) => {
 
         // Hourly Forecast: slice the list array to get the next 24 hours of data
         if (unit === "C") {
-        const hourlyForecastData = data.list.slice(0, 8).map((item) => ({
-          date: item.dt_txt,
-          temp: item.main.temp,
-          description: item.weather[0].description,
-          icon: item.weather[0].icon,
-        }));
-        setHourlyForecast(hourlyForecastData);
-      } else {
-        const hourlyForecastData = data.list.slice(0, 8).map((item) => ({
-          date: item.dt_txt,
-          temp: (item.main.temp * 1.8 + 32).toFixed(2),
-          description: item.weather[0].description,
-          icon: item.weather[0].icon,
-        }));
-        setHourlyForecast(hourlyForecastData);
-      }
+          const hourlyForecastData = data.list.slice(0, 8).map((item) => ({
+            date: item.dt_txt,
+            temp: item.main.temp,
+            description: item.weather[0].description,
+            icon: item.weather[0].icon,
+          }));
+          setHourlyForecast(hourlyForecastData);
+        } else {
+          const hourlyForecastData = data.list.slice(0, 8).map((item) => ({
+            date: item.dt_txt,
+            temp: (item.main.temp * 1.8 + 32).toFixed(2),
+            description: item.weather[0].description,
+            icon: item.weather[0].icon,
+          }));
+          setHourlyForecast(hourlyForecastData);
+        }
 
         // Weekly Forecast: group the list array by date to get 7 days of data
         if (unit === "C") {
-        const weeklyForecastData = data.list.reduce((acc, item) => {
-          const date = item.dt_txt.split(" ")[0];
-          const hour = item.dt_txt.split(" ")[1];
-          if (hour === "12:00:00") {
-            acc.push({
-              date,
-              temp: item.main.temp,
-              description: item.weather[0].description,
-              icon: item.weather[0].icon,
-            });
-          }
-          return acc;
-        }, []);
-        setWeeklyForecast(weeklyForecastData.slice(0, 7));
-      } else {
-        const weeklyForecastData = data.list.reduce((acc, item) => {
-          const date = item.dt_txt.split(" ")[0];
-          const hour = item.dt_txt.split(" ")[1];
-          if (hour === "12:00:00") {
-            acc.push({
-              date,
-              temp: (item.main.temp * 1.8 + 32).toFixed(2),
-              description: item.weather[0].description,
-              icon: item.weather[0].icon,
-            });
-          }
-          return acc;
-        }, []);
-        setWeeklyForecast(weeklyForecastData.slice(0, 7));
-      }
-
+          const weeklyForecastData = data.list.reduce((acc, item) => {
+            const date = item.dt_txt.split(" ")[0];
+            const hour = item.dt_txt.split(" ")[1];
+            if (hour === "12:00:00") {
+              acc.push({
+                date,
+                temp: item.main.temp,
+                description: item.weather[0].description,
+                icon: item.weather[0].icon,
+              });
+            }
+            return acc;
+          }, []);
+          setWeeklyForecast(weeklyForecastData.slice(0, 7));
+        } else {
+          const weeklyForecastData = data.list.reduce((acc, item) => {
+            const date = item.dt_txt.split(" ")[0];
+            const hour = item.dt_txt.split(" ")[1];
+            if (hour === "12:00:00") {
+              acc.push({
+                date,
+                temp: (item.main.temp * 1.8 + 32).toFixed(2),
+                description: item.weather[0].description,
+                icon: item.weather[0].icon,
+              });
+            }
+            return acc;
+          }, []);
+          setWeeklyForecast(weeklyForecastData.slice(0, 7));
+        }
       } catch (error) {
         console.log("Error fetching forecast data: ", error);
       }
