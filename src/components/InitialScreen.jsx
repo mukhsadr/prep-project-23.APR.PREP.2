@@ -23,7 +23,7 @@ import {
   SmallText,
   SmallTextBold,
   Title,
-  ScrollingText
+  ScrollingText,
 } from "../TextStyle";
 import AirQuality from "./AirQuality";
 import LoadingSpinner from "./LoadingSpinner";
@@ -41,17 +41,6 @@ function InitialScreen() {
 
   if (error) {
     return <div>Error: {error.message}</div>;
-  } else if (results === null) {
-    return (
-      <div style={{display: "flex", 
-        justifyContent: "center", 
-        alignItems: "center",
-        height: "100vh",
-        flexDirection: "column"}}>
-        <div>Sorry, we will get back soon. </div> <br></br>
-        <div>Err: results is null. Check if API key expired. </div>
-      </div>
-      );
   } else {
     const currentWeatherTextAreaHeight = screenWidth > 600 ? "100px" : "150px";
 
@@ -218,7 +207,7 @@ export function BigCard({ city, screenWidth, screenHeight }) {
 
   return (
     <>
-      {isVarLoaded && results && (
+      {isVarLoaded && !!results && (
         <>
           <div
             className="BigCard"
@@ -229,7 +218,7 @@ export function BigCard({ city, screenWidth, screenHeight }) {
             }}
           >
             <div align="left">
-                <MainScreenTemp text={cityString} color="White"/>
+              <MainScreenTemp text={cityString} color="White" />
             </div>
 
             <div align="center">
@@ -262,79 +251,85 @@ export function BigCard({ city, screenWidth, screenHeight }) {
 export function BigCardStatContainer({ screenWidth, results, unit, speed }) {
   if (screenWidth > 700) {
     return (
-      <div id="container">
-        <div id="inner">
-          <div class="child" style={{ width: "25%" }}>
-            <BigCardStatArea
-              firstLine={"Air Quality"}
-              secondLine={
-                <AirQuality
-                  city={results.name}
-                  lat={results.coord.lat}
-                  lon={results.coord.lon}
-                ></AirQuality>
-              }
-            />
+      <div id="container" style={{ minHeight: "50px" }}>
+        {!!results && (
+          <div id="inner">
+            <div class="child" style={{ width: "25%" }}>
+              <BigCardStatArea
+                firstLine={"Air Quality"}
+                secondLine={
+                  <AirQuality
+                    city={results.name}
+                    lat={results.coord.lat}
+                    lon={results.coord.lon}
+                  ></AirQuality>
+                }
+              />
+            </div>
+            <div class="child" style={{ width: "25%" }}>
+              <BigCardStatArea
+                firstLine={"Humidity"}
+                secondLine={results.main.humidity + "%"}
+              />
+            </div>
+            <div class="child" style={{ width: "25%" }}>
+              <BigCardStatArea
+                firstLine={"Feel like"}
+                secondLine={results.main.feels_like + "°" + unit}
+              />
+            </div>
+            <div class="child" style={{ width: "25%" }}>
+              <BigCardStatArea
+                firstLine={"Wind speed"}
+                secondLine={results.wind.speed + speed}
+              />
+            </div>
           </div>
-          <div class="child" style={{ width: "25%" }}>
-            <BigCardStatArea
-              firstLine={"Humidity"}
-              secondLine={results.main.humidity + "%"}
-            />
-          </div>
-          <div class="child" style={{ width: "25%" }}>
-            <BigCardStatArea
-              firstLine={"Feel like"}
-              secondLine={results.main.feels_like + "°" + unit}
-            />
-          </div>
-          <div class="child" style={{ width: "25%" }}>
-            <BigCardStatArea
-              firstLine={"Wind speed"}
-              secondLine={results.wind.speed + speed}
-            />
-          </div>
-        </div>
+        )}
       </div>
     );
   } else {
     return (
-      <div id="container">
-        <div id="inner">
-          <div class="child" style={{ width: "50%" }}>
-            <BigCardStatArea
-              firstLine={"Air Quality"}
-              secondLine={
-                <AirQuality
-                  city={results.name}
-                  lat={results.coord.lat}
-                  lon={results.coord.lon}
-                ></AirQuality>
-              }
-            />
+      <div>
+        {!!results && (
+          <div id="container">
+            <div id="inner">
+              <div class="child" style={{ width: "50%" }}>
+                <BigCardStatArea
+                  firstLine={"Air Quality"}
+                  secondLine={
+                    <AirQuality
+                      city={results.name}
+                      lat={results.coord.lat}
+                      lon={results.coord.lon}
+                    ></AirQuality>
+                  }
+                />
+              </div>
+              <div class="child" style={{ width: "50%" }}>
+                <BigCardStatArea
+                  firstLine={"Humidity"}
+                  secondLine={results.main.humidity + "%"}
+                />
+              </div>
+            </div>
+            <div style={{ height: "40px" }}></div>
+            <div id="inner">
+              <div class="child" style={{ width: "50%" }}>
+                <BigCardStatArea
+                  firstLine={"Feel like"}
+                  secondLine={results.main.feels_like + "°" + unit}
+                />
+              </div>
+              <div class="child" style={{ width: "50%" }}>
+                <BigCardStatArea
+                  firstLine={"Wind speed"}
+                  secondLine={results.wind.speed + speed}
+                />
+              </div>
+            </div>
           </div>
-          <div class="child" style={{ width: "50%" }}>
-            <BigCardStatArea
-              firstLine={"Humidity"}
-              secondLine={results.main.humidity + "%"}
-            />
-          </div>
-        </div>
-        <div style={{ height: "40px" }}></div>
-        <div id="inner">
-          <div class="child" style={{ width: "50%" }}>
-            <BigCardStatArea
-              firstLine={"Feel like"}
-              secondLine={results.main.feels_like + "°" + unit}
-            />
-          </div>
-          <div class="child" style={{ width: "50%" }}>
-            <BigCardStatArea
-              firstLine={"Wind speed"}
-              secondLine={results.wind.speed + speed}
-            />
-          </div>
-        </div>
+        )}
       </div>
     );
   }
