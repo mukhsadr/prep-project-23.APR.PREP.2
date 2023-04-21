@@ -111,7 +111,7 @@ const WeatherStore = ({ children }) => {
   };
 
   const options = {
-    timeout: 3000,
+    timeout: 5000,
   };
 
   useEffect(() => {

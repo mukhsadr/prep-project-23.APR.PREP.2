@@ -23,6 +23,7 @@ import {
   SmallText,
   SmallTextBold,
   Title,
+  ScrollingText
 } from "../TextStyle";
 import AirQuality from "./AirQuality";
 import LoadingSpinner from "./LoadingSpinner";
@@ -46,6 +47,17 @@ function InitialScreen() {
 
   if (error) {
     return <div>Error: {error.message}</div>;
+  } else if (results === null) {
+    return (
+      <div style={{display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center",
+        height: "100vh",
+        flexDirection: "column"}}>
+        <div>Sorry, we will get back soon. </div> <br></br>
+        <div>Err: results is null. Check if API key expired. </div>
+      </div>
+      );
   } else {
     const currentWeatherTextAreaHeight = screenWidth > 600 ? "100px" : "150px";
 
@@ -199,6 +211,11 @@ export function BigCard({ city, screenWidth, screenHeight }) {
     changeScreen();
   };
 
+  let cityString = city;
+  if (cityString.length > 15) {
+    cityString = cityString.slice(0, 15) + "...";
+  }
+
   return (
     <>
       {isVarLoaded && results && (
@@ -212,7 +229,7 @@ export function BigCard({ city, screenWidth, screenHeight }) {
             }}
           >
             <div align="left">
-              <MainScreenTemp text={city} color="White" />
+                <MainScreenTemp text={cityString} color="White"/>
             </div>
 
             <div align="center">

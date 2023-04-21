@@ -8,6 +8,7 @@
     align-items: center;
     margin-right: 10px;
     width: 150px; /* or any other value you prefer */
+    min-width: 142px;
   }
   
   .weekly-forecast-container {

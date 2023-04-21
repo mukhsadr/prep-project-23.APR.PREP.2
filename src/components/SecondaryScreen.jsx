@@ -8,6 +8,7 @@ import {
   SmallText,
   SmallTextBold,
   Title,
+  ScrollingText
 } from "../TextStyle";
 import back_button from "../components/BackButton.png";
 import favorite from "../components/Favorite.png";
@@ -89,124 +90,149 @@ function SecondaryScreen() {
 
   if (error) {
     return <div>Error: {error.message}</div>;
+  } else if (results === null) {
+    return (
+      <div style={{display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center",
+        height: "100vh",
+        flexDirection: "column"}}>
+        <div>Sorry, we will get back soon. </div> <br></br>
+        <div>Err: results is null. Check if API key expired. </div>
+      </div>
+      );
   } else {
+
+    if (screenWidth < 1080) {
+      return (
+        <div>
+          <TopBar></TopBar>
+          <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            padding: "0px 20px 0px",
+          }}
+          >
+            {/* function area */}
+
+            <div>
+              {/* Left side */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  padding: "0px 10px 0px",
+                }}
+              >
+                <img
+                  src={back_button}
+                  alt="Back Button"
+                  onClick={handleBackButtonClick}
+                  height={30}
+                  width={30}
+                />
+
+                <ScrollingText text={
+                  <MainScreenTemp text={city} color="White"
+                />} />
+                <MainScreenTemp
+                  text={temp.toFixed(2) + "°" + unit}
+                  color="White"
+                />
+                <MainScreenTemp text={results.weather[0].main} color="White" />
+                <img
+                  src={fav_img}
+                  alt="Favorite Button"
+                  onClick={handleFavClick}
+                  height={30}
+                  width={30}
+                />
+              </div>
+              <div style={{ width: "100%" }}>
+                <div style={leftSectionCardStyle}>
+                  {isVarLoaded && results && <Forecast city={city} />}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              {/* right side */}
+              {location.lat && location.lng && <Map city={city}/>}
+
+              <div style={{ height: "10px" }}></div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flex_direction: "row",
+                  justify_content: "space-between",
+                  align_items: "flex-start",
+                  padding: "10px",
+                  gap: "10px",
+                  /* Inside auto layout */
+                  order: 1,
+                  align_self: "stretch",
+                  flex_grow: 1,
+                }}
+              >
+                {/* Reminder and airquality area */}
+
+                <div style={{ width: "50%" }}>
+                  <div style={rightSectionCardStyle}>
+                    {/* Reminder area */}
+                    <SmallText text={"Things to brings:"} />
+                    <div
+                      style={{
+                        overflowX: "auto",
+                        display: "flex",
+                        whiteSpace: "nowrap",
+                        height: "170px",
+                      }}
+                    >
+                      {!!results.weather && !!results.weather[0].main && (
+                        <EquipmentTable
+                          equipments={requiredThings[results.weather[0].main]}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ width: "50%" }}>
+                  <div style={rightSectionCardStyle}>
+                    {/* Area Quality area */}
+                    <div className="aq-container">
+                      <AirQuality1 city={city} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            {/* Button part */}
+            <div>
+              {isVarLoaded && results && (
+                <WeeklyForecast weeklyForecast={weeklyForecast} />
+              )}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div>
         <TopBar></TopBar>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            padding: "0px 20px 0px",
-          }}
-        >
-          {/* function area */}
-
-          <div style={{ width: screenWidth * 0.5 }}>
-            {/* Left side */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                padding: "0px 10px 0px",
-              }}
-            >
-              <img
-                src={back_button}
-                alt="Back Button"
-                onClick={handleBackButtonClick}
-                height={30}
-                width={30}
-              />
-
-              <ScrollingText text={
-                <MainScreenTemp text={city} color="White"
-              />} />
-              <MainScreenTemp
-                text={temp.toFixed(2) + "°" + unit}
-                color="White"
-              />
-              <MainScreenTemp text={results.weather[0].main} color="White" />
-              <img
-                src={fav_img}
-                alt="Favorite Button"
-                onClick={handleFavClick}
-                height={30}
-                width={30}
-              />
-            </div>
-            <div style={{ width: "100%" }}>
-              <div style={leftSectionCardStyle}>
-                {isVarLoaded && results && <Forecast city={city} />}
-              </div>
-            </div>
-          </div>
-
-          <div style={{ width: screenWidth * 0.5, padding: "10px" }}>
-            {/* right side */}
-            {location.lat && location.lng && <Map city={city}/>}
-
-            <div style={{ height: "10px" }}></div>
-
-            <div
-              style={{
-                display: "flex",
-                flex_direction: "row",
-                justify_content: "space-between",
-                align_items: "flex-start",
-                padding: "10px",
-                gap: "10px",
-                /* Inside auto layout */
-                order: 1,
-                align_self: "stretch",
-                flex_grow: 1,
-              }}
-            >
-              {/* Reminder and airquality area */}
-
-              <div style={{ width: "50%" }}>
-                <div style={rightSectionCardStyle}>
-                  {/* Reminder area */}
-                  <SmallText text={"Things to brings:"} />
-                  <div
-                    style={{
-                      overflowX: "auto",
-                      display: "flex",
-                      whiteSpace: "nowrap",
-                      height: "200px",
-                    }}
-                  >
-                    {!!results.weather && !!results.weather[0].main && (
-                      <EquipmentTable
-                        equipments={requiredThings[results.weather[0].main]}
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div style={{ width: "50%" }}>
-                <div style={rightSectionCardStyle}>
-                  {/* Area Quality area */}
-                  <div className="aq-container">
-                    <AirQuality1 city={city} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          {/* Button part */}
-          <div>
-            {isVarLoaded && results && (
-              <WeeklyForecast weeklyForecast={weeklyForecast} />
-            )}
-          </div>
-        </div>
+        <BigScreenLayout screenWidth = {screenWidth} handleBackButtonClick = {handleBackButtonClick} 
+        temp={temp} results={results} handleFavClick={handleFavClick} 
+        leftSectionCardStyle={leftSectionCardStyle} location={location}
+        rightSectionCardStyle={rightSectionCardStyle} isVarLoaded={isVarLoaded}
+        city={city} unit={unit} fav_img={fav_img} weeklyForecast={weeklyForecast} />
       </div>
     );
   }
@@ -214,22 +240,125 @@ function SecondaryScreen() {
 
 export default SecondaryScreen;
 
-
-const ScrollingText = ({ text }) => {
-  const containerRef = useRef(null);
-  const [isOverflowing, setIsOverflowing] = useState(false);
-
-  useEffect(() => {
-    if (containerRef.current.scrollWidth > containerRef.current.clientWidth) {
-      setIsOverflowing(true);
-    } else {
-      setIsOverflowing(false);
-    }
-  }, [text]);
+export function BigScreenLayout({screenWidth, handleBackButtonClick, 
+  temp, results, handleFavClick, leftSectionCardStyle, location,
+  rightSectionCardStyle, isVarLoaded, city, unit, fav_img, weeklyForecast}) {
 
   return (
-    <div className="scrolling-text-container" ref={containerRef}>
-      <div className={`scrolling-text ${isOverflowing ? "scroll" : ""}`}>{text}</div>
-    </div>
-  );
-};
+    <>
+    <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          padding: "0px 20px 0px",
+        }}
+      >
+        {/* function area */}
+
+        <div style={{ width: screenWidth * 0.5 }}>
+          {/* Left side */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              padding: "0px 10px 0px",
+            }}
+          >
+            <img
+              src={back_button}
+              alt="Back Button"
+              onClick={handleBackButtonClick}
+              height={30}
+              width={30}
+            />
+
+            <ScrollingText text={
+              <MainScreenTemp text={city} color="White"
+            />} />
+            <MainScreenTemp
+              text={temp.toFixed(2) + "°" + unit}
+              color="White"
+            />
+            <MainScreenTemp text={results.weather[0].main} color="White" />
+            <img
+              src={fav_img}
+              alt="Favorite Button"
+              onClick={handleFavClick}
+              height={30}
+              width={30}
+            />
+          </div>
+          <div style={{ width: "100%" }}>
+            <div style={leftSectionCardStyle}>
+              {isVarLoaded && results && <Forecast city={city} />}
+            </div>
+          </div>
+        </div>
+
+        <div style={{ width: screenWidth * 0.5, padding: "10px" }}>
+          {/* right side */}
+          {location.lat && location.lng && <Map city={city}/>}
+
+          <div style={{ height: "10px" }}></div>
+
+          <div
+            style={{
+              display: "flex",
+              flex_direction: "row",
+              justify_content: "space-between",
+              align_items: "flex-start",
+              padding: "10px",
+              gap: "10px",
+              /* Inside auto layout */
+              order: 1,
+              align_self: "stretch",
+              flex_grow: 1,
+            }}
+          >
+            {/* Reminder and airquality area */}
+
+            <div style={{ width: "50%" }}>
+              <div style={rightSectionCardStyle}>
+                {/* Reminder area */}
+                <SmallText text={"Things to brings:"} />
+                <div
+                  style={{
+                    overflowX: "auto",
+                    display: "flex",
+                    whiteSpace: "nowrap",
+                    height: "200px",
+                  }}
+                >
+                  {!!results.weather && !!results.weather[0].main && (
+                    <EquipmentTable
+                      equipments={requiredThings[results.weather[0].main]}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div style={{ width: "50%" }}>
+              <div style={rightSectionCardStyle}>
+                {/* Area Quality area */}
+                <div className="aq-container">
+                  <AirQuality1 city={city} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        {/* Button part */}
+        <div>
+          {isVarLoaded && results && (
+            <WeeklyForecast weeklyForecast={weeklyForecast} />
+          )}
+        </div>
+      </div>
+    </>
+  )
+}
