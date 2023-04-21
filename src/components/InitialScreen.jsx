@@ -30,18 +30,12 @@ import LoadingSpinner from "./LoadingSpinner";
 function InitialScreen() {
   const {
     yourLocation,
-    temp,
-    unit,
-    isLoaded,
-    results,
     error,
     isVarLoaded,
-    changeScreen,
     favCities,
     screenWidth,
-    setScreenWidth,
     screenHeight,
-    setScreenHeight,
+    noLocation,
   } = useWeatherContext();
 
   if (error) {
@@ -62,7 +56,14 @@ function InitialScreen() {
             <TopBar></TopBar>
           </Grid>
           <Grid item maxHeight={currentWeatherTextAreaHeight}>
-            <Title text="Your current location weather:" color="White" />
+            <Title
+              text={
+                noLocation
+                  ? "Default location weather:"
+                  : "Your current location weather:"
+              }
+              color="White"
+            />
           </Grid>
 
           <Grid item maxHeight="425px">

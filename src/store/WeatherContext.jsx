@@ -32,6 +32,7 @@ const WeatherStore = ({ children }) => {
   const [weeklyForecast, setWeeklyForecast] = useState(null);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+  const [noLocation, setNoLocation] = useState(false);
 
   const cityHandler = (city) => {
     if (city === "Your location") {
@@ -149,6 +150,7 @@ const WeatherStore = ({ children }) => {
         setCity("New York City");
         console.log("Hello");
         setYourLocation("New York City");
+        setNoLocation(true);
       },
       options
     );
@@ -302,6 +304,7 @@ const WeatherStore = ({ children }) => {
     setScreenWidth,
     screenHeight,
     setScreenHeight,
+    noLocation,
   };
 
   return (
