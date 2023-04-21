@@ -141,10 +141,12 @@ input {
 .tooltip2:hover .tooltiptext {
   visibility: visible;
   bottom: -100%;
+  z-index: 113;
 }
 .tooltip2:hover .tooltiptext-2 {
   visibility: visible;
   bottom: -30%;
+  z-index: 113;
 }
 
 .BigCard{
