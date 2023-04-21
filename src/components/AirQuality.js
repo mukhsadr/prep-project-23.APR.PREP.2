@@ -30,7 +30,6 @@ export default function AirQuality(props) {
     if (aqi == 1) {
       return (
         <>
-          <span>Air quality: </span>
           <a href="#">
             <span class="circleGreen">{aqi}</span>
           </a>
@@ -39,7 +38,6 @@ export default function AirQuality(props) {
     } else if (aqi == 2) {
       return (
         <>
-          <span></span>
           <a href="#">
             <span class="circleYellow">{aqi}</span>
           </a>
@@ -48,7 +46,6 @@ export default function AirQuality(props) {
     } else if (aqi == 3) {
       return (
         <>
-          <span></span>
           <a href="#">
             <span class="circleOrange">{aqi}</span>
           </a>
@@ -57,7 +54,6 @@ export default function AirQuality(props) {
     } else if (aqi == 4) {
       return (
         <>
-          <span></span>
           <a href="#">
             <span class="circleRed">{aqi}</span>
           </a>
@@ -66,7 +62,6 @@ export default function AirQuality(props) {
     } else if (aqi == 5) {
       return (
         <>
-          <span></span>
           <a href="#">
             <span class="circlePurple">{aqi}</span>
           </a>
