@@ -136,11 +136,12 @@ input {
   flex-direction: column;
   height: auto;
   min-width: 350px;
-  min-height: 379px;
+  min-height: 300px;
   max-width: 600px;
+  max-height: 380px;
 
   color: black;
-  padding: 5% 5% 5%;
+  padding: 5% 5% 3%;
   gap: 15%;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
@@ -154,6 +155,10 @@ input {
 .BigCard:hover {
   cursor: pointer;
   transform: scale(1.05);
+}
+
+.BigCard > * {
+  backdrop-filter: blur(5px);
 }
 
 .main-screen-temp {
