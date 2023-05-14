@@ -18,8 +18,6 @@ function App() {
     function handleResize() {
       setScreenWidth(window.innerWidth);
       setScreenHeight(window.innerHeight);
-      console.log("Screen width: ", screenWidth);
-      console.log("Screen height: ", screenHeight);
     }
 
     window.addEventListener('resize', handleResize);

@@ -16,11 +16,11 @@ const WeatherStore = ({ children }) => {
   const [screen, setScreen] = useState(false);
   const [error, setError] = useState(null);
   const [isVarLoaded, setIsVarLoaded] = useState(false);
-  const [city, setCity] = useState("Your location");
+  const [city, setCity] = useState("New York City");
   const [temp, setTemp] = useState(null);
   const [unit, setUnit] = useState("C");
   const [results, setResults] = useState(null);
-  const [yourLocation, setYourLocation] = useState("Your location");
+  const [yourLocation, setYourLocation] = useState("New York City");
   const [favCities, setFavCities] = useState(null);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
@@ -35,7 +35,7 @@ const WeatherStore = ({ children }) => {
   const [noLocation, setNoLocation] = useState(false);
 
   const cityHandler = (city) => {
-    if (city === "Your location") {
+    if (city === "New York City") {
       setCity(yourLocation);
     } else {
       setCity(city);
@@ -72,12 +72,6 @@ const WeatherStore = ({ children }) => {
         JSON.stringify([...favCities, city])
       );
     }
-
-    console.log(city, "added to favorite city.");
-    console.log(
-      "local storage's favCities = ",
-      JSON.parse(window.localStorage.getItem("MLH_FAV_CITIES"))
-    );
     return true;
   };
 
@@ -92,9 +86,6 @@ const WeatherStore = ({ children }) => {
 
       // Store the updated array back in local storage
       window.localStorage.setItem("MLH_FAV_CITIES", JSON.stringify(favCities));
-
-      console.log(city, "removed from favorite city.");
-      console.log("Current fav_cities = ", favCities);
       return true;
     } else {
       console.log(city, "is not in favCities");
@@ -148,7 +139,6 @@ const WeatherStore = ({ children }) => {
         let coordX = -73.935242;
         setLocation({ lat: coordX, lng: coordY });
         setCity("New York City");
-        console.log("Hello");
         setYourLocation("New York City");
         setNoLocation(true);
       },
@@ -208,7 +198,7 @@ const WeatherStore = ({ children }) => {
         const data = await response.json();
         console.log("Forecast Data: ", data);
 
-        // Hourly Forecast: slice the list array to get the next 24 hours of data
+        // Hourly Forecast: Slice the list array to retrieve the next 8 elements, representing a 3-hour interval each, providing the forecast for the upcoming 24 hours.
         if (unit === "C") {
           const hourlyForecastData = data.list.slice(0, 8).map((item) => ({
             date: item.dt_txt,
@@ -217,6 +207,7 @@ const WeatherStore = ({ children }) => {
             icon: item.weather[0].icon,
           }));
           setHourlyForecast(hourlyForecastData);
+          console.log("Hourly Forecast: ", hourlyForecastData)
         } else {
           const hourlyForecastData = data.list.slice(0, 8).map((item) => ({
             date: item.dt_txt,
@@ -227,8 +218,9 @@ const WeatherStore = ({ children }) => {
           setHourlyForecast(hourlyForecastData);
         }
 
-        // Weekly Forecast: group the list array by date to get 7 days of data
+        // Weekly Forecast: group the list array by date to get 5 days of data
         if (unit === "C") {
+          // Filter and transform the weather forecast data to retrieve the forecast at noon times.
           const weeklyForecastData = data.list.reduce((acc, item) => {
             const date = item.dt_txt.split(" ")[0];
             const hour = item.dt_txt.split(" ")[1];
@@ -242,7 +234,8 @@ const WeatherStore = ({ children }) => {
             }
             return acc;
           }, []);
-          setWeeklyForecast(weeklyForecastData.slice(0, 7));
+          setWeeklyForecast(weeklyForecastData.slice(0, 5));
+          console.log("Weekly Forecast: ", weeklyForecastData.slice(0, 5))
         } else {
           const weeklyForecastData = data.list.reduce((acc, item) => {
             const date = item.dt_txt.split(" ")[0];
